@@ -258,7 +258,6 @@ ul {
   width: 85px;
   height: 85px;
   padding-top: 8px;
-  background-color: rgb(74, 74, 74);
   -webkit-transition: all 0.3s ease;
           transition: all 0.3s ease;
 }
@@ -502,6 +501,7 @@ ol li:before {
 .form-control {
   border-color: #c79c60;
   border-radius: 10px;
+ margin-left: 300px;
 }
 .form-control:focus { 
   border-color: rgb(136, 93, 33); 
@@ -513,6 +513,7 @@ button.tm-more-button {
   border: 0;
   display: block;
   outline: 0;
+margin-left: 300px;
 }
 #google-map { 
   height: 350px;
@@ -622,7 +623,10 @@ button.tm-more-button {
   box-shadow: 8px 4px 16px 0 rgba(4,7,9,0.8);
   transition: 0.3s;
 }
-
+.menu_page h1{
+  margin-bottom: 30px;
+  font-size: 60px;
+}
 footer{
   background-color: #583a2e;
   color: #fcffff;
