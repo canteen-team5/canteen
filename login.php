@@ -1,6 +1,33 @@
 <?php
+    include('conn.php');
 
-
+    error_reporting(0);
+    $usr = $pwd = $msg = "";
+    if(isset($_POST["btnlogin"])){
+        $usr = $_POST["username"];
+        $pwd = $_POST["password"];
+        if($usr == "") $msg = "Please enter username";
+        elseif($pwd == "") $msg = "Please enter password";
+        else { 
+            $sql = "select * from tbusr where usrname='$usr' and usrpwd='$pwd' ";
+            $result = $conn->query($sql);
+            echo $sql;
+            if($result->num_rows > 0){
+                while($row = $result->fetch_assoc()) {
+                    $rol = $row["usrrol"];
+                }
+                if ($rol == "A") header ("location:admin/product.php");
+                else {
+                    if(isset($_SESSION["cart"]))
+                        header("location:frmorddet.php");
+                    else
+                        header("location:index.php");
+                }
+            }
+            else echo "<script type='text/javascript'> alert('Incorrect Password'); </script>";
+        }
+        if(!$msg == "") echo "<script type='text/javascript'> alert('$msg'); </script>";
+    }
 ?>
 
 
@@ -38,17 +65,17 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" class="form-control" name="username" placeholder="Username">
+                                    <input type="text" class="form-control" name="username" placeholder="Username" value="<?php echo $usr;?>">
                                 </div>
                             
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" class="form-control" name="password" placeholder="Password">
+                                        <input type="password" class="form-control" name="password" placeholder="Password" value="" >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block btn-lg">Log In</button>
+                                    <button type="submit" name="btnlogin" class="btn btn-primary btn-block btn-lg">Log In</button>
                                 </div>
                             </div>
                         </form>
