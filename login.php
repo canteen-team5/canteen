@@ -11,7 +11,6 @@
         else { 
             $sql = "select * from tbusr where usrname='$usr' and usrpwd='$pwd' ";
             $result = $conn->query($sql);
-            echo $sql;
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()) {
                     $rol = $row["usrrol"];
