@@ -4,9 +4,20 @@
     error_reporting(0);
 
     $catnam = $msg = "";
+
     if(isset($_POST["catsubmit"])){
         $catnam = $_POST["cat_name"];
         if($catnam == "") $msg = "Please input name";
+        
+        elseif(isset($_SESSION["ccod"])){
+          $ccod = $_SESSION["ccod"];
+          $sql = "call updcat($ccod,'$catnam')";
+          if (mysqli_query($conn, $sql)) 
+            $msg = "Record updated successfully";
+          else 
+            $msg = "Error updating record: " . mysqli_error($conn);
+        }
+
         else{
             $sql = "call inscat('$catnam')";
             if($conn->query($sql) === TRUE) {
@@ -14,8 +25,30 @@
             } else {
               $msg = "Error: " . $sql . "<br>" . $conn->error;
             }
-            echo "<script> alert('$msg'); </script>";
         }
+      if(!$msg == "") echo "<script> alert('$msg'); </script>";
+    }
+
+    if(isset($_REQUEST["ccod"])){
+
+      if($_REQUEST["mod"] == 'D'){
+        $catcod = $_REQUEST["ccod"];
+        $sql = "call delcat($catcod)";
+        if($conn->query($sql) === TRUE) $msg = "Record deleted successfully";
+        else $msg = "Error deleting record: " . $conn->error;
+      }
+
+      if($_REQUEST["mod"] == 'E'){
+        $_SESSION["ccod"]=$_REQUEST["ccod"];
+        $catcod = $_REQUEST["ccod"];
+        $sql = "call fndcat($catcod)";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+          $row = $result->fetch_assoc(); 
+          $cnam = $row["catname"];
+        }       
+      }
+      if(!$msg == "") echo "<script> alert('$msg'); </script>";
     }
 
 ?>
@@ -51,6 +84,10 @@
   box-sizing: border-box;
 }
 
+body{
+  background-color: #e4e4e4;
+
+}
 input[type=text], select, textarea {
   width: 50%;
   padding: 12px;
@@ -66,6 +103,8 @@ label {
   display: inline-block;
   margin-left: 300px;
   margin-top:60px;
+  width: max-content;
+  font-size: 20px;
 }
 
 input[type=submit] {
@@ -109,10 +148,10 @@ input[type=submit]:hover {
     margin-top: 0;
   }
 }
-p{
+p.cat{
   max-width: 60%;
   margin: 1em auto;
-  background-color: #e2e2e2;
+  background-color: #d0d0d0;;
   border-radius: 1em;
   padding: 2px;
 }
@@ -126,13 +165,19 @@ span.text{
 span.bttn{
   float: right;
 }
-input[type=button] {
+.category_name{
+  display: flex;
+    width: 80%;
+    margin: auto;
+}
+.bttn a {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  display: inline-block;
 }
   </style>
   </head>
@@ -167,21 +212,36 @@ input[type=button] {
         <label for="cat_name">Categories Name:</label>
       </div>
       <div class="col-75">
-        <input type="text" name="cat_name" placeholder="Your category name..">
+        <input type="text" name="cat_name" placeholder="Your category name.." value="<?php echo $cnam; ?>" >
       </div>
     </div>
       <input type="submit" value="Submit" name="catsubmit" >
-      <h2>CATEGORY NAME</h2>
+      <div class="category_name">
+        <div class="col-lg-12 tm-section-header-container">
+          <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Category Name</h2>
+          <div class="tm-hr-container"><hr class="tm-hr"></div>
+        </div>
+      </div>
       <?php
         $sql_disp = "call dspcat";
         $result_disp = $conn->query($sql_disp);
         if($result_disp->num_rows > 0){
           while ($row = $result_disp->fetch_assoc()){
-            echo "<p><span class='text'>".$row["catname"]."</span> <span class='bttn'> <input type='button' name='edit' value='Edit'> <input type='button' name='delete' value='Delete'> </span> </p>";
+            echo "<p class='cat' ><span class='text'>".$row["catname"]."</span> <span class='bttn'> <a href=category.php?ccod=".$row["catcod"]."&mod=E >Edit</a>
+            <a href=category.php?ccod=".$row["catcod"]."&mod=D >Delete</a> </span> </p>";
           }
-        } else echo "0 results";
+        } else echo "<script> alert('No record found'); </script>";
 
       ?>
       </form>
+
+      <footer>
+        <div class="container">
+          <div class="row tm-copyright">
+           <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2084 Your Canteen</p>
+         </div>  
+       </div>
+     </div>
+   </footer> 
   </body>
   </html>
