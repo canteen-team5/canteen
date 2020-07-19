@@ -1,9 +1,9 @@
 <?php
     session_start();
     include('../conn.php');
-    error_reporting(0);
+    //error_reporting(0);
 
-    $catnam = $msg = "";
+    $catnam = $cnam = $msg = "";
 
     if(isset($_POST["catsubmit"])){
         $catnam = $_POST["cat_name"];
@@ -11,6 +11,7 @@
         
         elseif(isset($_SESSION["ccod"])){
           $ccod = $_SESSION["ccod"];
+          unset($_SESSION['ccod']);
           $sql = "call updcat($ccod,'$catnam')";
           if (mysqli_query($conn, $sql)) 
             $msg = "Record updated successfully";
@@ -224,13 +225,14 @@ span.bttn{
       </div>
       <?php
         $sql_disp = "call dspcat";
+        //$sql_disp = "select * from tbcat";
         $result_disp = $conn->query($sql_disp);
         if($result_disp->num_rows > 0){
           while ($row = $result_disp->fetch_assoc()){
             echo "<p class='cat' ><span class='text'>".$row["catname"]."</span> <span class='bttn'> <a href=category.php?ccod=".$row["catcod"]."&mod=E >Edit</a>
             <a href=category.php?ccod=".$row["catcod"]."&mod=D >Delete</a> </span> </p>";
           }
-        } else echo "<script> alert('No record found'); </script>";
+        } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
 
       ?>
       </form>
