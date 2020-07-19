@@ -153,9 +153,11 @@ input[type=submit]:hover {
             </div>
             <nav class="tm-nav">
               <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="product listing.html" class="active">Product</a></li>
-                <li><a href="menu.html">Orders</a></li>
+              <li><a href="../index.php">Home</a></li>
+                <li><a href="category.php">Category</a></li>
+                <li><a href="#" class="active">Add Product</a></li>
+                <li><a href="productlisting.php">Product List</a></li>
+                <li><a href="order.php">Orders</a></li>
               </ul>
             </nav>   
           </div>           

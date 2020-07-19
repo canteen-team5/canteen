@@ -10,7 +10,7 @@
         if($usr == "") $msg = "Please enter username";
         elseif($pwd == "") $msg = "Please enter password";
         else { 
-            $sql = "select * from tbusr where usrname='$usr' and usrpwd='$pwd' ";
+            $sql = "call login_check('$usr', '$pwd')";
             $result = $conn->query($sql);
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()) {

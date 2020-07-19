@@ -3,7 +3,7 @@
     include('../conn.php');
     //error_reporting(0);
 
-    $catnam = $cnam = $msg = "";
+    $catnam = $cnam = $msg = $result_disp ="";
 
     if(isset($_POST["catsubmit"])){
         $catnam = $_POST["cat_name"];
@@ -47,7 +47,10 @@
         if ($result->num_rows > 0) {
           $row = $result->fetch_assoc(); 
           $cnam = $row["catname"];
-        }       
+        } 
+        /*$sql_disp = "call dspcat";
+        $result_disp = $conn->query($sql_disp); 
+        print_r($result_disp); */    
       }
       if(!$msg == "") echo "<script> alert('$msg'); </script>";
     }
@@ -198,7 +201,8 @@ span.bttn{
               <ul>
                 <li><a href="../index.php">Home</a></li>
                 <li><a href="#" class="active">Category</a></li>
-                <li><a href="product.php">Product</a></li>
+                <li><a href="product.php">Add Product</a></li>
+                <li><a href="productlisting.php">Product List</a></li>
                 <li><a href="order.php">Orders</a></li>
               </ul>
             </nav>   
@@ -207,7 +211,7 @@ span.bttn{
       </div>
     </div>
     <h1>CATEGORY</h1>
-    <form method="post"  action="category.php" name="frmcat" >
+    <form method="post"  action="category.php" name="frmcat" style="padding-bottom: 5em;" >
        <div class="row">
       <div class="col-25">
         <label for="cat_name">Categories Name:</label>
@@ -219,14 +223,13 @@ span.bttn{
       <input type="submit" value="Submit" name="catsubmit" >
       <div class="category_name">
         <div class="col-lg-12 tm-section-header-container">
-          <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Category Name</h2>
+          <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Category List</h2>
           <div class="tm-hr-container"><hr class="tm-hr"></div>
         </div>
       </div>
       <?php
         $sql_disp = "call dspcat";
-        //$sql_disp = "select * from tbcat";
-        $result_disp = $conn->query($sql_disp);
+        $result_disp = $conn->query($sql_disp); 
         if($result_disp->num_rows > 0){
           while ($row = $result_disp->fetch_assoc()){
             echo "<p class='cat' ><span class='text'>".$row["catname"]."</span> <span class='bttn'> <a href=category.php?ccod=".$row["catcod"]."&mod=E >Edit</a>
@@ -237,7 +240,7 @@ span.bttn{
       ?>
       </form>
 
-      <footer>
+      <footer >
         <div class="container">
           <div class="row tm-copyright">
            <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2084 Your Canteen</p>

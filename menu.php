@@ -36,8 +36,22 @@
         </div>    
       </div>
     </div>
-    
-    <div class="tm-main-section light-gray-bg">
+    <section class="tm-welcome-section">
+      <div class="container tm-position-relative">
+        <div class="tm-lights-container">
+          <img src="img/light.png" alt="Light" class="light light-1">
+          <img src="img/light.png" alt="Light" class="light light-2">
+          <img src="img/light.png" alt="Light" class="light light-3">  
+        </div>        
+        <div class="row tm-welcome-content">
+          <h2 class="white-text tm-handwriting-font tm-welcome-header"><img src="img/header-line.png" alt="Line" class="tm-header-line">&nbsp;Our Menus&nbsp;&nbsp;<img src="img/header-line.png" alt="Line" class="tm-header-line"></h2>
+          <h2 class="gold-text tm-welcome-header-2">Canteen</h2>
+          <p class="gray-text tm-welcome-description">The <span class="gold-text">canteen</span> is very big and could accommodate many student at a time. Our<span class="gold-text"> canteen</span> provide many kinds of food .Many student came here to have the food. The cook of our canteen are very nice and they make sure that we student get the best food. </p>     
+        </div>
+        <img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive">  
+      </div>      
+        </section>
+           <div class="tm-main-section light-gray-bg">
       <div class="container" id="main">
             
         <section class="tm-section row">
@@ -45,8 +59,28 @@
             <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Our Menus</h2>
             <div class="tm-hr-container"><hr class="tm-hr"></div>
           </div>
-          <div>           
-            <div class="tm-menu-product-content col-lg-12 col-md-12"> <!-- menu content -->
+          <div>
+            <div class="col-lg-3 col-md-3">
+              <div class="tm-position-relative margin-bottom-30">              
+                <nav class="tm-side-menu">
+                  <ul>
+                    <li><a href="#" class="active">Maggie</a></li>
+                    <li><a href="#">Pasta</a></li>
+                    <li><a href="#">Samosa</a></li>
+                    <li><a href="#">Coffee</a></li>
+                    <li><a href="#">Cold Drink</a></li>
+                    <li><a href="#">Tea</a></li>
+                    <li><a href="#">Sandwich</a></li>
+                    <li><a href="#">Patis</a></li>
+                    <li><a href="#">Bread Pakoda</a></li>
+                    <li><a href="#">Noodles</a></li>
+                    <li><a href="#">black coffee</a></li>
+                  </ul>              
+                </nav>    
+                <img src="img/vertical-menu-bg.png" alt="Menu bg" class="tm-side-menu-bg">
+              </div>  
+            </div>            
+            <div class="tm-menu-product-content col-lg-9 col-md-9"> <!-- menu content -->
               <div class="tm-product">
                 <img src="img/popular-1.jpg" alt="Product" width="150px" height="150px">
                 <div class="tm-product-text">
