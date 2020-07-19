@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Canteen</title>
+  
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/templatemo-style.css" rel="stylesheet">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 <style>
   body{
-    margin: 6% 20% 10% 20%;
-    background-image: url('fastfood.jpg');
-    font-family: Roboto, Arial, Helvetica Neue, sans-serif;
-
+    background-color: yellow;
   }
 * {
   box-sizing: border-box;
@@ -17,7 +24,7 @@ h2{
   font-weight: normal;
   font-size: 40px;
   text-align: center;
-  margin: 10px 0 22px 0;
+  margin: 0px 0 22px 0;
 }
 input[type=text], select, textarea {
   width: 100%;
@@ -53,10 +60,14 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
-.border {
+.border{
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+  margin: 0% 20% 10% 20%;
+  background-image: url('fastfood.jpg');
+  font-family: Roboto, Arial, Helvetica Neue, sans-serif;
+
 }
 
 .col-25 {
@@ -88,8 +99,30 @@ input[type=submit]:hover {
 </style>
 </head>
 <body>
+   <div class="tm-top-header">
+      <div class="container">
+        <div class="row">
+          <div class="tm-top-header-inner">
+            <div class="tm-logo-container">
+              <img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
+              <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
+            </div>
+            <div class="mobile-menu-icon">
+              <i class="fa fa-bars"></i>
+            </div>
+            <nav class="tm-nav">
+              <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="product listing.html" class="active">Product</a></li>
+                <li><a href="menu.html">Orders</a></li>
+              </ul>
+            </nav>   
+          </div>           
+        </div>    
+      </div>
+    </div>
 <div class="border">
-<h2>Form</h2>
+<h2>Add Product</h2>
   <form>
     <div class="row">
       <div class="col-25">
@@ -135,7 +168,7 @@ input[type=submit]:hover {
         <label for="item_picture">Item Picture</label>
       </div>
       <div class="col-75">
-        <input type="files"  name="picture" placeholder="Choose File">
+        <input type="file"  name="picture" placeholder="Choose File">
       </div>
     </div>
      <div class="row">
