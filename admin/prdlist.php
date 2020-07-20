@@ -71,14 +71,16 @@
       <?php
         $sql_disp = "call dspmenu";
         $result_disp = $conn->query($sql_disp); 
-        //$i = 0;
+        $i = 0;
         if($result_disp->num_rows > 0){
           while ($row = $result_disp->fetch_assoc()){
             echo "<p class='cat' ><span class='text'>".$row["foodname"]."</span> <span class='bttn'> 
             <a href=prddetail.php?fcod=".$row["foodcod"]." >Details</a> </span> </p>";
+            $i++;
+            if($i == 3) break;
           }
         } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
-
+        $conn->close();
       ?>  
                   
         </section>
@@ -94,6 +96,7 @@
             </div>
           </div>
       <?php
+        include('../conn.php');
         $sql_disp = "call dspmenu";
         $result_disp = $conn->query($sql_disp); 
         //$i = 0;

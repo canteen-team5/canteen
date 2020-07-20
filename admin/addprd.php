@@ -19,8 +19,21 @@
     elseif($itm_pic == "") $msg = "Please input Item picture";
     //elseif($itm_qty == "") $itm_qty = "null";
     else {
+      if(isset($_REQUEST['fcod'])){
+        if($_REQUEST["mod"] == 'E'){
+          $fcod = $_REQUEST['fcod'];
+          $sql = "call updmenu($fcod, '$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, '$itm_avail', $itm_qty)";
+          echo $sql;
+          if ($conn->query($sql) === TRUE) {
+            $msg = "Record updated successfully";
+          } else {
+            $msg = "Error updating record: " . $conn->error;
+          }
+        }
+      }
+
+
       $sql = "call insmenu('$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, '$itm_avail', $itm_qty)";
-      echo $sql;
       if (mysqli_query($conn, $sql)) 
         $msg = "New record created successfully";
       else
@@ -33,8 +46,14 @@
   }
 
 
-
-
+//update data
+if(isset($_REQUEST['fcod'])){
+  $itm_nam = $_SESSION["fnam"];
+  $itm_prc = $_SESSION["fprc"];
+  $itm_dsc = $_SESSION["fdsc"];
+  $itm_avail = $_SESSION["favl"];
+  $itm_qty = $_SESSION["fqty"];
+}
 ?>
 
 
@@ -169,25 +188,7 @@ input[type=submit]:hover {
 <div class="border">
 <h2>Add Product</h2>
   <form method='post' action='addprd.php' enctype="multipart/form-data">
-    <div class="row">
-      <div class="col-25">
-        <label for="category">Select Category</label>
-      </div>
-      <div class="col-75">
-         <select id="category" name="category">
-          <?php
-            $sql = "call dspcat";
-            $result = $conn->query($sql);
-            if($result->num_rows >0){
-              while($row = $result->fetch_assoc()){
-                echo "<option value=".$row["catcod"].">".$row["catname"]."</option>";
-              }
-            }
-
-          ?>
-          </select>
-      </div>
-    </div>
+    
     <div class="row">
       <div class="col-25">
         <label for="item_name">Item Name</label>
@@ -220,14 +221,50 @@ input[type=submit]:hover {
         <input type="file"  name="picture" placeholder="Choose File" >
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-25">
+        <label for="category">Select Category</label>
+      </div>
+      <div class="col-75">
+         <select id="category" name="category">
+          <?php
+            $sql = "call dspcat";
+            $result = $conn->query($sql);
+            if($result->num_rows >0){
+              while($row = $result->fetch_assoc()){
+                echo "<option value=".$row["catcod"].">".$row["catname"]."</option>";
+                
+                
+                /*if($row["catcod"] == $_SESSION["fcatcod"])
+                  echo "selcted  >".$row["catname"]."</option>";
+                else
+                echo ">".$row["catname"]."</option>";*/
+              }
+            }
+
+          ?>
+          </select>
+      </div>
+    </div>
+    
      <div class="row">
       <div class="col-25">
         <label for="item_available">Item Available</label>
       </div>
       <div class="col-75">
          <select id="Available" name="available">
-            	<option name="Avail" value="T">Available</option>
-            	<option name="not-avail" value="F">Not Available</option>
+            <?php
+              if(isset($_REQUEST["fcod"])){
+                if($itm_avail == "True")
+                  echo '<option name="Avail" value="True" selected>Available</option>';
+                else
+                  echo '<option name="not-avail" value="False">Not Available</option>';
+              }
+
+            ?>
+            	<option name="Avail" value="True">Available</option>
+            	<option name="not-avail" value="False">Not Available</option>
             </select>
       </div>
     </div>
@@ -240,7 +277,12 @@ input[type=submit]:hover {
       </div>
     </div><br>
    <div class="row">
-      <input type="submit" value="Submit" name="submit">
+      <?php
+        if(isset($_REQUEST['fcod']))
+          echo '<input type="submit" value="Update" name="submit">';
+        else
+            echo '<input type="submit" value="Submit" name="submit">';
+      ?>
     </div>
   </form>
 </div>

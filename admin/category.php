@@ -48,6 +48,7 @@
           $row = $result->fetch_assoc(); 
           $cnam = $row["catname"];
         } 
+        $conn->close();
         /*$sql_disp = "call dspcat";
         $result_disp = $conn->query($sql_disp); 
         print_r($result_disp); */    
@@ -190,7 +191,12 @@ input[type=submit]:hover {
         <input type="text" name="cat_name" placeholder="Your category name.." value="<?php echo $cnam; ?>" >
       </div>
     </div>
-      <input type="submit" value="Submit" name="catsubmit" >
+      <?php
+        if(isset($_REQUEST["ccod"]) && $_REQUEST["mod"] == "E")
+          echo '<input type="submit" value="Update" name="catsubmit" >';
+        else
+          echo '<input type="submit" value="Submit" name="catsubmit" >';
+      ?>
       <div class="category_name">
         <div class="col-lg-12 tm-section-header-container">
           <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Category List</h2>
@@ -198,6 +204,7 @@ input[type=submit]:hover {
         </div>
       </div>
       <?php
+        include('../conn.php');
         $sql_disp = "call dspcat";
         $result_disp = $conn->query($sql_disp); 
         if($result_disp->num_rows > 0){
