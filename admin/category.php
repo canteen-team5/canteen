@@ -152,37 +152,7 @@ input[type=submit]:hover {
     margin-top: 0;
   }
 }
-p.cat{
-  max-width: 60%;
-  margin: 1em auto;
-  background-color: #d0d0d0;;
-  border-radius: 1em;
-  padding: 2px;
-}
-span.text{
-  width: 50%;
-  font-size: 20px;
-  font-weight: 600;
-  display: inline-block;
-  padding: 9px;
-}
-span.bttn{
-  float: right;
-}
-.category_name{
-  display: flex;
-    width: 80%;
-    margin: auto;
-}
-.bttn a {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: inline-block;
-}
+
   </style>
   </head>
   <body>
@@ -201,8 +171,8 @@ span.bttn{
               <ul>
                 <li><a href="../index.php">Home</a></li>
                 <li><a href="#" class="active">Category</a></li>
-                <li><a href="product.php">Add Product</a></li>
-                <li><a href="productlisting.php">Product List</a></li>
+                <li><a href="addprd.php">Add Product</a></li>
+                <li><a href="prdlist.php">Product List</a></li>
                 <li><a href="order.php">Orders</a></li>
               </ul>
             </nav>   

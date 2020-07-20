@@ -17,8 +17,10 @@
     elseif($itm_prc == "") $msg = "Please enter Item price";
     elseif($itm_dsc == "") $msg = "Please enter Item description";
     elseif($itm_pic == "") $msg = "Please input Item picture";
+    //elseif($itm_qty == "") $itm_qty = "null";
     else {
       $sql = "call insmenu('$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, '$itm_avail', $itm_qty)";
+      echo $sql;
       if (mysqli_query($conn, $sql)) 
         $msg = "New record created successfully";
       else
@@ -156,7 +158,7 @@ input[type=submit]:hover {
               <li><a href="../index.php">Home</a></li>
                 <li><a href="category.php">Category</a></li>
                 <li><a href="#" class="active">Add Product</a></li>
-                <li><a href="productlisting.php">Product List</a></li>
+                <li><a href="prdlist.php">Product List</a></li>
                 <li><a href="order.php">Orders</a></li>
               </ul>
             </nav>   
@@ -166,7 +168,7 @@ input[type=submit]:hover {
     </div>
 <div class="border">
 <h2>Add Product</h2>
-  <form method='post' action='product.php' enctype="multipart/form-data">
+  <form method='post' action='addprd.php' enctype="multipart/form-data">
     <div class="row">
       <div class="col-25">
         <label for="category">Select Category</label>
@@ -207,7 +209,7 @@ input[type=submit]:hover {
         <label for="item_desc">Item Description</label>
       </div>
       <div class="col-75">
-        <textarea id="description" name="describe" placeholder="Item description.." style="height:100px" value="<?php echo $itm_dsc; ?>"></textarea>
+        <textarea id="description" name="describe" placeholder="Item description.." style="height:100px" value=""><?php echo $itm_dsc; ?> </textarea>
       </div>
     </div>
     <div class="row">
@@ -215,7 +217,7 @@ input[type=submit]:hover {
         <label for="item_picture">Item Picture</label>
       </div>
       <div class="col-75">
-        <input type="file"  name="picture" placeholder="Choose File">
+        <input type="file"  name="picture" placeholder="Choose File" >
       </div>
     </div>
      <div class="row">
