@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  include('conn.php');
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,10 +33,11 @@
             </div>
             <nav class="tm-nav">
               <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="menu.html" class="active">Menu</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="#" class="active">Menu</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <li><a href="cart.php">Cart</a></li>
               </ul>
             </nav>   
           </div>           
@@ -64,23 +72,47 @@
               <div class="tm-position-relative margin-bottom-30">              
                 <nav class="tm-side-menu">
                   <ul>
-                    <li><a href="#" class="active">Maggie</a></li>
-                    <li><a href="#">Pasta</a></li>
-                    <li><a href="#">Samosa</a></li>
-                    <li><a href="#">Coffee</a></li>
-                    <li><a href="#">Cold Drink</a></li>
-                    <li><a href="#">Tea</a></li>
-                    <li><a href="#">Sandwich</a></li>
-                    <li><a href="#">Patis</a></li>
-                    <li><a href="#">Bread Pakoda</a></li>
-                    <li><a href="#">Noodles</a></li>
-                    <li><a href="#">black coffee</a></li>
+                    <?php
+                      $sql = "call dspmenu";
+                      $result = $conn->query($sql);
+                      if($result->num_rows > 0){
+                        while($row = $result->fetch_assoc()){
+                          echo '<li><a href="#">'.$row["foodname"].'</a></li>';
+                        }
+                      }
+                      $conn->close();
+
+                    ?>
+                    
                   </ul>              
                 </nav>    
                 <img src="img/vertical-menu-bg.png" alt="Menu bg" class="tm-side-menu-bg">
               </div>  
             </div>            
             <div class="tm-menu-product-content col-lg-9 col-md-9"> <!-- menu content -->
+
+            <?php
+              include('conn.php');
+              $sql = "call dspmenu";
+                      $result = $conn->query($sql);
+                      if($result->num_rows > 0){
+                        while($row = $result->fetch_assoc()){
+                          echo '<div class="tm-product">
+              <img src="prdpics/'.$row["foodpic"].' " alt="Product" width="150px" height="150px">
+              <div class="tm-product-text">
+                <h3 class="tm-product-title">'.$row["foodname"].'</h3>
+                <p class="tm-product-description">'.$row["fooddsc"].'</p>
+              </div>
+              <div class="tm-product-price">
+                <a href="cart.php?fcod='.$row["foodcod"].'" class="tm-product-price-link tm-handwriting-font">
+                <span class="tm-product-price-currency"></span>₹'.$row["foodprc"].'</a>
+              </div>
+            </div>';
+                        }
+                      }
+
+              
+            ?>
               <div class="tm-product">
                 <img src="img/popular-1.jpg" alt="Product" width="150px" height="150px">
                 <div class="tm-product-text">
@@ -98,7 +130,7 @@
                   <p class="tm-product-description">Pasta is the Italian designation or name given to a type of starchy noodle or dish typically made from grain flour, commonly wheat, mixed into a paste or dough, usually with water or eggs, and formed or cut into sheets or other shapes.</p>
                 </div>
                 <div class="tm-product-price">
-                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency">$</span>20</a>
+                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency">Order Now</span></a>
                 </div>
               </div>
               <div class="tm-product">
@@ -118,7 +150,7 @@
                   <p class="tm-product-description">Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species. When coffee berries turn from green to bright red in color – indicating ripeness – they are picked, processed, and dried. Dried coffee seeds are roasted to varying degrees, depending on the desired flavor.</p>
                 </div>
                 <div class="tm-product-price">
-                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency">$</span>25</a>
+                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency"></span>₹25</a>
                 </div>
               </div>
               <div class="tm-product">

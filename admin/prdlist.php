@@ -1,6 +1,22 @@
 <?php
   session_start();
   include('../conn.php');
+  $msg = "";
+  
+  if(isset($_REQUEST["fcod"]) && isset($_REQUEST["mod"])){
+    $fcod = $_REQUEST["fcod"];
+    if($_REQUEST["mod"] == 'D'){
+      $sql = "call delmenu($fcod)";
+      if ($conn->query($sql) === TRUE) {
+        $msg = "Record deleted successfully";
+
+      } else {
+        $msg = "Error deleting record: " . $conn->error;
+      }
+    }
+  }
+
+  if(!$msg == "") echo "<script> alert('$msg'); </script>";
 
 ?>
 
@@ -29,6 +45,9 @@
     }
     p.cat{
       text-align: center;
+    }
+    footer{
+      margin: 10vh 0 0;
     }
   </style>
   </head>
@@ -74,8 +93,9 @@
         $i = 0;
         if($result_disp->num_rows > 0){
           while ($row = $result_disp->fetch_assoc()){
-            echo "<p class='cat' ><span class='text'>".$row["foodname"]."</span> <span class='bttn'> 
-            <a href=prddetail.php?fcod=".$row["foodcod"]." >Details</a> </span> </p>";
+            echo "<p class='cat' ><span class='text'> 
+            <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+             </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D >Delete</a> </span> </p>";
             $i++;
             if($i == 3) break;
           }
@@ -102,8 +122,9 @@
         //$i = 0;
         if($result_disp->num_rows > 0){
           while ($row = $result_disp->fetch_assoc()){
-            echo "<p class='cat' ><span class='text'>".$row["foodname"]."</span> <span class='bttn'> 
-            <a href=prddetail.php?fcod=".$row["foodcod"]." >Details</a> </span> </p>";
+            echo "<p class='cat' ><span class='text'> 
+            <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+             </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D >Delete</a> </span> </p>";
           }
         } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
 

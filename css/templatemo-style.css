@@ -496,8 +496,8 @@ ol li:before {
 .tm-product-price-currency {
   font-size: 20px;
   position: absolute;
-  top: 24px;
-  left: 22px;
+  top: 25%;
+  left: 0%;
 }
 .form-control {
   border-color: #c79c60;
@@ -631,7 +631,6 @@ margin-left: 300px;
 footer{
   background-color: #131212;
   color: #c79c60;
-  margin-top: 70px;
 }
 
 @media screen and (max-width: 550px) {

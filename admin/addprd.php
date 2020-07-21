@@ -19,25 +19,23 @@
     elseif($itm_pic == "") $msg = "Please input Item picture";
     //elseif($itm_qty == "") $itm_qty = "null";
     else {
-      if(isset($_REQUEST['fcod'])){
-        if($_REQUEST["mod"] == 'E'){
-          $fcod = $_REQUEST['fcod'];
+      if(isset($_SESSION["check"])){
+          $fcod = $_SESSION['fcod'];
           $sql = "call updmenu($fcod, '$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, '$itm_avail', $itm_qty)";
-          echo $sql;
           if ($conn->query($sql) === TRUE) {
             $msg = "Record updated successfully";
           } else {
             $msg = "Error updating record: " . $conn->error;
           }
-        }
+          unset($_SESSION["check"]);
       }
-
-
-      $sql = "call insmenu('$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, '$itm_avail', $itm_qty)";
+      else{
+        $sql = "call insmenu('$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, '$itm_avail', $itm_qty)";
       if (mysqli_query($conn, $sql)) 
         $msg = "New record created successfully";
       else
         $msg = "Error: " . $sql . "<br>" . mysqli_error($conn);
+      }
     }
     if($itm_pic!="")
       move_uploaded_file ($_FILES["picture"]["tmp_name"],"../prdpics/".$_FILES["picture"]["name"]);
@@ -53,6 +51,7 @@ if(isset($_REQUEST['fcod'])){
   $itm_dsc = $_SESSION["fdsc"];
   $itm_avail = $_SESSION["favl"];
   $itm_qty = $_SESSION["fqty"];
+  $_SESSION["check"] = 1;
 }
 ?>
 
@@ -247,7 +246,7 @@ input[type=submit]:hover {
           </select>
       </div>
     </div>
-    
+
      <div class="row">
       <div class="col-25">
         <label for="item_available">Item Available</label>
@@ -256,15 +255,23 @@ input[type=submit]:hover {
          <select id="Available" name="available">
             <?php
               if(isset($_REQUEST["fcod"])){
-                if($itm_avail == "True")
+                if($itm_avail == "True"){
                   echo '<option name="Avail" value="True" selected>Available</option>';
-                else
                   echo '<option name="not-avail" value="False">Not Available</option>';
+                }
+                else{
+                  echo '<option name="Avail" value="True">Available</option>';
+                  echo '<option name="not-avail" value="False" selected >Not Available</option>';
+                }
+              }
+              else{
+                echo '<option name="Avail" value="True">Available</option>';
+                echo '<option name="not-avail" value="False">Not Available</option>';
               }
 
             ?>
-            	<option name="Avail" value="True">Available</option>
-            	<option name="not-avail" value="False">Not Available</option>
+            	
+            	
             </select>
       </div>
     </div>

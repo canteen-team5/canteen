@@ -48,10 +48,11 @@
             </div>
             <nav class="tm-nav">
               <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="menu.php">Menu</a></li>
+                <li><a href="#" class="active">Contact</a></li>
+                <li><a href="cart.php">Cart</a></li>
               </ul>
             </nav>   
           </div>           
