@@ -1,60 +1,58 @@
 <?php
-    session_start();
-    include('../conn.php');
+session_start();
+include('../conn.php');
     //error_reporting(0);
 
-    $catnam = $cnam = $msg = $result_disp ="";
+$catnam = $cnam = $msg = $result_disp = "";
 
-    if(isset($_POST["catsubmit"])){
-        $catnam = $_POST["cat_name"];
-        if($catnam == "") $msg = "Please input name";
-        
-        elseif(isset($_SESSION["ccod"])){
-          $ccod = $_SESSION["ccod"];
-          unset($_SESSION['ccod']);
-          $sql = "call updcat($ccod,'$catnam')";
-          if (mysqli_query($conn, $sql)) 
-            $msg = "Record updated successfully";
-          else 
-            $msg = "Error updating record: " . mysqli_error($conn);
-        }
+if (isset($_POST["catsubmit"])) {
+  $catnam = $_POST["cat_name"];
+  if ($catnam == "") $msg = "Please input name";
 
-        else{
-            $sql = "call inscat('$catnam')";
-            if($conn->query($sql) === TRUE) {
-              $msg = "New record created successfully";
-            } else {
-              $msg = "Error: " . $sql . "<br>" . $conn->error;
-            }
-        }
-      if(!$msg == "") echo "<script> alert('$msg'); </script>";
+  elseif (isset($_SESSION["ccod"])) {
+    $ccod = $_SESSION["ccod"];
+    unset($_SESSION['ccod']);
+    $sql = "call updcat($ccod,'$catnam')";
+    if (mysqli_query($conn, $sql))
+      $msg = "Record updated successfully";
+    else
+      $msg = "Error updating record: " . mysqli_error($conn);
+  } else {
+    $sql = "call inscat('$catnam')";
+    if ($conn->query($sql) === true) {
+      $msg = "New record created successfully";
+    } else {
+      $msg = "Error: " . $sql . "<br>" . $conn->error;
     }
+  }
+  if (!$msg == "") echo "<script> alert('$msg'); </script>";
+}
 
-    if(isset($_REQUEST["ccod"])){
+if (isset($_REQUEST["ccod"])) {
 
-      if($_REQUEST["mod"] == 'D'){
-        $catcod = $_REQUEST["ccod"];
-        $sql = "call delcat($catcod)";
-        if($conn->query($sql) === TRUE) $msg = "Record deleted successfully";
-        else $msg = "Error deleting record: " . $conn->error;
-      }
+  if ($_REQUEST["mod"] == 'D') {
+    $catcod = $_REQUEST["ccod"];
+    $sql = "call delcat($catcod)";
+    if ($conn->query($sql) === true) $msg = "Record deleted successfully";
+    else $msg = "Error deleting record: " . $conn->error;
+  }
 
-      if($_REQUEST["mod"] == 'E'){
-        $_SESSION["ccod"]=$_REQUEST["ccod"];
-        $catcod = $_REQUEST["ccod"];
-        $sql = "call fndcat($catcod)";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-          $row = $result->fetch_assoc(); 
-          $cnam = $row["catname"];
-        } 
-        $conn->close();
+  if ($_REQUEST["mod"] == 'E') {
+    $_SESSION["ccod"] = $_REQUEST["ccod"];
+    $catcod = $_REQUEST["ccod"];
+    $sql = "call fndcat($catcod)";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      $cnam = $row["catname"];
+    }
+    $conn->close();
         /*$sql_disp = "call dspcat";
         $result_disp = $conn->query($sql_disp); 
-        print_r($result_disp); */    
-      }
-      if(!$msg == "") echo "<script> alert('$msg'); </script>";
-    }
+        print_r($result_disp); */
+  }
+  if (!$msg == "") echo "<script> alert('$msg'); </script>";
+}
 
 ?>
 
@@ -93,33 +91,36 @@ body{
   background-color: #e4e4e4;
 
 }
-input[type=text], select, textarea {
-  width: 50%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-  margin-left:200px;
-  margin-top: 60px;
+input[type=text] {
+  width: 90%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    margin: 20px auto;
+    text-align: center;
+
 }
 
 label {
-  padding: 12px 12px 12px 30px;
-  display: inline-block;
-  margin-left: 300px;
-  margin-top:60px;
-  width: max-content;
-  font-size: 20px;
+  padding: 12px 62px 12px 30px;
+    display: block;
+    margin-top: 20px;
+    width: 45%;
+    font-size: 20px;
+    text-align: right;
+    float: left;
 }
 
 input[type=submit] {
   background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left:40%;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    width: 90%;
 }
 
 input[type=submit]:hover {
@@ -138,6 +139,16 @@ input[type=submit]:hover {
   margin-top: 6px;
 }
 
+.row{
+  padding: 4% 0 0;
+}
+.catsubrght{
+  width: 50%;
+    float: left;
+}
+span.text{
+  width: auto;
+}
 /* Clear floats after the columns */
 .row:after {
   content: "";
@@ -145,14 +156,6 @@ input[type=submit]:hover {
   clear: both;
 }
 
-
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
-    width: 100%;
-    margin-top: 0;
-  }
-}
 
   </style>
   </head>
@@ -183,20 +186,18 @@ input[type=submit]:hover {
     </div>
     <h1>CATEGORY</h1>
     <form method="post"  action="category.php" name="frmcat" style="padding-bottom: 5em;" >
-       <div class="row">
-      <div class="col-25">
-        <label for="cat_name">Categories Name:</label>
-      </div>
-      <div class="col-75">
-        <input type="text" name="cat_name" placeholder="Your category name.." value="<?php echo $cnam; ?>" >
+    <div class="row" >
+      <label for="cat_name">Categories Name:</label>
+      <div class="catsubrght">
+        <input type="text" name="cat_name" placeholder="Your category name.." value="">   
+      <?php
+      if (isset($_REQUEST["ccod"]) && $_REQUEST["mod"] == "E")
+        echo '<input type="submit" value="Update" name="catsubmit" >';
+      else
+        echo '<input type="submit" value="Add Category" name="catsubmit" >';
+      ?>
       </div>
     </div>
-      <?php
-        if(isset($_REQUEST["ccod"]) && $_REQUEST["mod"] == "E")
-          echo '<input type="submit" value="Update" name="catsubmit" >';
-        else
-          echo '<input type="submit" value="Submit" name="catsubmit" >';
-      ?>
       <div class="category_name">
         <div class="col-lg-12 tm-section-header-container">
           <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Category List</h2>
@@ -204,15 +205,15 @@ input[type=submit]:hover {
         </div>
       </div>
       <?php
-        include('../conn.php');
-        $sql_disp = "call dspcat";
-        $result_disp = $conn->query($sql_disp); 
-        if($result_disp->num_rows > 0){
-          while ($row = $result_disp->fetch_assoc()){
-            echo "<p class='cat' ><span class='text'>".$row["catname"]."</span> <span class='bttn'> <a href=category.php?ccod=".$row["catcod"]."&mod=E >Edit</a>
-            <a href=category.php?ccod=".$row["catcod"]."&mod=D >Delete</a> </span> </p>";
-          }
-        } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
+      include('../conn.php');
+      $sql_disp = "call dspcat";
+      $result_disp = $conn->query($sql_disp);
+      if ($result_disp->num_rows > 0) {
+        while ($row = $result_disp->fetch_assoc()) {
+          echo "<p class='cat' ><span class='text'>" . $row["catname"] . "</span> <span class='bttn'> <a href=category.php?ccod=" . $row["catcod"] . "&mod=E >Edit</a>
+            <a href=category.php?ccod=" . $row["catcod"] . "&mod=D >Delete</a> </span> </p>";
+        }
+      } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
 
       ?>
       </form>

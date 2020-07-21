@@ -18,6 +18,21 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/templatemo-style.css" rel="stylesheet">
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+
+
+  <style>
+    span.bttn{
+      width: 100%;
+    margin: 10px 5px 0;
+    }
+    .tm-product img{
+      width: 150px;
+    height: 150px;
+    }
+    .bttn a{
+      width: 100%;
+    }
+    </style>
   </head>
   <body>
     <div class="tm-top-header">
@@ -73,11 +88,15 @@
                 <nav class="tm-side-menu">
                   <ul>
                     <?php
+                      $i = 0;
                       $sql = "call dspmenu";
                       $result = $conn->query($sql);
                       if($result->num_rows > 0){
                         while($row = $result->fetch_assoc()){
-                          echo '<li><a href="#">'.$row["foodname"].'</a></li>';
+                          if($row["foodisavl"] == "True"){
+                            $i++;
+                            echo '<li><a href="#itm'.$i.'">'.$row["foodname"].'</a></li>';
+                          }
                         }
                       }
                       $conn->close();
@@ -91,77 +110,32 @@
             </div>            
             <div class="tm-menu-product-content col-lg-9 col-md-9"> <!-- menu content -->
 
-            <?php
+            <?php 
+              $j = 0;
               include('conn.php');
               $sql = "call dspmenu";
-                      $result = $conn->query($sql);
-                      if($result->num_rows > 0){
-                        while($row = $result->fetch_assoc()){
-                          echo '<div class="tm-product">
-              <img src="prdpics/'.$row["foodpic"].' " alt="Product" width="150px" height="150px">
-              <div class="tm-product-text">
-                <h3 class="tm-product-title">'.$row["foodname"].'</h3>
-                <p class="tm-product-description">'.$row["fooddsc"].'</p>
-              </div>
-              <div class="tm-product-price">
-                <a href="cart.php?fcod='.$row["foodcod"].'" class="tm-product-price-link tm-handwriting-font">
-                <span class="tm-product-price-currency"></span>₹'.$row["foodprc"].'</a>
-              </div>
-            </div>';
-                        }
-                      }
+              $result = $conn->query($sql);
+              if($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                  if($row["foodisavl"] == "True"){
+                    $j++;
+                    echo '<div class="tm-product" id="itm'.$j.'">
+                    <img src="prdpics/'.$row["foodpic"].' " alt="Product" >
+                    <div class="tm-product-text">
+                    <h3 class="tm-product-title">'.$row["foodname"].'</h3>
+                    <p class="tm-product-description">'.$row["fooddsc"].'</p>
+                    <span class="bttn"> <a href="cart.php?fcod='.$row["foodcod"].'mod=E ">Add to Cart</a></span></div>
+                    <div class="tm-product-price">
+                    <span class="tm-product-price-link tm-handwriting-font">₹'.$row["foodprc"].'</span>
+                    </div>
+                    </div>';
+                  }
+                }
+              }
 
               
             ?>
-              <div class="tm-product">
-                <img src="img/popular-1.jpg" alt="Product" width="150px" height="150px">
-                <div class="tm-product-text">
-                  <h3 class="tm-product-title">Maggie</h3>
-                  <p class="tm-product-description">Maggie is an international brand of seasonings, instant soups, and noodles that originated in Switzerland in late 19th century.Maggie is a 2015 American post-apocalyptic horror drama film directed by Henry Hobson.</p>
-                </div>
-                <div class="tm-product-price">
-                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency">$</span>30</a>
-                </div>
-              </div>
-              <div class="tm-product">
-                <img src="img/popular-2.jfif" alt="Product" width="150px" height="150px">
-                <div class="tm-product-text">
-                  <h3 class="tm-product-title">Pasta</h3>
-                  <p class="tm-product-description">Pasta is the Italian designation or name given to a type of starchy noodle or dish typically made from grain flour, commonly wheat, mixed into a paste or dough, usually with water or eggs, and formed or cut into sheets or other shapes.</p>
-                </div>
-                <div class="tm-product-price">
-                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency">Order Now</span></a>
-                </div>
-              </div>
-              <div class="tm-product">
-                <img src="img/popular-3.webp" alt="Product" width="150px" height="150px">
-                <div class="tm-product-text">
-                  <h3 class="tm-product-title">Samosa</h3>
-                  <p class="tm-product-description">A samosa is a fried or baked pastry with a savoury filling, such as spiced potatoes, onions, peas, cheese, beef and other meats, or lentils. It may take different forms, including triangular, cone, or half-moon shapes, depending on the region. </p>
-                </div>
-                <div class="tm-product-price">
-                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency">$</span>15</a>
-                </div>
-              </div>
-              <div class="tm-product">
-                <img src="img/special-1.jpg" alt="Product" width="150px"  height="150px">
-                <div class="tm-product-text">
-                  <h3 class="tm-product-title">Coffee</h3>
-                  <p class="tm-product-description">Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species. When coffee berries turn from green to bright red in color – indicating ripeness – they are picked, processed, and dried. Dried coffee seeds are roasted to varying degrees, depending on the desired flavor.</p>
-                </div>
-                <div class="tm-product-price">
-                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency"></span>₹25</a>
-                </div>
-              </div>
-              <div class="tm-product">
-                <img src="img/special-3.jfif" alt="Product">
-                <div class="tm-product-text">
-                  <h3 class="tm-product-title">Cold Drink</h3>
-                  <p class="tm-product-description">A soft drink is a drink that usually contains carbonated water, a sweetener, and a natural or artificial flavoring. The sweetener may be a sugar, high-fructose corn syrup, fruit juice, a sugar substitute, or some combination of these.</p>
-                </div>
-                <div class="tm-product-price">
-                  <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency">$</span>15</a>
-                </div>
+              
               </div>
             </div>
           </div>          

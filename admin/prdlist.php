@@ -127,11 +127,38 @@
              </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D >Delete</a> </span> </p>";
           }
         } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
-
+        $conn->close();
       ?>  
                   
         </section>
     </div>
+
+    <div class="tm-main-section light-gray-bg">
+        <section class="tm-section tm-section-margin-bottom-0 row">
+          <div class="category_name">
+            <div class="col-lg-12 tm-section-header-container">
+              <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Not Avilable</h2>
+              <div class="tm-hr-container"><hr class="tm-hr"></div>
+            </div>
+          </div>
+      <?php
+        include('../conn.php');
+        $sql_disp = "call dspmenu";
+        $result_disp = $conn->query($sql_disp); 
+        if($result_disp->num_rows > 0){
+          while ($row = $result_disp->fetch_assoc()){
+            if($row["foodisavl"] == "False"){
+              echo "<p class='cat' ><span class='text'> 
+              <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+              </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D >Delete</a> </span> </p>";
+            }
+          }
+        } else echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";
+        $conn->close();
+      ?>            
+        </section>
+    </div> 
+
 
     <footer>
         <div class="container">

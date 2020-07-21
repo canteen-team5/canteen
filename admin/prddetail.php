@@ -33,7 +33,7 @@
       if ($conn->query($sql) === TRUE) {
         $msg = "Record deleted successfully";
         if(!$msg == "") echo "<script> alert('$msg'); </script>";
-        header('location:prdlist.php');
+        header('refresh:5;url=location:prdlist.php');
 
       } else {
         $msg = "Error deleting record: " . $conn->error;
