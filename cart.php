@@ -6,6 +6,7 @@
   if(isset($_POST["btnsubmit"])){
     if(!isset($_SESSION["ucod"]))
       header('location:login.php');
+    date_default_timezone_set("Asia/Kolkata");
     $date = date("Y-m-d");
     $usrcod = $_SESSION["ucod"];
     $fcod = $_SESSION["cart"];
@@ -14,8 +15,8 @@
     $time =  date("H:i", strtotime($temp_time));
     $status = "Placed";
     $sql = "call insord('$date', $usrcod, '$fcod', '$fqty', '$time', '$status')";
-    echo $sql.$fcod;;
     if(mysqli_query($conn, $sql)){
+      $_SESSION["time"] = $time;
       $msg = "Order Placed successfully";
       header('location:orddet.php');
     } else {
@@ -161,7 +162,6 @@
     <h1>SHOPPING CART</h1>
 
         <?php
-        echo $_SESSION["cart"];
           if(isset($_SESSION["cart"])){
             $str = $_SESSION["cart"];
             $arr = explode("," , $str);

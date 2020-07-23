@@ -1,3 +1,11 @@
+<?php
+
+  session_start();
+  include('conn.php');
+  $ordstatus = $date = $time = "";
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +20,9 @@
   <link href="css/templatemo-style.css" rel="stylesheet">
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
   <style>
+  body{
+    background: #e4e4e4;
+  }
      h1{
             font-size: 50px;
         font-family: 'Damion', cursive;
@@ -22,6 +33,17 @@
         font-size: 40px;
         font-family: 'Damion', cursive;;
       }
+      .imgdsc{
+        display: flex;
+        padding: 10px;
+        margin: 10px 0;
+      }
+      .det{
+        font-size: 20px;
+        width: 60%;
+        padding: 1em;
+        float: left;
+      }
       .tm-main-section{
         padding-top: 0;
       }
@@ -31,10 +53,17 @@
           padding: 20px;
       }
       .tm-popular-item-img{
-          height:80%;
+        width: 200px;
+        height: 200px;
+      }
+      th{
+        text-align: center;
+      }
+      .bttn{
+        display: contents;
       }
       .bttn a{
-        margin: 0 15%;
+        margin: 10px;
       }
       footer{
         margin: 0;
@@ -55,72 +84,116 @@
             </div>
             <nav class="tm-nav">
               <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                 <li><a href="orders.html" class="active">Orders</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="menu.php">Menu</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <li><a href="cart.php" >Cart</a></li>
               </ul>
             </nav>   
           </div>           
         </div>    
       </div>
     </div>
-     <h1>Orders Placed Successfully</h1>
+     <h1>Description of Order</h1>
      <div class="tm-main-section light-gray-bg">
          <div class="container" id="main">
           <section class="tm-section tm-section-margin-bottom-0 row">
             <div class="tm-popular-item">
               
                 <div class="tm-popular-item-description">
-                  <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">Description of Orders</span></h3><hr class="tm-popular-item-hr">
-                    <div class="imgdsc" style="display: flex;padding: 10px;margin: 10px 0;">
-  <img src="img/dummy.png" alt="Popular" class="tm-popular-item-img" width="200px" height="200px">
-                  <p style="font-size: 20px;width: 60%;/* margin-left: 40%; */padding: 1em;float: left;"><i><b>Name:</b></i> Rahul<br><i><b>Contact No.:</b></i> 1234567896<br><i><b>Email:</b></i> abc@gmail.com</br><i><b>Address:</b></i> #678,yamunanagar</p></div>
+                  <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">
+                  <?php
+                    include('conn.php');
+                    $ucod = $_SESSION["ucod"];
+                    $time = $_SESSION["time"];
+                    $sql = "select * from tbord where ordusrcod = $ucod and ordtime = '$time'";
+                    $result = $conn->query($sql);
+                    if($result->num_rows > 0){
+                      $row = $result->fetch_assoc();
+                      $ordcod = $row["ordcod"];
+                      $ordstatus = $row["ordstatus"];
+                      $date = $row["orddate"];
+                      $time = $row["ordtime"];
+
+                      echo 'Order No. '.$ordcod;
+                    }
+                    else echo 'Order No. #';
+                  ?>
+                    </span></h3><hr class="tm-popular-item-hr">
+                    <div class="imgdsc">
+                      <img src="img/dummy.png" alt="Popular" class="tm-popular-item-img" >
+                  <p class="det" >
+                  <?php
+                    include('conn.php');
+                    $ucod = $_SESSION["ucod"];
+                    $sql = "call fndusr($ucod)";
+                    $result = $conn->query($sql);
+                    if($result->num_rows > 0){
+                      $row = $result->fetch_assoc();
+                      echo '<i><b>Date: </b></i>'.$date.' '.$time.'</br> <i><b>Roll No: </b></i>'.$row["rollno"].'</br> <i><b>Name: </b></i>'.$row["fname"].' '.$row["lname"].'  <br>
+                      <i><b>Contact No.: </b></i> '.$row["mobile"].'<br><i><b>Email: </b></i> '.$row["email"].'<br>
+                      <span class="bttn"><a><i><b>Order Status: </b></i>'. $ordstatus.' </a></span>';
+                    }
+                    $conn->close();
+                  ?>
+                  </p></div>
                  <hr class="tm-popular-item-hr">
-  <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Samosa</td>
-          <td>20</td>
-          <td>6</td>
-          <td>400</td>
-          
-        </tr>
-        <tr>
-          <td>Maggie</td>
-          <td>20</td>
-          <td>8</td>
-          <td>500</td>
-          
-        </tr>
-        <tr>
-          <td>Pasta</td>
-          <td>40</td>
-          <td>10</td>
-          <td>400</td>
-        
-        </tr>
-        <tr>
-          <td>Tea</td>
-          <td>15</td>
-          <td>5</td>
-          <td>500</td>
-          
-        </tr>
-        <tr>
-          <td>Total Amount:</td>
-        </tr>
-      </tbody>
-    </table>
+                 <?php
+          if(isset($_SESSION["cart"])){
+            $str = $_SESSION["cart"];
+            $arr = explode("," , $str);
+            foreach($arr as $item){
+              $contents[$item] = isset($contents[$item])?$contents[$item]+1:1;
+            }
+            if(count($contents) != 0){
+              $tot_all = 0;
+              echo '
+              <div class = "cart">
+              <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>';
+              foreach($contents as $key => $value){
+                include('conn.php');
+                $tot = 0;
+                $sql = "call fndmenu($key)";
+                $result = $conn->query($sql);
+                if($result->num_rows > 0){
+                  while($row = $result->fetch_assoc()){
+                    echo '<tr>
+                    <td>'.$row["foodname"].'</td>
+                    <td>'.$row["foodprc"].'</td>
+                    <td>'.$value.'</td>';
+                    $tot += $row["foodprc"] * $value;
+                    $tot_all += $tot;
+                    echo '<td>'.$tot.'</td> </tr>';
+                  }
+                }
+                $conn->close();
+              }
+              echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td><td></td></tr>
+                    
+                  </tbody>
+                </table>
+                
+              </div>
+                
+              ';
+            } 
+          } else{
+            echo "<div class='empty-cart'><p class='cat' ><span class='text'> Your cart is Empty </span> </p>
+            <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
+          }
+
+        ?>
+  
                  <hr class="tm-popular-item-hr">
                 </h3></div>
                 
