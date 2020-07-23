@@ -25,7 +25,8 @@
             $newcart = $fcod;
         }
       }
-      $_SESSION["cart"] = $newcart;
+      if(isset($newcart))
+        $_SESSION["cart"] = $newcart;
     }
   }
 
@@ -75,9 +76,11 @@
     }
    .table{
     width: 60%;
-    margin-left: 20%;
-    margin-right:20%;
-    margin-top: 3%;
+    margin: 3% auto 0;
+    text-align: center;
+   }
+   .table th, input{
+    text-align: center;
    }
    .cat{
      text-align: center;
@@ -86,7 +89,26 @@
    .empty-cart{
      padding: 50px;
    }
-  
+   .cart{
+     min-height: 50vh;
+   }
+   .btnsubmit{
+    padding: 2em;
+    width: 100%;
+    text-align: center;
+   }
+   #suborder{
+    font-size: 25px;
+    border: 0;
+    background: #339033;
+    border-radius: 4px;
+    box-shadow: 4px 5px 8px grey;
+    padding: 0.5em 3em;
+   }
+  #suborder:hover{
+    background: #57b557;
+  }
+
   </style>
   </head>
   <body>
@@ -126,6 +148,7 @@
             if(count($contents) != 0){
               $tot_all = 0;
               echo '
+              <div class = "cart">
               <table class="table table-striped">
               <thead>
                 <tr>
@@ -158,11 +181,14 @@
                 }
                 $conn->close();
               }
-              echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td></tr>
+              echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td><td></td></tr>
                     <form>
                   </tbody>
                 </table>
-                <div class="btn"><button type="submit" name="btnsubmit">Submit Order</button></div>
+                <div class="btnsubmit">
+                <div class="btn"><button type="submit" name="btnsubmit" id="suborder">Submit Order</button></div> </div>
+              </div>
+                
               ';
             } 
           } else{
