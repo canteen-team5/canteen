@@ -1,3 +1,58 @@
+<?php
+  session_start();
+  include('conn.php');
+
+
+
+  //for adding the product into cart
+  if(isset($_REQUEST["fcod"]) && $_REQUEST["action"] == "add"){
+    if(isset($_SESSION["cart"])){
+      $_SESSION["cart"] = $_SESSION["cart"].",".$_REQUEST["fcod"];
+    }
+    else
+      $_SESSION["cart"] = $_REQUEST["fcod"];
+  }
+
+  //for updating the quantity
+  if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "update"){
+    foreach($_POST as $key=>$value){
+      if(strstr($key,'qty')){
+        $fcod = str_replace('qty', '', $key);
+        for($i = 0; $i < $value; $i++){
+          if(isset($newcart))
+            $newcart .= ','.$fcod;
+          else
+            $newcart = $fcod;
+        }
+      }
+      $_SESSION["cart"] = $newcart;
+    }
+  }
+
+  //for deleting any item
+  if(isset($_REQUEST["fcod"]) &&  $_REQUEST["action"] == "delete"){
+    if(isset($_SESSION["cart"])){
+      $str = $_SESSION["cart"];
+      $arr = explode(',', $str);
+      $str1 = "";
+      for($i = 0; $i < count($arr); $i++){
+        if($arr[$i] != $_REQUEST["fcod"]){
+          if($str1 == "")
+            $str1 = $arr[$i];
+          else
+            $str1 .= ",".$arr[$i];
+        }
+      }
+      $_SESSION["cart"] = $str1;
+      if($_SESSION["cart"] == ""){
+        unset($_SESSION["cart"]);
+      }
+    }
+  }
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +78,13 @@
     margin-left: 20%;
     margin-right:20%;
     margin-top: 3%;
+   }
+   .cat{
+     text-align: center;
+     padding: 50px;
+   }
+   .empty-cart{
+     padding: 50px;
    }
   
   </style>
@@ -53,48 +115,64 @@
       </div>
     </div>
     <h1>SHOPPING CART</h1>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Samosa</td>
-          <td>15</td>
-          <td><input type="number" name="qty" value=""></td>
-          <td>400</td>
-          <td><button><a href="#">Update</a></button>&nbsp;<button><a href="#">Delete</a></button></td>
-        </tr>
-        <tr>
-          <td>Maggie</td>
-          <td>20</td>
-          <td>8</td>
-          <td>500</td>
-          <td><button><a href="#">Update</a></button>&nbsp;<button><a href="#">Delete</a></button></td>
-        </tr>
-        <tr>
-          <td>Pasta</td>
-          <td>40</td>
-          <td>10</td>
-          <td>400</td>
-          <td><button><a href="#">Update</a></button>&nbsp;<button><a href="#">Delete</a></button></td>
-        </tr>
-        <tr>
-          <td>Tea</td>
-          <td>15</td>
-          <td>5</td>
-          <td>500</td>
-          <td><button><a href="#">Update</a></button>&nbsp;<button><a href="#">Delete</a></button></td>
-        </tr>
-        <tr>
-          <td>Total Amount:</td>
-      </tbody>
-    </table>
+
+        <?php
+          if(isset($_SESSION["cart"])){
+            $str = $_SESSION["cart"];
+            $arr = explode("," , $str);
+            foreach($arr as $item){
+              $contents[$item] = isset($contents[$item])?$contents[$item]+1:1;
+            }
+            if(count($contents) != 0){
+              $tot_all = 0;
+              echo '
+              <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+              <form action="cart.php?action=update" method="post">';
+              foreach($contents as $key => $value){
+                include('conn.php');
+                $tot = 0;
+                $sql = "call fndmenu($key)";
+                $result = $conn->query($sql);
+                if($result->num_rows > 0){
+                  while($row = $result->fetch_assoc()){
+                    echo '<tr>
+                    <td>'.$row["foodname"].'</td>
+                    <td>'.$row["foodprc"].'</td>
+                    <td><input type="number" name="qty'.$key.'" value="'.$value.'"></td>';
+                    $tot += $row["foodprc"] * $value;
+                    $tot_all += $tot;
+                    echo '<td>'.$tot.'</td>
+                    <td><button type="submit" name="update"> <a> Update </a> </button>&nbsp;
+                    <button><a href="cart.php?fcod='.$row["foodcod"].'&action=delete ">Delete</a></button></td>
+                    </tr>';
+                  }
+                }
+                $conn->close();
+              }
+              echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td></tr>
+                    <form>
+                  </tbody>
+                </table>
+                <div class="btn"><button type="submit" name="btnsubmit">Submit Order</button></div>
+              ';
+            } 
+          } else{
+            echo "<div class='empty-cart'><p class='cat' ><span class='text'> Your cart is Empty </span> </p>
+            <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
+          }
+
+        ?>
+
+      
     <footer>
       <div class="container">
           <div class="row tm-copyright">

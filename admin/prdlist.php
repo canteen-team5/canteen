@@ -6,10 +6,12 @@
   if(isset($_REQUEST["fcod"]) && isset($_REQUEST["mod"])){
     $fcod = $_REQUEST["fcod"];
     if($_REQUEST["mod"] == 'D'){
+      $pic = $_REQUEST["pic"];
+      $file = "../prdpics/$pic";
       $sql = "call delmenu($fcod)";
       if ($conn->query($sql) === TRUE) {
         $msg = "Record deleted successfully";
-
+        unlink($file);
       } else {
         $msg = "Error deleting record: " . $conn->error;
       }
@@ -95,7 +97,7 @@
           while ($row = $result_disp->fetch_assoc()){
             echo "<p class='cat' ><span class='text'> 
             <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-             </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D >Delete</a> </span> </p>";
+             </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
             $i++;
             if($i == 3) break;
           }
@@ -124,7 +126,7 @@
           while ($row = $result_disp->fetch_assoc()){
             echo "<p class='cat' ><span class='text'> 
             <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-             </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D >Delete</a> </span> </p>";
+             </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
           }
         } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
         $conn->close();
@@ -150,7 +152,7 @@
             if($row["foodisavl"] == "False"){
               echo "<p class='cat' ><span class='text'> 
               <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-              </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D >Delete</a> </span> </p>";
+              </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
             }
           }
         } else echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";

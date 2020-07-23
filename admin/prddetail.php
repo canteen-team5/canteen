@@ -22,6 +22,7 @@
     $_SESSION["favl"] = $favl;
     $_SESSION["fprc"] = $fprc;
     $_SESSION["fqty"] = $fqty;
+    $_SESSION["fpic"] = $fpic;
     $_SESSION["fcatcod"] = $row["foodcatcod"];
   } else echo "No results";
   $conn->close();
@@ -29,11 +30,14 @@
   include('../conn.php');
   if(isset($_REQUEST["fcod"]) && isset($_REQUEST["mod"])){
     if($_REQUEST["mod"] == 'D'){
+      $pic = $_REQUEST["pic"];
+      $file = "../prdpics/$pic";
       $sql = "call delmenu($fcod)";
       if ($conn->query($sql) === TRUE) {
         $msg = "Record deleted successfully";
         if(!$msg == "") echo "<script> alert('$msg'); </script>";
-        header('refresh:5;url=location:prdlist.php');
+        unlink($file);
+        header('refresh:0;url=location:prdlist.php');
 
       } else {
         $msg = "Error deleting record: " . $conn->error;
@@ -155,7 +159,7 @@
                   <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">P</span>rice: ₹<?php echo $fprc; ?></h3><hr class="tm-popular-item-hr">
                    
                   <?php echo '<h3 <span class="bttn"> <a href="addprd.php?fcod='.$_SESSION["fcod"].'&mod=E ">Edit</a>
-                    <a href="prddetail.php?fcod='.$_SESSION["fcod"].'&mod=D ">Delete</a> </span></h3>'; ?>
+                    <a href="prddetail.php?fcod='.$_SESSION["fcod"].'&mod=D&pic="'.$_SESSION["fpic"].'" ">Delete</a> </span></h3>'; ?>
                 </div>
             </div>
           </section>

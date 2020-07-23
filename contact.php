@@ -68,9 +68,7 @@
         </div>        
         <div class="row tm-welcome-content">
           <h2 class="white-text tm-handwriting-font tm-welcome-header"><img src="img/header-line.png" alt="Line" class="tm-header-line">&nbsp;Contact Us&nbsp;&nbsp;<img src="img/header-line.png" alt="Line" class="tm-header-line"></h2>
-          <h2 class="gold-text tm-welcome-header-2">Canteen</h2>
-          <p class="gray-text tm-welcome-description">The <span class="gold-text">canteen</span> is very big and could accommodate many student at a time. Our<span class="gold-text"> canteen</span> provide many kinds of food .Many student came here to have the food. The cook of our canteen are very nice and they make sure that we student get the best food. </p>
-     
+          
         </div>
         <img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive">            
       </div>      

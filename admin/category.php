@@ -106,7 +106,7 @@ label {
   padding: 12px 62px 12px 30px;
     display: block;
     margin-top: 20px;
-    width: 45%;
+    width: 35%;
     font-size: 20px;
     text-align: right;
     float: left;
@@ -139,9 +139,6 @@ input[type=submit]:hover {
   margin-top: 6px;
 }
 
-.row{
-  padding: 4% 0 0;
-}
 .catsubrght{
   width: 50%;
     float: left;
@@ -184,9 +181,9 @@ span.text{
         </div>    
       </div>
     </div>
-    <h1>CATEGORY</h1>
+    <h1 style="width:85%;">CATEGORY</h1>
     <form method="post"  action="category.php" name="frmcat" style="padding-bottom: 5em;" >
-    <div class="row" >
+    <div class="row" style="padding:4% 0 0;" >
       <label for="cat_name">Categories Name:</label>
       <div class="catsubrght">
         <input type="text" name="cat_name" placeholder="Your category name.." value="">   
