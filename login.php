@@ -1,8 +1,9 @@
 <?php
+    session_start();
     include('conn.php');
 
     error_reporting(0);
-    $usr = $pwd = $msg = "";
+    $usr = $pwd = $msg = $ucod = "";
     
     if(isset($_POST["btnlogin"])){
         $usr = $_POST["username"];
@@ -15,11 +16,13 @@
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()) {
                     $rol = $row["usrrol"];
+                    $ucod = $row["usrcod"];
                 }
+                $_SESSION["ucod"] = $ucod;
                 if ($rol == "A") header ("location:admin/product.php");
                 else {
                     if(isset($_SESSION["cart"]))
-                        header("location:frmorddet.php");
+                        header("location:cart.php");
                     else
                         header("location:index.php");
                 }

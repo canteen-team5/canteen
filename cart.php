@@ -2,6 +2,28 @@
   session_start();
   include('conn.php');
 
+  //for submitting order
+  if(isset($_POST["btnsubmit"])){
+    if(!isset($_SESSION["ucod"]))
+      header('location:login.php');
+    $date = date("Y-m-d");
+    $usrcod = $_SESSION["ucod"];
+    $fcod = $_SESSION["cart"];
+    $fqty = "null";
+    $temp_time = date("h:i a"); 
+    $time =  date("H:i", strtotime($temp_time));
+    $status = "Placed";
+    $sql = "call insord('$date', $usrcod, '$fcod', '$fqty', '$time', '$status')";
+    echo $sql.$fcod;;
+    if(mysqli_query($conn, $sql)){
+      $msg = "Order Placed successfully";
+      header('location:orddet.php');
+    } else {
+      $msg = "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+  }
+
 
 
   //for adding the product into cart
@@ -139,6 +161,7 @@
     <h1>SHOPPING CART</h1>
 
         <?php
+        echo $_SESSION["cart"];
           if(isset($_SESSION["cart"])){
             $str = $_SESSION["cart"];
             $arr = explode("," , $str);
@@ -182,11 +205,12 @@
                 $conn->close();
               }
               echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td><td></td></tr>
-                    <form>
+                    
                   </tbody>
                 </table>
                 <div class="btnsubmit">
                 <div class="btn"><button type="submit" name="btnsubmit" id="suborder">Submit Order</button></div> </div>
+                </form>
               </div>
                 
               ';
