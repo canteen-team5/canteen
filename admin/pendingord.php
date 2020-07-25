@@ -65,6 +65,11 @@
   <link href="../css/font-awesome.min.css" rel="stylesheet">
   <link href="../css/templatemo-style.css" rel="stylesheet">
   <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
   <style>
   body{
     background: #e4e4e4;
@@ -147,7 +152,14 @@
                 <li><a href="category.php">Category</a></li>
                 <li><a href="addprd.php">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
-                <li><a href="#" class="active">Orders</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="allorder.php">All orders</a></li>
+                    <li><a href="pendingord.php">Pending orders</a></li>
+                    <li><a href="acceptedord.php">Accepted orders</a></li>
+                    <li><a href="cancelledord.php">Cancelled orders</a></li>
+                  </ul>
+                </li>
               </ul>
             </nav>   
           </div>           
