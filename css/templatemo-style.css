@@ -11,7 +11,10 @@ COLOR CODES
 */
 
 
-body { overflow-x: hidden; }
+body { 
+  overflow-x: hidden; 
+  background: #e4e4e4;
+}
 ul { 
   margin: 0; 
   padding: 0;
@@ -224,7 +227,6 @@ ul {
   margin-top: 30px;  
   margin-bottom: 80px;
 }
-.tm-popular-item-img { /*margin-left: 3px; */}
 .tm-popular-items-container {
   display: -webkit-box;
   display: -webkit-flex;

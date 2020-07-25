@@ -11,13 +11,51 @@
     $usrcod = $_SESSION["ucod"];
     $fcod = $_SESSION["cart"];
     $fqty = "null";
-    $temp_time = date("h:i a"); 
-    $time =  date("H:i", strtotime($temp_time));
-    $status = "Placed";
+    $temp_time = date("h:i:s a"); 
+    $time =  date("H:i:s", strtotime($temp_time));
+    $status = "Pending";
     $sql = "call insord('$date', $usrcod, '$fcod', '$fqty', '$time', '$status')";
     if(mysqli_query($conn, $sql)){
       $_SESSION["time"] = $time;
       $msg = "Order Placed successfully";
+
+      //fetching usr-email;
+      $result = $conn->query("call fndusr($usrcod)");
+      if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        $email = $row["email"];
+      }
+
+      // for sending mail
+      require("PHPMailer/src/PHPMailer.php");
+      require("PHPMailer/src/SMTP.php");
+
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
+        $mail->IsSMTP(); // enable SMTP
+
+        //$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+        $mail->SMTPAuth = true; // authentication enabled
+        $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 465; // or 587
+        $mail->IsHTML(true);
+        $mail->Username = "rajat18111999@gmail.com";
+        $mail->Password = "2552@rajat&";
+        $mail->SetFrom("rajat18111999@gmail.com", 'Canteen');
+        $mail->Subject = "Order Placed";
+        $mail->Body = "Thanks for ordering food";
+        $mail->AddAddress($email);
+        $mail->Send();
+        /*if(!$mail->Send()) {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        } else {
+            echo "Message has been sent";
+        }*/
+
+      unset($_SESSION["cart"]);
+
+      
+
       header('location:orddet.php');
     } else {
       $msg = "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -162,6 +200,7 @@
     <h1>SHOPPING CART</h1>
 
         <?php
+        include('conn.php');
           if(isset($_SESSION["cart"])){
             $str = $_SESSION["cart"];
             $arr = explode("," , $str);

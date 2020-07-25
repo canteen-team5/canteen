@@ -2,7 +2,7 @@
 
   session_start();
   include('conn.php');
-  $ordstatus = $date = $time = "";
+  $ordstatus = $date = $time = $fcod = "";
 ?>
 
 
@@ -115,10 +115,11 @@
                       $ordstatus = $row["ordstatus"];
                       $date = $row["orddate"];
                       $time = $row["ordtime"];
-
+                      $fcod = $row["ordfoodcod"];
                       echo 'Order No. '.$ordcod;
                     }
                     else echo 'Order No. #';
+                    //unset($_SESSION["time"]); 
                   ?>
                     </span></h3><hr class="tm-popular-item-hr">
                     <div class="imgdsc">
@@ -131,17 +132,22 @@
                     $result = $conn->query($sql);
                     if($result->num_rows > 0){
                       $row = $result->fetch_assoc();
-                      echo '<i><b>Date: </b></i>'.$date.' '.$time.'</br> <i><b>Roll No: </b></i>'.$row["rollno"].'</br> <i><b>Name: </b></i>'.$row["fname"].' '.$row["lname"].'  <br>
+                      $email = $row["email"];
+                      $mobile = $row["mobile"];
+                      echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row["rollno"].'</br>
+                       <i><b>Name: </b></i>'.$row["fname"].' '.$row["lname"].'  <br>
                       <i><b>Contact No.: </b></i> '.$row["mobile"].'<br><i><b>Email: </b></i> '.$row["email"].'<br>
                       <span class="bttn"><a><i><b>Order Status: </b></i>'. $ordstatus.' </a></span>';
+
+                     
                     }
                     $conn->close();
                   ?>
                   </p></div>
                  <hr class="tm-popular-item-hr">
                  <?php
-          if(isset($_SESSION["cart"])){
-            $str = $_SESSION["cart"];
+          if($fcod){
+            $str = $fcod;
             $arr = explode("," , $str);
             foreach($arr as $item){
               $contents[$item] = isset($contents[$item])?$contents[$item]+1:1;
@@ -187,8 +193,9 @@
                 
               ';
             } 
+            
           } else{
-            echo "<div class='empty-cart'><p class='cat' ><span class='text'> Your cart is Empty </span> </p>
+            echo "<div class='empty-cart'><p class='cat' ><span class='text'> Something went wrong! </span> </p>
             <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
           }
 
