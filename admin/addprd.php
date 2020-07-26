@@ -294,8 +294,7 @@ input[type=submit]:hover {
   </form>
 </div>
   <footer>
-      
-      <div class="container">
+     <div class="container">
         <div class="row tm-copyright">
          <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 MAIMT Canteen</p>
        </div>  
