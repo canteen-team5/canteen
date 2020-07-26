@@ -63,6 +63,8 @@
       .tm-popular-item-img{
         width: 200px;
         height: 200px;
+        border-radius: 10%;
+    margin: 1em;
       }
       th{
         text-align: center;
@@ -144,17 +146,20 @@
                           $date = $row["orddate"];
                           $ordstatus = $row["ordstatus"];
                           $fcod = $row["ordfoodcod"];
-                          echo 'Order No. '.$row["ordcod"].'
-                          </span></h3><hr class="tm-popular-item-hr">
-                          <div class="imgdsc">
-                            <img src="../img/dummy.png" alt="Popular" class="tm-popular-item-img" >
-                          <p class="det" >';
+                          echo 'Order No. '.$row["ordcod"];
                           //$conn->close();
                           include('../conn.php');
                           $sql_usr = "call fndusr($ucod)";
                           $result_usr = $conn->query($sql_usr);
                           if($result_usr->num_rows > 0){
                             $row_usr = $result_usr->fetch_assoc();
+                            $_SESSION["email"] = $row_usr["email"];
+                            $mobile = $row_usr["mobile"];
+                          echo '</span></h3><hr class="tm-popular-item-hr">
+                          <div class="imgdsc">
+                            <img src="../stupics/'.$row_usr["usrpic"].'" alt="User Picture" class="tm-popular-item-img" >
+                          <p class="det" >';
+
                             echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row_usr["rollno"].'</br>
                              <i><b>Name: </b></i>'.$row_usr["fname"].' '.$row_usr["lname"].'  <br>
                             <i><b>Contact No.: </b></i> '.$row_usr["mobile"].'<br><i><b>Email: </b></i> '.$row_usr["email"].'<br>
