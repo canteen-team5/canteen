@@ -26,9 +26,9 @@
           $mail->Host = "smtp.gmail.com";
           $mail->Port = 465; // or 587
           $mail->IsHTML(true);
-          $mail->Username = "rajat18111999@gmail.com";
-          $mail->Password = "2552@rajat&";
-          $mail->SetFrom("rajat18111999@gmail.com", 'Canteen');
+          $mail->Username = "team5canteen@gmail.com";
+          $mail->Password = "canteen@team5";
+          $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
           $mail->Subject = "Order Status Changed";
           if($chkord == "Accepted")
             $mail->Body = "Hurray! Your has been accepted.\n Thanks for ordering food";
@@ -253,7 +253,7 @@
                       </table>';
                       if($row["ordstatus"] == "Pending")
                         echo '<hr class="tm-popular-item-hr">
-                                <form action="order.php?ordcod='.$row["ordcod"].'" method="post">
+                                <form action="allorder.php?ordcod='.$row["ordcod"].'" method="post">
                                 <label for="order">Check Order:</label>
                                 <select id="selects" name="chkord">
                                     <option value="Accepted">Accept order</option>

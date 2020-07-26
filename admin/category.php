@@ -197,7 +197,7 @@ span.text{
     <div class="row" style="padding:4% 0 0;" >
       <label for="cat_name">Categories Name:</label>
       <div class="catsubrght">
-        <input type="text" name="cat_name" placeholder="Your category name.." value="">   
+        <input type="text" name="cat_name" placeholder="Your category name.." value="<?php echo$cnam;?>">   
       <?php
       if (isset($_REQUEST["ccod"]) && $_REQUEST["mod"] == "E")
         echo '<input type="submit" value="Update" name="catsubmit" >';
