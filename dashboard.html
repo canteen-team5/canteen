@@ -14,22 +14,45 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <style>
     body{
-      background-image: url('fastfood.jpg');
+      background-color: darkgray;
     }
+
+    
+    .tm-main-section{
+        padding-top: 20px;
+        background-color: darkgray;
+      }
+
+      .tm-popular-item{
+          max-width: 100%;
+          text-align: center;
+          padding: 20px;
+
+      }
+      .tm-popular-item-img{
+          height:90%;
+          margin-top: 40px;
+          margin-left: 40px;
+      }
+      .bttn a{
+        margin: 0 15%;
+      }
     .box1{
       margin-top: 40px;
       margin-left: 15%;
       width: 20%;
       padding: 8%;
-      background-color: deeppink;
+      background-image: url('img/img1.jpeg');
       border-radius: 30px;
+
+
     }
     .box2{
       margin-top: -18%;
       margin-left: 40%;
       width: 20%;
       padding: 7%;
-      background-color: green;
+      background-image: url('img/img2.jpeg');
       border-radius: 30px;
     }
     .box3{
@@ -37,7 +60,7 @@
       margin-left: 66%;
       width: 20%;
       padding: 7%;
-      background-color: yellow;
+      background-image: url('img/img3.jpeg');
       border-radius: 30px;
     }
     .box4{
@@ -45,7 +68,7 @@
       margin-left: 15%;
       width: 20%;
       padding: 8%;
-      background-color: blue;
+      background-image: url('img/img4.jpeg');
       border-radius: 30px;
     }
     .box5{
@@ -53,7 +76,7 @@
       margin-left: 40%;
       width: 20%;
       padding: 7%;
-      background-color: orangered;
+      background-image: url('img/img5.jpeg');
       border-radius: 30px;
     }
     .box6{
@@ -61,15 +84,19 @@
       margin-left: 66%;
       width: 20%;
       padding: 8%;
-      background-color: fuchsia;
+      background-image: url('img/img6.jpeg');
       border-radius: 30px;
     }
     a{
       font-size: 20px;
-      color:white;
       font-weight: bold;
       text-align: center;
-
+      color: black;
+      font-style: italic;
+      }
+    .color{
+      color:white;
+       font-style: italic;
     }
   </style>
  </head>
@@ -94,6 +121,21 @@
         </div>    
       </div>
     </div>
+    <div class="tm-main-section light-gray-bg">
+        <div class="container" id="main">
+          <section class="tm-section tm-section-margin-bottom-0 row">
+          <div class="tm-popular-item">
+          <div class="tm-popular-item-description">
+          
+          <div class="imgdsc" style="display: flex;padding: 10px;margin: 10px 0;">
+          <img src="img/dummy.png" alt="Popular" class="tm-popular-item-img" width="150px" height="150px">
+          <p style="font-size: 20px;width: 60%;/* margin-left: 40%; */padding: 1em;float: left;"><i><b><br>Roll:</b></i> Admin<br><i><b>Name:</b></i> Admin<br><i><b>Contact No.:</b></i> 1234567896<br><i><b>Email:</b></i> abc@gmail.com</br></p></div>
+         
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
    <div class="box1">
       <a href="category.php"><b>Category</b></a>
    </div>
@@ -104,13 +146,13 @@
   <a href="prddetail.php"><b>Product Detail</b></a>
   </div>
   <div class="box4">
-    <a href="all orders.html"><b>Orders</b></a>
+    <a href="all orders.html"><b><div class="color">Orders</div></b></a>
   </div>
   <div class="box5">
-    <a href="product listing.html"><b>Product list</b></a>
+    <a href="product listing.html"><b><div class="color">Product list</div></b></a>
   </div>
   <div class="box6">
-    <a href="#"><b>Sales</b></a>
+    <a href="#"><b><div class="color">Sales</div></b></a>
   </div>
 <br>      <footer>
       <div class="container">

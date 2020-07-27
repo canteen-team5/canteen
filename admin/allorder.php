@@ -121,7 +121,7 @@
         border: 0;
       }
       label{
-        float:left;
+        margin-left: 12px;
         font-size: 30px;
         padding: 10px 0 0;
       }
@@ -255,11 +255,8 @@
                         echo '<hr class="tm-popular-item-hr">
                                 <form action="order.php?ordcod='.$row["ordcod"].'" method="post">
                                 <label for="order">Check Order:</label>
-                                <select id="selects" name="chkord">
-                                    <option value="Accepted">Accept order</option>
-                                    <option value="Cancelled">Cancel order</option>
-                                </select>
-                                    <span class="bttn"><a> <button type="submit" name="submit">Submit</button> </a></span>
+                                <span class="bttn"><a><i><b>Accept the Order</b></i> </a></span>;
+                                <span class="bttn"><a><i><b>Cancel the Order</b></i> </a></span>;
                                 </form>';
                     echo '</div>
                       
