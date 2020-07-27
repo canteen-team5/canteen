@@ -26,9 +26,9 @@
           $mail->Host = "smtp.gmail.com";
           $mail->Port = 465; // or 587
           $mail->IsHTML(true);
-          $mail->Username = "rajat18111999@gmail.com";
-          $mail->Password = "2552@rajat&";
-          $mail->SetFrom("rajat18111999@gmail.com", 'Canteen');
+          $mail->Username = "team5canteen@gmail.com";
+          $mail->Password = "canteen@team5";
+          $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
           $mail->Subject = "Order Status Changed";
           if($chkord == "Accepted")
             $mail->Body = "Hurray! Your has been accepted.\n Thanks for ordering food";
@@ -106,6 +106,8 @@
       .tm-popular-item-img{
         width: 200px;
         height: 200px;
+        border-radius: 10%;
+    margin: 1em;
       }
       th{
         text-align: center;
@@ -187,11 +189,8 @@
                           $date = $row["orddate"];
                           $ordstatus = $row["ordstatus"];
                           $fcod = $row["ordfoodcod"];
-                          echo 'Order No. '.$row["ordcod"].'
-                          </span></h3><hr class="tm-popular-item-hr">
-                          <div class="imgdsc">
-                            <img src="../img/dummy.png" alt="Popular" class="tm-popular-item-img" >
-                          <p class="det" >';
+                          echo 'Order No. '.$row["ordcod"];
+
                           //$conn->close();
                           include('../conn.php');
                           $sql_usr = "call fndusr($ucod)";
@@ -200,6 +199,11 @@
                             $row_usr = $result_usr->fetch_assoc();
                             $_SESSION["email"] = $row_usr["email"];
                             $mobile = $row_usr["mobile"];
+                          echo '</span></h3><hr class="tm-popular-item-hr">
+                          <div class="imgdsc">
+                            <img src="../stupics/'.$row_usr["usrpic"].'" alt="User Picture" class="tm-popular-item-img" >
+                          <p class="det" >';
+                          
                             echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row_usr["rollno"].'</br>
                              <i><b>Name: </b></i>'.$row_usr["fname"].' '.$row_usr["lname"].'  <br>
                             <i><b>Contact No.: </b></i> '.$row_usr["mobile"].'<br><i><b>Email: </b></i> '.$row_usr["email"].'<br>
@@ -253,7 +257,7 @@
                       </table>';
                       if($row["ordstatus"] == "Pending")
                         echo '<hr class="tm-popular-item-hr">
-                                <form action="order.php?ordcod='.$row["ordcod"].'" method="post">
+                                <form action="allorder.php?ordcod='.$row["ordcod"].'" method="post">
                                 <label for="order">Check Order:</label>
                                 <span class="bttn"><a><i><b>Accept the Order</b></i> </a></span>;
                                 <span class="bttn"><a><i><b>Cancel the Order</b></i> </a></span>;

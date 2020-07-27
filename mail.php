@@ -48,12 +48,12 @@ require("PHPMailer/src/PHPMailer.php");
     $mail->Host = "smtp.gmail.com";
     $mail->Port = 465; // or 587
     $mail->IsHTML(true);
-    $mail->Username = "rajat18111999@gmail.com";
-    $mail->Password = "2552@rajat&";
+    $mail->Username = "xx@gmail.com";
+    $mail->Password = "123";
     $mail->SetFrom("xxxxxx@xxxxx.com");
     $mail->Subject = "Test";
     $mail->Body = "hello";
-    $mail->AddAddress("rs97404632@gmail.com");
+    $mail->AddAddress("abc@gmail.com");
 
      if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;

@@ -10,11 +10,10 @@
     $date = date("Y-m-d");
     $usrcod = $_SESSION["ucod"];
     $fcod = $_SESSION["cart"];
-    $fqty = "null";
     $temp_time = date("h:i:s a"); 
     $time =  date("H:i:s", strtotime($temp_time));
     $status = "Pending";
-    $sql = "call insord('$date', $usrcod, '$fcod', '$fqty', '$time', '$status')";
+    $sql = "call insord('$date', $usrcod, '$fcod', '$time', '$status')";
     if(mysqli_query($conn, $sql)){
       $_SESSION["time"] = $time;
       $msg = "Order Placed successfully";
@@ -39,9 +38,9 @@
         $mail->Host = "smtp.gmail.com";
         $mail->Port = 465; // or 587
         $mail->IsHTML(true);
-        $mail->Username = "rajat18111999@gmail.com";
-        $mail->Password = "2552@rajat&";
-        $mail->SetFrom("rajat18111999@gmail.com", 'Canteen');
+        $mail->Username = "team5canteen@gmail.com";
+        $mail->Password = "canteen@team5";
+        $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
         $mail->Subject = "Order Placed";
         $mail->Body = "Thanks for ordering food";
         $mail->AddAddress($email);

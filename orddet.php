@@ -55,6 +55,8 @@
       .tm-popular-item-img{
         width: 200px;
         height: 200px;
+        border-radius: 10%;
+        margin: 1em;
       }
       th{
         text-align: center;
@@ -120,12 +122,7 @@
                     }
                     else echo 'Order No. #';
                     //unset($_SESSION["time"]); 
-                  ?>
-                    </span></h3><hr class="tm-popular-item-hr">
-                    <div class="imgdsc">
-                      <img src="img/dummy.png" alt="Popular" class="tm-popular-item-img" >
-                  <p class="det" >
-                  <?php
+
                     include('conn.php');
                     $ucod = $_SESSION["ucod"];
                     $sql = "call fndusr($ucod)";
@@ -134,6 +131,13 @@
                       $row = $result->fetch_assoc();
                       $email = $row["email"];
                       $mobile = $row["mobile"];
+                  
+                    echo '</span></h3><hr class="tm-popular-item-hr">
+                    <div class="imgdsc">
+                      <img src="stupics/'.$row["usrpic"].'" alt="Popular" class="tm-popular-item-img" >
+                  <p class="det" >';
+                  
+                    
                       echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row["rollno"].'</br>
                        <i><b>Name: </b></i>'.$row["fname"].' '.$row["lname"].'  <br>
                       <i><b>Contact No.: </b></i> '.$row["mobile"].'<br><i><b>Email: </b></i> '.$row["email"].'<br>
