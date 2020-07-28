@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canteen</title>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/templatemo-style.css" rel="stylesheet">
 <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <style>
   body{
-    margin: 6% 20% 10% 20%;
-    background-image: url('./images/fastfood.jpg');
-    font-family: Roboto, Arial, Helvetica Neue, sans-serif;
+    background: #f2f2f2;
   }
 * {
   box-sizing: border-box;
@@ -19,6 +25,7 @@ h2{
   font-size: 40px;
   text-align: center;
   margin: 10px 0 22px 0;
+  width: 80%;
 }
 input[type=text], select, textarea {
   width: 100%;
@@ -31,6 +38,7 @@ input[type=text], select, textarea {
 label {
   padding: 12px 12px 12px 0;
   display: inline-block;
+  font-size: 18px;
 }
 
 input[type=submit] {
@@ -44,6 +52,13 @@ input[type=submit] {
   width: 75%;
   margin: 2em 0 0 0;
 }
+input[type=file]{
+	padding: 12px;
+  width: 100%;
+	border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+} 
 
 input[type=submit]:hover {
   background-color: #45a049;
@@ -51,10 +66,17 @@ input[type=submit]:hover {
 
 .container {
   border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
+  background-color: #000000;
 }
+.border{
+  border-radius: 5px;
+  padding: 20px;
+  width: 60%;
+  margin: 0% auto 5%;
+  font-family: Roboto, Arial, Helvetica Neue, sans-serif;
 
+
+}
 .col-25 {
   float: left;
   width: 25%;
@@ -84,8 +106,34 @@ input[type=submit]:hover {
 </style>
 </head>
 <body>
-<div class="container">
-<h2>Registeration Form</h2>
+    <div class="tm-top-header">
+        <div class="container">
+            <div class="row">
+                <div class="tm-top-header-inner">
+                  <div class="tm-logo-container">
+                    <img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
+                    <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
+                  </div>
+                  <div class="mobile-menu-icon">
+                    <i class="fa fa-bars"></i>
+                  </div>
+                  <nav class="tm-nav">
+                    <ul>
+                      <li><a href="index.php">Home</a></li>
+                      <li><a href="about.php">About</a></li>
+                      <li><a href="menu.php">Menu</a></li>
+                      <li><a href="contact.php">Contact</a></li>
+                      <li><a href="" class="active">Cart</a></li>
+                    </ul>
+                  </nav>   
+                </div>           
+              </div>    
+        </div>
+      </div>
+
+      
+<div class="border">
+    <h2>Registeration Form</h2>
   <form>
       <div class="row">
           <div class="col-25">
@@ -111,33 +159,30 @@ input[type=submit]:hover {
         <input type="text" id="lname" name="lastname" placeholder="Your last name..">
       </div>
     </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="email">Email</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="email_id" name="lastname" placeholder="Your email-id..">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="address">Address</label>
-      </div>
-      <div class="col-75">
-        <textarea id="address" name="subject" placeholder="Your address.." style="height:100px"></textarea>
-      </div>
-    </div>
+    
+    
+    
     <div class="row">
       <div class="col-25">
         <label for="gender">Gender</label>
       </div>
       <div class="col-75">
-        <input type="radio" id="male" name="gender" value="male">
+        <input type="radio" id="male" name="gender" value="Male">
         <label for="male">Male</label>
-        <input type="radio" id="female" name="gender" value="female">
+        <input type="radio" id="female" name="gender" value="Female">
         <label for="female">Female</label>
+        <input type="radio" id="other" name="gender" value="Other">
+        <label for="other">Other</label>
       </div>
     </div>
+    <div class="row">
+        <div class="col-25">
+          <label for="email">Email</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="email_id" name="lastname" placeholder="Your email-id..">
+        </div>
+      </div>
     <div class="row">
       <div class="col-25">
         <label for="mobile no">Mobile No</label>
@@ -146,6 +191,15 @@ input[type=submit]:hover {
         <input type="text" id="mobile_no" name="Mobile_no" placeholder="Your mobile no..">
       </div>
     </div>
+    <div class="row">
+        <div class="col-25">
+          <label for="item_picture">Image</label>
+        </div>
+        <div class="col-75">
+          <input type="file"  name="picture" placeholder="Choose File" >
+        </div>
+      </div>
+
     <div class="row">
       <div class="col-25">
         <label for="user name">User Name</label>
@@ -164,10 +218,17 @@ input[type=submit]:hover {
     </div>
     
     <div class="row">
-      <input type="submit" value="Submit">
+      <input type="submit" value="Submit" name="submit">
     </div>
   </form>
 </div>
 
+<footer>
+    <div class="container">
+        <div class="row tm-copyright">
+         <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 Your Canteen</p>
+       </div>  
+     </div>
+  </footer> <!-- Footer content--> 
 </body>
 </html>

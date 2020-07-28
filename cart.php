@@ -52,9 +52,6 @@
         }*/
 
       unset($_SESSION["cart"]);
-
-      
-
       header('location:orddet.php');
     } else {
       $msg = "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -116,61 +113,63 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Canteen</title>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/templatemo-style.css" rel="stylesheet">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <style>
-    h1{
-      font-size: 50px;
-      font-family: 'Damion', cursive;
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canteen</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/templatemo-style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+      h1{
+        font-size: 50px;
+        font-family: 'Damion', cursive;
+        text-align: center;
+      }
+    .table{
+      width: 60%;
+      margin: 3% auto 0;
       text-align: center;
     }
-   .table{
-    width: 60%;
-    margin: 3% auto 0;
-    text-align: center;
-   }
-   .table th, input{
-    text-align: center;
-   }
-   .cat{
-     text-align: center;
-     padding: 50px;
-   }
-   .empty-cart{
-     padding: 50px;
-   }
-   .cart{
-     min-height: 50vh;
-   }
-   .btnsubmit{
-    padding: 2em;
-    width: 100%;
-    text-align: center;
-   }
-   #suborder{
-    font-size: 25px;
-    border: 0;
-    background: #339033;
-    border-radius: 4px;
-    box-shadow: 4px 5px 8px grey;
-    padding: 0.5em 3em;
-   }
-  #suborder:hover{
-    background: #57b557;
-  }
+    .table th, input{
+      text-align: center;
+    }
+    .cat{
+      text-align: center;
+      padding: 50px;
+    }
+    .empty-cart{
+      padding: 50px;
+    }
+    .cart{
+      min-height: 50vh;
+    }
+    .btnsubmit{
+      padding: 2em;
+      width: 100%;
+      text-align: center;
+    }
+    #suborder{
+      font-size: 25px;
+      border: 0;
+      background: #339033;
+      border-radius: 4px;
+      box-shadow: 4px 5px 8px grey;
+      padding: 0.5em 3em;
+    }
+    #suborder:hover{
+      background: #57b557;
+    }
 
-  </style>
+    </style>
   </head>
+
+
   <body>
     <div class="tm-top-header">
       <div class="container">
@@ -196,6 +195,8 @@
         </div>    
       </div>
     </div>
+
+
     <h1>SHOPPING CART</h1>
 
         <?php
@@ -268,5 +269,6 @@
          </div>  
        </div>
     </footer> <!-- Footer content-->  
+    
   </body>
 </html>

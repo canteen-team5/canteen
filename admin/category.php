@@ -59,108 +59,73 @@ if (isset($_REQUEST["ccod"])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Canteen</title>
-  
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/font-awesome.min.css" rel="stylesheet">
-  <link href="../css/templatemo-style.css" rel="stylesheet">
-  <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <style>
-    h1{
-      text-align: center;
-      font-style: italic;
-      margin-top: 50px;
-    }
-     h2{
-      text-align: center;
-      font-style: italic;
-      margin-top: 50px;
-    }
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canteen</title>
     
-* {
-  box-sizing: border-box;
-}
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/templatemo-style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
 
-body{
-  background-color: #e4e4e4;
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+      h1{
+        text-align: center;
+        font-style: italic;
+        margin-top: 50px;
+      }
+      h2{
+        text-align: center;
+        font-style: italic;
+        margin-top: 50px;
+      }
+      input[type=text] {
+        margin: 20px auto;
+        text-align: center;
+        width: 90%;
+      }
 
-}
-input[type=text] {
-  width: 90%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-    margin: 20px auto;
-    text-align: center;
+      label {
+        padding: 12px 62px 12px 30px;
+        display: block;
+        margin-top: 20px;
+        width: 35%;
+        font-size: 20px;
+        text-align: right;
+        float: left;
+      }
 
-}
+      input[type=submit] {
+        float: left;
+        display: block;
+        width: 90%;
+        margin: 0;
+      }
 
-label {
-  padding: 12px 62px 12px 30px;
-    display: block;
-    margin-top: 20px;
-    width: 35%;
-    font-size: 20px;
-    text-align: right;
-    float: left;
-}
+      input[type=submit]:hover {
+        background-color: #45a049;
+      }
 
-input[type=submit] {
-  background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
-    width: 90%;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
-}
-
-.col-25 {
-  float: left;
-  width: 25%;
-  margin-top: 6px;
-}
-
-.col-75 {
-  float: left;
-  width: 75%;
-  margin-top: 6px;
-}
-
-.catsubrght{
-  width: 50%;
-    float: left;
-}
-span.text{
-  width: auto;
-}
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+      .catsubrght{
+        width: 50%;
+          float: left;
+      }
+      span.text{
+        width: auto;
+      }
 
 
-  </style>
+    </style>
   </head>
-  <body>
+
+  <body class="body">
     <div class="tm-top-header">
       <div class="container">
         <div class="row">
@@ -192,20 +157,23 @@ span.text{
         </div>    
       </div>
     </div>
+
     <h1 style="width:85%;">CATEGORY</h1>
     <form method="post"  action="category.php" name="frmcat" style="padding-bottom: 5em;" >
-    <div class="row" style="padding:4% 0 0;" >
-      <label for="cat_name">Categories Name:</label>
-      <div class="catsubrght">
-        <input type="text" name="cat_name" placeholder="Your category name.." value="<?php echo$cnam;?>">   
-      <?php
-      if (isset($_REQUEST["ccod"]) && $_REQUEST["mod"] == "E")
-        echo '<input type="submit" value="Update" name="catsubmit" >';
-      else
-        echo '<input type="submit" value="Add Category" name="catsubmit" >';
-      ?>
+
+      <div class="row" style="padding:4% 0 0;" >
+        <label for="cat_name">Categories Name:</label>
+        <div class="catsubrght">
+          <input type="text" name="cat_name" placeholder="Your category name.." value="<?php echo$cnam;?>">   
+          <?php
+            if (isset($_REQUEST["ccod"]) && $_REQUEST["mod"] == "E")
+              echo '<input type="submit" value="Update" name="catsubmit" >';
+            else
+              echo '<input type="submit" value="Add Category" name="catsubmit" >';
+          ?>
+        </div>
       </div>
-    </div>
+
       <div class="category_name">
         <div class="col-lg-12 tm-section-header-container">
           <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Category List</h2>
@@ -224,15 +192,15 @@ span.text{
       } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
 
       ?>
-      </form>
+    </form>
 
-      <footer >
+      <footer>
         <div class="container">
           <div class="row tm-copyright">
            <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2084 Your Canteen</p>
-         </div>  
-       </div>
-     </div>
-   </footer> 
-  </body>
-  </html>
+          </div>  
+        </div>
+      </footer> 
+
+   </body>
+</html>

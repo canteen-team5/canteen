@@ -4,49 +4,77 @@
   include('../conn.php');
   //error_reporting(0);
   $msg = $mobile = "";
-  if(isset($_POST["submit"]) && isset($_REQUEST["ordcod"])){
+
+  require("../PHPMailer/src/PHPMailer.php");
+  require("../PHPMailer/src/SMTP.php");
+
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    $mail->IsSMTP(); // enable SMTP
+
+    //$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+    $mail->SMTPAuth = true; // authentication enabled
+    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+    $mail->Host = "smtp.gmail.com";
+    $mail->Port = 465; // or 587
+    $mail->IsHTML(true);
+    $mail->Username = "team5canteen@gmail.com";
+    $mail->Password = "canteen@team5";
+    $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
+    $mail->Subject = "Order Status Changed";
+ 
+ 
+ // for accepting the order
+ if((isset($_REQUEST["ordcod"]) && $_REQUEST["action"]) == "accept"){
+
+   $ordcod = $_REQUEST["ordcod"];
+   $sql = "update tbord set ordstatus = 'Accepted' where ordcod = $ordcod";
+   if (mysqli_query($conn, $sql)) {
+     $msg =  "Record updated successfully";
+     $email = $_SESSION["email"];
+
     
-      $chkord = $_POST["chkord"];
-      $ordcod = $_REQUEST["ordcod"];
-      $sql = "update tbord set ordstatus = '$chkord' where ordcod = $ordcod";
-      if (mysqli_query($conn, $sql)) {
-        $msg =  "Record updated successfully";
-        $email = $_SESSION["email"];
+       $mail->Body = "Hurray! Your has been accepted.\n Thanks for ordering food";
+       
+       $mail->AddAddress($email);
+       $mail->Send();
+       /*if(!$mail->Send()) {
+           echo "Mailer Error: " . $mail->ErrorInfo;
+       } else {
+           echo "Message has been sent";
+       }*/
+       //unset($_SESSION["email"]);
+   } else {
+     $msg =  "Error updating record: " . mysqli_error($conn);
+   }
+   //if(!$msg == "" ) echo "<script> alert('h1'); </script>";
+ }
 
-        // for sending mail
-        require("../PHPMailer/src/PHPMailer.php");
-        require("../PHPMailer/src/SMTP.php");
+ // for cancelling the order
+ if(isset($_REQUEST["ordcod"]) && $_REQUEST["action"] == "cancel"){
+   
+   $ordcod = $_REQUEST["ordcod"];
+   $sql = "update tbord set ordstatus = 'Cancelled' where ordcod = $ordcod";
+   if (mysqli_query($conn, $sql)) {
+     $msg =  "Record updated successfully";
+     $email = $_SESSION["email"];
 
-          $mail = new PHPMailer\PHPMailer\PHPMailer();
-          $mail->IsSMTP(); // enable SMTP
+    
+       $mail->Body = "Oops! Your order has been cancelled.";
+     
+       $mail->AddAddress($email);
+       $mail->Send();
+       /*if(!$mail->Send()) {
+           echo "Mailer Error: " . $mail->ErrorInfo;
+       } else {
+           echo "Message has been sent";
+       }*/
+       //unset($_SESSION["email"]);
+   } else {
+     $msg =  "Error updating record: " . mysqli_error($conn);
+   }
+   //if(!$msg == "" ) echo "<script> alert('$msg'); </script>";
+ }
 
-          //$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-          $mail->SMTPAuth = true; // authentication enabled
-          $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-          $mail->Host = "smtp.gmail.com";
-          $mail->Port = 465; // or 587
-          $mail->IsHTML(true);
-          $mail->Username = "team5canteen@gmail.com";
-          $mail->Password = "canteen@team5";
-          $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
-          $mail->Subject = "Order Status Changed";
-          if($chkord == "Accepted")
-            $mail->Body = "Hurray! Your has been accepted.\n Thanks for ordering food";
-          else 
-            $mail->Body = "Opps! Your has been Cancelled due inavailability if food.\n Thanks for ordering food";
-          $mail->AddAddress($email);
-          $mail->Send();
-          /*if(!$mail->Send()) {
-              echo "Mailer Error: " . $mail->ErrorInfo;
-          } else {
-              echo "Message has been sent";
-          }*/
-          unset($_SESSION["email"]);
-      } else {
-        $msg =  "Error updating record: " . mysqli_error($conn);
-      }
-      if(!$msg == "" ) echo "<script> alert('$msg'); </script>";
-  }
 
   
 ?>
@@ -54,28 +82,28 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Canteen</title>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/font-awesome.min.css" rel="stylesheet">
-  <link href="../css/templatemo-style.css" rel="stylesheet">
-  <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canteen</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/templatemo-style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  <style>
-  body{
-    background: #e4e4e4;
-  }
-     h1{
-            font-size: 50px;
+    <style>
+      body{
+        background: #e4e4e4;
+      }
+      h1{
+        font-size: 50px;
         font-family: 'Damion', cursive;
         text-align: center;
         margin: 30px 0 10px;
@@ -107,7 +135,7 @@
         width: 200px;
         height: 200px;
         border-radius: 10%;
-    margin: 1em;
+        margin: 1em;
       }
       th{
         text-align: center;
@@ -117,6 +145,7 @@
       }
       .bttn a{ 
         margin: 10px;
+        font-size: 20px;
       }
       .bttn button {
         background: #4CAF50;
@@ -126,6 +155,7 @@
         margin-left: 12px;
         font-size: 30px;
         padding: 10px 0 0;
+        width: 100%;
       }
       select{
         width:60%;
@@ -134,8 +164,10 @@
       footer{
         margin: 0;
       }
-      </style>
+    </style>
   </head>
+
+
   <body>
     <div class="tm-top-header">
       <div class="container">
@@ -168,115 +200,107 @@
         </div>    
       </div>
     </div>
-     <h1>Total Orders</h1>
 
-     <?php
+
+    <h1>Total Orders</h1>
+
+    <?php
        include('../conn.php');
        $sql = "call dspord()";
        $result = $conn->query($sql);
        if($result->num_rows > 0){
            while($row = $result->fetch_assoc() ){
-               echo ' <div class="tm-main-section light-gray-bg">
+              echo ' <div class="tm-main-section light-gray-bg">
                <div class="container" id="main">
                 <section class="tm-section tm-section-margin-bottom-0 row">
                   <div class="tm-popular-item">
-                    
-                      <div class="tm-popular-item-description">
-                        <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">';
-
-                          $ucod = $row["ordusrcod"];
-                          $time = $row["ordtime"];
-                          $date = $row["orddate"];
-                          $ordstatus = $row["ordstatus"];
-                          $fcod = $row["ordfoodcod"];
-                          echo 'Order No. '.$row["ordcod"];
-
-                          //$conn->close();
-                          include('../conn.php');
-                          $sql_usr = "call fndusr($ucod)";
-                          $result_usr = $conn->query($sql_usr);
-                          if($result_usr->num_rows > 0){
-                            $row_usr = $result_usr->fetch_assoc();
-                            $_SESSION["email"] = $row_usr["email"];
-                            $mobile = $row_usr["mobile"];
-                          echo '</span></h3><hr class="tm-popular-item-hr">
-                          <div class="imgdsc">
-                            <img src="../stupics/'.$row_usr["usrpic"].'" alt="User Picture" class="tm-popular-item-img" >
-                          <p class="det" >';
-                          
-                            echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row_usr["rollno"].'</br>
-                             <i><b>Name: </b></i>'.$row_usr["fname"].' '.$row_usr["lname"].'  <br>
-                            <i><b>Contact No.: </b></i> '.$row_usr["mobile"].'<br><i><b>Email: </b></i> '.$row_usr["email"].'<br>
-                            <span class="bttn"><a><i><b>Order Status: </b></i>'. $ordstatus.' </a></span>';
-      
-                            }
-                          $conn->close();
-                        echo '</p></div>
-                       <hr class="tm-popular-item-hr">';
-                       include('../conn.php');
-                if(isset($fcod)){
-                  $str = $fcod;
-                  $arr = explode("," , $str);
-                  foreach($arr as $item){
-                    $contents[$item] = isset($contents[$item])?$contents[$item]+1:1;
-                  }
-                  if(count($contents) != 0){
-                    $tot_all = 0;
-                    echo '<div class = "cart">
-                    <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Item</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>';
-                    foreach($contents as $key => $value){
+                    <div class="tm-popular-item-description">
+                      <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">';
+                      $ucod = $row["ordusrcod"];
+                      $time = $row["ordtime"];
+                      $date = $row["orddate"];
+                      $ordstatus = $row["ordstatus"];
+                      $fcod = $row["ordfoodcod"];
+                      echo 'Order No. '.$row["ordcod"];
+                      //$conn->close();
                       include('../conn.php');
-                      $tot = 0;
-                      $sql_menu = "call fndmenu($key)";
-                      $result_menu = $conn->query($sql_menu);
-                      if($result_menu->num_rows > 0){
-                        while($row_menu = $result_menu->fetch_assoc()){
-                          echo '<tr>
-                          <td>'.$row_menu["foodname"].'</td>
-                          <td>'.$row_menu["foodprc"].'</td>
-                          <td>'.$value.'</td>';
-                          $tot += $row_menu["foodprc"] * $value;
-                          $tot_all += $tot;
-                          echo '<td>'.$tot.'</td> </tr>';
-                        }
+                      $sql_usr = "call fndusr($ucod)";
+                      $result_usr = $conn->query($sql_usr);
+                      if($result_usr->num_rows > 0){
+                        $row_usr = $result_usr->fetch_assoc();
+                        $_SESSION["email"] = $row_usr["email"];
+                        $mobile = $row_usr["mobile"];
+                        echo '</span></h3><hr class="tm-popular-item-hr">
+                        <div class="imgdsc">
+                          <img src="../stupics/'.$row_usr["usrpic"].'" alt="User Picture" class="tm-popular-item-img" >
+                        <p class="det" >';
+                          
+                        echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row_usr["rollno"].'</br>
+                        <i><b>Name: </b></i>'.$row_usr["fname"].' '.$row_usr["lname"].'  <br>
+                        <i><b>Contact No.: </b></i> '.$row_usr["mobile"].'<br><i><b>Email: </b></i> '.$row_usr["email"].'<br>
+                        <span class="bttn"><a><i><b>Order Status: </b></i>'. $ordstatus.' </a></span> </p></div>';
                       }
                       $conn->close();
-                    }
-                    echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td><td></td></tr>
-                          
-                        </tbody>
-                      </table>';
-                      if($row["ordstatus"] == "Pending")
-                        echo '<hr class="tm-popular-item-hr">
-                                <form action="allorder.php?ordcod='.$row["ordcod"].'" method="post">
-                                <label for="order">Check Order:</label>
-                                <span class="bttn"><a><i><b>Accept the Order</b></i> </a></span>;
-                                <span class="bttn"><a><i><b>Cancel the Order</b></i> </a></span>;
-                                </form>';
-                    echo '</div>
-                      
-                    ';
-                  } 
-                } else{
-                  echo "<div class='empty-cart'><p class='cat' ><span class='text'> Something went wrong! </span> </p>
-                  <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
-                }
-      
+                      echo '<hr class="tm-popular-item-hr">';
+
+                      include('../conn.php');
+                      if(isset($fcod)){
+                        $str = $fcod;
+                        $arr = explode("," , $str);
+                        foreach($arr as $item){
+                          $contents[$item] = isset($contents[$item])?$contents[$item]+1:1;
+                        }
+                        if(count($contents) != 0){
+                          $tot_all = 0;
+                          echo '<div class = "cart">
+                          <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Item</th>
+                              <th>Price</th>
+                              <th>Quantity</th>
+                              <th>Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>';
+                          foreach($contents as $key => $value){
+                            include('../conn.php');
+                            $tot = 0;
+                            $sql_menu = "call fndmenu($key)";
+                            $result_menu = $conn->query($sql_menu);
+                            if($result_menu->num_rows > 0){
+                              while($row_menu = $result_menu->fetch_assoc()){
+                                echo '<tr>
+                                <td>'.$row_menu["foodname"].'</td>
+                                <td>'.$row_menu["foodprc"].'</td>
+                                <td>'.$value.'</td>';
+                                $tot += $row_menu["foodprc"] * $value;
+                                $tot_all += $tot;
+                                echo '<td>'.$tot.'</td> </tr>';
+                              }
+                            }
+                            $conn->close();
+                          }
+                          echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td><td></td></tr>
+                                
+                              </tbody>
+                            </table>';
+                            if($row["ordstatus"] == "Pending")
+                              echo '<hr class="tm-popular-item-hr">
+                              <span class="bttn"><a href="allorder.php?ordcod='.$row["ordcod"].'&action=accept"><i><b> Accept the Order  </b></i> </a></span>
+                              <span class="bttn"><a href="allorder.php?ordcod='.$row["ordcod"].'&action=cancel"><i><b> Cancel the Order  </b></i> </a></span>';
+                          echo '</div>';
+                        } 
+                      } else{
+                        echo "<div class='empty-cart'><p class='cat' ><span class='text'> Something went wrong! </span> </p>
+                        <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
+                      }
+            
         
-                     echo '  <hr class="tm-popular-item-hr">
-                      </h3></div>
-                      
-                    </div></section>
+                    echo '  <hr class="tm-popular-item-hr" style="margin: 15px 0;">                      
                   </div>
+                </section>
+              </div>
             </div>';
            }
        }
@@ -284,14 +308,13 @@
      ?>
      
             
-   <footer> 
-    <div class="container">
-          <div class="row tm-copyright">
-           <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 MAIMT Canteen</p>
-         </div>  
-       </div>
-    
-   </footer><!-- Footer content-->  
+    <footer> 
+      <div class="container">
+        <div class="row tm-copyright">
+         <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 MAIMT Canteen</p>
+        </div>  
+      </div> 
+    </footer><!-- Footer content-->  
 
- </body>
- </html>
+  </body>
+</html>

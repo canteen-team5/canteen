@@ -102,6 +102,7 @@
       .tm-popular-item-img{
         width: 300px;
         height: 240px;
+        border-radius: 10px;
       }
       .dsc{
         font-size: 20px;
@@ -149,41 +150,47 @@
           </div>    
         </div>
       </div>
+
       <h1>PRODUCT &nbsp; DETAILS</h1>
         <div class="tm-main-section light-gray-bg">
          <div class="container" id="main">
+
           <section class="tm-section tm-section-margin-bottom-0 row">
             <div class="tm-popular-item">
-                <div class="tm-popular-item-description">
-                  <h3 class="tm-handwriting-font tm-popular-item-title">
-                      <span class="tm-handwriting-font bigger-first-letter"><?php echo $fnam; ?></span></h3>
-                      <hr class="tm-popular-item-hr">
-                  <div class="imgdsc">
-                    <img src="../prdpics/<?php echo $fpic; ?>" alt="Popular" class="tm-popular-item-img" >
-                    <div class="dsc">
-                      <h2 class="tm-handwriting-font">Description:</h2>
-                      <p><?php echo $fdsc; ?></p>
-                    </div>
+              <div class="tm-popular-item-description">
+                <h3 class="tm-handwriting-font tm-popular-item-title">
+                    <span class="tm-handwriting-font bigger-first-letter"><?php echo $fnam; ?></span></h3>
+                    <hr class="tm-popular-item-hr">
+                <div class="imgdsc">
+                  <img src="../prdpics/<?php echo $fpic; ?>" alt="Popular" class="tm-popular-item-img" >
+                  <div class="dsc">
+                    <h2 class="tm-handwriting-font">Description:</h2>
+                    <p><?php echo $fdsc; ?></p>
                   </div>
-                  <h3 class="tm-handwriting-font tm-popular-item-title" style="width: 50%; float: left;">
-                      <span class="tm-handwriting-font bigger-first-letter">A</span>vailable: <?php echo $favl; ?></h3>
-                  <h3 class="tm-handwriting-font tm-popular-item-title"> <span class="tm-handwriting-font bigger-first-letter">Q</span>uantity: <?php echo $fqty; ?></h3><hr class="tm-popular-item-hr">
-                  <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">P</span>rice: ₹<?php echo $fprc; ?></h3><hr class="tm-popular-item-hr">
-                   
-                  <?php echo '<h3 <span class="bttn"> <a href="addprd.php?fcod='.$_SESSION["fcod"].'&mod=E ">Edit</a>
-                    <a href="prddetail.php?fcod='.$_SESSION["fcod"].'&mod=D&pic="'.$_SESSION["fpic"].'" ">Delete</a> </span></h3>'; ?>
                 </div>
+                <h3 class="tm-handwriting-font tm-popular-item-title" style="width: 50%; float: left;">
+                    <span class="tm-handwriting-font bigger-first-letter">A</span>vailable: <?php echo $favl; ?></h3>
+                <h3 class="tm-handwriting-font tm-popular-item-title"> <span class="tm-handwriting-font bigger-first-letter">Q</span>uantity: <?php echo $fqty; ?></h3><hr class="tm-popular-item-hr">
+                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">P</span>rice: ₹<?php echo $fprc; ?></h3><hr class="tm-popular-item-hr">
+                   
+                <?php echo '<h3 <span class="bttn"> <a href="addprd.php?fcod='.$_SESSION["fcod"].'&mod=E ">Edit</a>
+                  <a href="prddetail.php?fcod='.$_SESSION["fcod"].'&mod=D&pic="'.$_SESSION["fpic"].'" ">Delete</a> </span></h3>'; ?>
+              </div>
             </div>
           </section>
+
          </div>
         </div>
+
+
       <footer>
         <div class="container">
-            <div class="row tm-copyright">
-             <p class="col-lg-12 small copyright-text text-center">Copyright © 2020 Your Canteen</p>
-           </div>  
-         </div>
+          <div class="row tm-copyright">
+           <p class="col-lg-12 small copyright-text text-center">Copyright © 2020 Your Canteen</p>
+          </div>  
+        </div>
       </footer> <!-- Footer content-->  
     
   
-   </body></html>
+  </body>
+</html>

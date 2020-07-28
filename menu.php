@@ -7,39 +7,40 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Canteen</title>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/templatemo-style.css" rel="stylesheet">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canteen</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/templatemo-style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 
 
-  <style>
-    span.bttn{
-      width: 100%;
-    margin: 10px 5px 0;
-    }
-    .tm-product img{
-      width: 150px;
-    height: 150px;
-    }
-    .bttn a{
-      width: 100%;
-    }
-    .tm-side-menu li{
-      background: url(./img/tm-brown-button.png);
-    background-size: cover;
-    margin: 5px;
-    padding: 10px;
-    }
+    <style>
+      span.bttn{
+        width: 100%;
+      margin: 10px 5px 0;
+      }
+      .tm-product img{
+        width: 150px;
+      height: 150px;
+      }
+      .bttn a{
+        width: 100%;
+      }
+      .tm-side-menu li{
+        background: url(./img/tm-brown-button.png);
+      background-size: cover;
+      margin: 5px;
+      padding: 10px;
+      }
     </style>
   </head>
+
   <body>
     <div class="tm-top-header">
       <div class="container">
@@ -65,6 +66,7 @@
         </div>    
       </div>
     </div>
+
     <section class="tm-welcome-section">
       <div class="container tm-position-relative">
         <div class="tm-lights-container">
@@ -77,10 +79,10 @@
         </div>
         <img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive">  
       </div>      
-        </section>
-           <div class="tm-main-section light-gray-bg">
-      <div class="container" id="main">
-            
+    </section>
+
+    <div class="tm-main-section light-gray-bg">
+      <div class="container" id="main">  
         <section class="tm-section row">
           <div class="col-lg-12 tm-section-header-container margin-bottom-30">
             <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Our Menus</h2>
@@ -104,16 +106,14 @@
                         }
                       }
                       $conn->close();
-
                     ?>
-                    
                   </ul>              
                 </nav>    
-                
               </div>  
-            </div>            
+            </div> 
+            
+            
             <div class="tm-menu-product-content col-lg-9 col-md-9"> <!-- menu content -->
-
             <?php 
               $j = 0;
               include('conn.php');
@@ -135,9 +135,7 @@
                     </div>';
                   }
                 }
-              }
-
-              
+              } 
             ?>
               
               </div>
@@ -146,15 +144,15 @@
         </section>
       </div>
     </div> 
+
+
     <footer>
-      
         <div class="container">
           <div class="row tm-copyright">
            <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2084 Your Canteen</p>
-         </div>  
-       </div>
-     </div>
-   </footer> <!-- Footer content-->  
+          </div>  
+        </div>
+    </footer> <!-- Footer content-->  
   
- </body>
- </html>
+  </body>
+</html>
