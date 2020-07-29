@@ -90,9 +90,8 @@
         </div>    
       </div>
     </div>
+
     <h1>PRODUCTS</h1>
-
-
     <div class="tm-main-section light-gray-bg">
         <section class="tm-section tm-section-margin-bottom-0 row">
           <div class="category_name">
@@ -101,23 +100,23 @@
               <div class="tm-hr-container"><hr class="tm-hr"></div>
             </div>
           </div>
-      <?php
-        $sql_disp = "call dspmenu";
-        $result_disp = $conn->query($sql_disp); 
-        $i = 0;
-        if($result_disp->num_rows > 0){
-          while ($row = $result_disp->fetch_assoc()){
-            echo "<p class='cat' ><span class='text'> 
-            <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-             </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
-            $i++;
-            if($i == 3) break;
-          }
-        } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
-        $conn->close();
-      ?>  
+          <?php
+            $sql_disp = "call dspmenu";
+            $result_disp = $conn->query($sql_disp); 
+            $i = 0;
+            if($result_disp->num_rows > 0){
+              while ($row = $result_disp->fetch_assoc()){
+                echo "<p class='cat' ><span class='text'> 
+                <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+                </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
+                $i++;
+                if($i == 3) break;
+              }
+            } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
+            $conn->close();
+          ?>  
                   
-        </section>
+      </section>
     </div> 
 
 
@@ -129,20 +128,21 @@
               <div class="tm-hr-container"><hr class="tm-hr"></div>
             </div>
           </div>
-      <?php
-        include('../conn.php');
-        $sql_disp = "call dspmenu";
-        $result_disp = $conn->query($sql_disp); 
-        //$i = 0;
-        if($result_disp->num_rows > 0){
-          while ($row = $result_disp->fetch_assoc()){
-            echo "<p class='cat' ><span class='text'> 
-            <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-             </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
-          }
-        } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
-        $conn->close();
-      ?>  
+
+          <?php
+            include('../conn.php');
+            $sql_disp = "call dspmenu";
+            $result_disp = $conn->query($sql_disp); 
+            //$i = 0;
+            if($result_disp->num_rows > 0){
+              while ($row = $result_disp->fetch_assoc()){
+                echo "<p class='cat' ><span class='text'> 
+                <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+                </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
+              }
+            } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
+            $conn->close();
+          ?>  
                   
         </section>
     </div>
@@ -155,34 +155,33 @@
               <div class="tm-hr-container"><hr class="tm-hr"></div>
             </div>
           </div>
-      <?php
-        include('../conn.php');
-        $sql_disp = "call dspmenu";
-        $result_disp = $conn->query($sql_disp); 
-        if($result_disp->num_rows > 0){
-          while ($row = $result_disp->fetch_assoc()){
-            if($row["foodisavl"] == "False"){
-              echo "<p class='cat' ><span class='text'> 
-              <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-              </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
-            }
-          }
-        } else echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";
-        $conn->close();
-      ?>            
+          <?php
+            include('../conn.php');
+            $sql_disp = "call dspmenu";
+            $result_disp = $conn->query($sql_disp); 
+            if($result_disp->num_rows > 0){
+              while ($row = $result_disp->fetch_assoc()){
+                if($row["foodisavl"] == "False"){
+                  echo "<p class='cat' ><span class='text'> 
+                  <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+                  </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
+                }
+              }
+            } else echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";
+            $conn->close();
+          ?>            
         </section>
     </div> 
 
 
     <footer>
-        <div class="container">
-          <div class="row tm-copyright">
-           <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 Your Canteen</p>
-          </div>  
-        </div>
-    
-   </footer> <!-- Footer content-->  
+      <div class="container">
+        <div class="row tm-copyright">
+         <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 Your Canteen</p>
+        </div>  
+      </div>   
+    </footer> <!-- Footer content-->  
 
- </body>
- </html>
+  </body>
+</html>
  
