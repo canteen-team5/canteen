@@ -33,7 +33,7 @@
       $email = $_SESSION["email"];
 
      
-        $mail->Body = "Hurray! Your has been accepted.\n Thanks for ordering food";
+        $mail->Body = "Hurray! Your order has been accepted. Thanks for ordering.";
         
         $mail->AddAddress($email);
         $mail->Send();

@@ -18,6 +18,13 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/templatemo-style.css" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+
+    <style>
+      .tm-popular-item-img{
+        width: 100%;
+      }
+      
+    </style>
   </head>
 
 

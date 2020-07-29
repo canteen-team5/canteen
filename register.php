@@ -126,7 +126,7 @@
 
     <!----------------- Registration Form ------------------------>
     <section class="border">
-      <h2>Registeration Form</h2>
+      <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Registeration Form</h1>
 
       <form action="register.php" method="post" enctype="multipart/form-data">
         <div class="row">
