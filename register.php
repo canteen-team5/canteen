@@ -1,7 +1,7 @@
 <?php
   session_start();
   include('conn.php');
-  $rollno = $fname = $lname = $gender = $email = $mobile = $usrpic = $usrname = $usrpwd = $err =  "";
+  $rollno = $fname = $lname = $gender = $email = $mobile = $usrpic = $usrname = $usrpwd = $err = $msg = "";
 
   if(isset($_POST["submit"])){
     $rollno = $_POST["roll_no"];
@@ -59,16 +59,14 @@
     else{
       $sql = "call insusr($rollno, '$fname', '$lname', '$usrpic', '$mobile', '$email', '$gender', '$usrname', '$usrpwd')";
       if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        $msg = "New record created successfully";
         if($usrpic!="")
         move_uploaded_file ($_FILES["picture"]["tmp_name"],"stupics/".$_FILES["picture"]["name"]);
-      } else echo  $conn->error;
+      } else $err =  $conn->error;
 
     }
-    if($err != "") echo $err;
+    //if($err != "") echo $err;
   }
-  if($usrpic!="")
-  move_uploaded_file ($_FILES["picture"]["tmp_name"],"stupics/".$_FILES["picture"]["name"]);
 
 ?>
 
@@ -123,6 +121,16 @@
         </div>    
       </div>
     </header>
+
+    <!----------------- Alert Box -------------------------------->
+    <?php 
+
+      if(!$err == "")
+      echo '<div class="err"> '.$err.' </div>';
+    
+      if(!$msg == "")
+        echo '<div class="msg"> '.$msg.' </div>';
+    ?>
 
     <!----------------- Registration Form ------------------------>
     <section class="border">
