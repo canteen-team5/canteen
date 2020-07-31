@@ -132,7 +132,7 @@
               </div>
               <nav class="tm-nav">
                 <ul>
-                    <li><a href="../index.php">Home</a></li>
+                    <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="category.php">Category</a></li>
                     <li><a href="addprd.php">Add Product</a></li>
                     <li><a href="prdlist.php">Product List</a></li>

@@ -4,8 +4,10 @@
 
   //for submitting order
   if(isset($_POST["btnsubmit"])){
+
     if(!isset($_SESSION["ucod"]))
       header('location:login.php');
+
     date_default_timezone_set("Asia/Kolkata");
     $date = date("Y-m-d");
     $usrcod = $_SESSION["ucod"];
@@ -13,9 +15,12 @@
     $temp_time = date("h:i:s a"); 
     $time =  date("H:i:s", strtotime($temp_time));
     $status = "Pending";
-    $sql = "call insord('$date', $usrcod, '$fcod', '$time', '$status')";
+    $total = $_SESSION["tot_all"];
+    $sql = "call insord('$date', $usrcod, '$fcod', '$time', '$status', $total)";
     if(mysqli_query($conn, $sql)){
       $_SESSION["time"] = $time;
+
+
       $msg = "Order Placed successfully";
 
       //fetching usr-email;
@@ -25,7 +30,6 @@
         $email = $row["email"];
         $mob = $row["mobile"];
       }
-
       // for sending mail
       require("PHPMailer/src/PHPMailer.php");
       require("PHPMailer/src/SMTP.php");
@@ -46,15 +50,10 @@
         $mail->Body = "Thanks for ordering food";
         $mail->AddAddress($email);
         $mail->Send();
-        /*if(!$mail->Send()) {
-            echo "Mailer Error: " . $mail->ErrorInfo;
-        } else {
-            echo "Message has been sent";
-        }*/
 
 
         //for sending messages
-        /*
+        
         $field = array(
           "sender_id" => "FSTSMS",
           "language" => "english",
@@ -63,46 +62,45 @@
           "message" => "32698",
           "variables" => "",
           "variables_values" => ""
-        );
+      );
       
-        $curl = curl_init();
+      $curl = curl_init();
       
-          curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://www.fast2sms.com/dev/bulk",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => json_encode($field),
-            CURLOPT_HTTPHEADER => array(
-              "authorization: wSxrquok0NJQCMad2DgBPjHlznZhLE68iFbImy9RA14Y3s5p7f8hI3XsobKBJZ1ElfumQvAWy9cV5iGS",
-              "cache-control: no-cache",
-              "accept: *//*",
-              "content-type: application/json"
-            ),
-          ));
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://www.fast2sms.com/dev/bulk",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYHOST => 0,
+        CURLOPT_SSL_VERIFYPEER => 0,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => json_encode($field),
+        CURLOPT_HTTPHEADER => array(
+          "authorization: wSxrquok0NJQCMad2DgBPjHlznZhLE68iFbImy9RA14Y3s5p7f8hI3XsobKBJZ1ElfumQvAWy9cV5iGS",
+          "cache-control: no-cache",
+          "accept: */*",
+          "content-type: application/json"
+        ),
+      ));
       
-          $response = curl_exec($curl);
-          $err = curl_error($curl);
-          
-          curl_close($curl);
-          
-          if ($err) {
-            echo "cURL Error #:" . $err;
-          } else {
-            echo $response;
-          }*/
-
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+      
+      curl_close($curl);
+      
+      if ($err) {
+        echo "cURL Error #:" . $err;
+      } else {
+        echo $response;
+      }
           // end of sending msg
       
       unset($_SESSION["cart"]);
       header('location:orddet.php');
     } else {
-      $msg = "Error: " . $sql . "<br>" . mysqli_error($conn);
+      $err = "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
 
   }
@@ -119,7 +117,7 @@
   }
 
   //for updating the quantity
-  if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "update"){
+  if(!isset($_POST["btnsubmit"]) && isset($_REQUEST["action"]) && $_REQUEST["action"] == "update"){
     foreach($_POST as $key=>$value){
       if(strstr($key,'qty')){
         $fcod = str_replace('qty', '', $key);
@@ -132,6 +130,8 @@
       }
       if(isset($newcart))
         $_SESSION["cart"] = $newcart;
+      
+        
     }
   }
 
@@ -236,7 +236,8 @@
                 <li><a href="about.php">About</a></li>
                 <li><a href="menu.php">Menu</a></li>
                 <li><a href="contact.php">Contact</a></li>
-                <li><a href="" class="active">Cart</a></li>
+                <li><a href="cart.php" class="active">Cart</a></li>
+                <li><a href="login.php">Login</a></li>
               </ul>
             </nav>   
           </div>           
@@ -298,9 +299,8 @@
                 <div class="btnsubmit">
                 <div class="btn"><button type="submit" name="btnsubmit" id="suborder">Submit Order</button></div> </div>
                 </form>
-              </div>
-                
-              ';
+              </div>';
+              $_SESSION["tot_all"] = $tot_all;
             } 
           } else{
             echo "<div class='empty-cart'><p class='cat' ><span class='text'> Your cart is Empty </span> </p>

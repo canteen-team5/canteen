@@ -3,11 +3,11 @@ session_start();
 include('../conn.php');
     //error_reporting(0);
 
-$catnam = $cnam = $msg = $result_disp = "";
+$catnam = $cnam = $msg = $result_disp = $err = "";
 
 if (isset($_POST["catsubmit"])) {
   $catnam = $_POST["cat_name"];
-  if ($catnam == "") $msg = "Please input name";
+  if ($catnam == "") $err = "Please input name";
 
   elseif (isset($_SESSION["ccod"])) {
     $ccod = $_SESSION["ccod"];
@@ -16,16 +16,15 @@ if (isset($_POST["catsubmit"])) {
     if (mysqli_query($conn, $sql))
       $msg = "Record updated successfully";
     else
-      $msg = "Error updating record: " . mysqli_error($conn);
+      $err = "Error updating record: " . mysqli_error($conn);
   } else {
     $sql = "call inscat('$catnam')";
     if ($conn->query($sql) === true) {
       $msg = "New record created successfully";
     } else {
-      $msg = "Error: " . $sql . "<br>" . $conn->error;
+      $err = "Error: " . $sql . "<br>" . $conn->error;
     }
   }
-  if (!$msg == "") echo "<script> alert('$msg'); </script>";
 }
 
 if (isset($_REQUEST["ccod"])) {
@@ -34,7 +33,7 @@ if (isset($_REQUEST["ccod"])) {
     $catcod = $_REQUEST["ccod"];
     $sql = "call delcat($catcod)";
     if ($conn->query($sql) === true) $msg = "Record deleted successfully";
-    else $msg = "Error deleting record: " . $conn->error;
+    else $err = "Error deleting record: " . $conn->error;
   }
 
   if ($_REQUEST["mod"] == 'E') {
@@ -51,7 +50,6 @@ if (isset($_REQUEST["ccod"])) {
         $result_disp = $conn->query($sql_disp); 
         print_r($result_disp); */
   }
-  if (!$msg == "") echo "<script> alert('$msg'); </script>";
 }
 
 ?>
@@ -139,7 +137,7 @@ if (isset($_REQUEST["ccod"])) {
             </div>
             <nav class="tm-nav">
               <ul>
-                <li><a href="../index.php">Home</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="#" class="active">Category</a></li>
                 <li><a href="addprd.php">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
@@ -157,6 +155,18 @@ if (isset($_REQUEST["ccod"])) {
         </div>    
       </div>
     </div>
+
+    <!----------------- Alert Box -------------------------------->
+    <?php 
+
+      if(!$err == "")
+      echo '<div class="err"> '.$err.' </div>';
+    
+      if(!$msg == "")
+        echo '<div class="msg"> '.$msg.' </div>';
+    ?>
+
+    <!------------------------------------------------------------------>
 
     <h1 style="width:85%;">CATEGORY</h1>
     <form method="post"  action="category.php" name="frmcat" style="padding-bottom: 5em;" >

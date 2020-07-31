@@ -188,7 +188,7 @@
             </div>
             <nav class="tm-nav">
               <ul>
-              <li><a href="../index.php">Home</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>  
                 <li><a href="category.php">Category</a></li>
                 <li><a href="addprd.php">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
@@ -304,7 +304,7 @@
                           } 
                         } else{
                           echo "<div class='empty-cart'><p class='cat' ><span class='text'> Something went wrong! </span> </p>
-                          <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
+                          <p class='cat'> <span class='text'> <a href='allorder.php'>Go To All Orders</a> </span> </p></div>";
                         }
       
         
@@ -318,7 +318,7 @@
            }
         } else{
         echo "<div class='empty-cart'><p class='cat' ><span class='text'> No pending order left </span> </p>
-        <p class='cat'> <span class='text'> <a href='allorder.php'>Go To All orders</a> </span> </p></div>";
+        <p class='cat'> <span class='text'> <a href='dashboard.php'>Go To Dashboard</a> </span> </p></div>";
       }
 
      ?>

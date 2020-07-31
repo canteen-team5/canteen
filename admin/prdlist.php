@@ -1,7 +1,7 @@
 <?php
   session_start();
   include('../conn.php');
-  $msg = "";
+  $msg = $err = "";
   
   if(isset($_REQUEST["fcod"]) && isset($_REQUEST["mod"])){
     $fcod = $_REQUEST["fcod"];
@@ -13,12 +13,11 @@
         $msg = "Record deleted successfully";
         unlink($file);
       } else {
-        $msg = "Error deleting record: " . $conn->error;
+        $err = "Error deleting record: " . $conn->error;
       }
     }
   }
 
-  if(!$msg == "") echo "<script> alert('$msg'); </script>";
 
 ?>
 
@@ -72,7 +71,7 @@
             </div>
             <nav class="tm-nav">
               <ul>
-                <li><a href="../index.php">Home</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
                 <li><a href="addprd.php">Add Product</a></li>
                 <li><a href="#" class="active">Product List</a></li>
@@ -91,6 +90,17 @@
       </div>
     </div>
 
+    <!----------------- Alert Box -------------------------------->
+    <?php 
+
+      if(!$err == "")
+      echo '<div class="err"> '.$err.' </div>';
+    
+      if(!$msg == "")
+        echo '<div class="msg"> '.$msg.' </div>';
+    ?>
+
+    
     <h1>PRODUCTS</h1>
     <div class="tm-main-section light-gray-bg">
         <section class="tm-section tm-section-margin-bottom-0 row">
@@ -121,7 +131,7 @@
 
 
     <div class="tm-main-section light-gray-bg">
-        <section class="tm-section tm-section-margin-bottom-0 row">
+        <section class="tm-section tm-section-margin-bottom-0 row" id="allprd">
           <div class="category_name">
             <div class="col-lg-12 tm-section-header-container">
               <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> All Products </h2>

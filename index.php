@@ -47,6 +47,7 @@
                 <li><a href="menu.php">Menu</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="cart.php">Cart</a></li>
+                <li><a href="login.php">Login</a></li>
               </ul>
             </nav>   
           </div>           

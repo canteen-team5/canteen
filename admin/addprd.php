@@ -2,7 +2,7 @@
   session_start();
   include('../conn.php');
 
-  $sel_cat = $itm_nam = $itm_prc = $itm_dsc = $itm_pic = $itm_avail = $itm_qty = $msg = "";
+  $sel_cat = $itm_nam = $itm_prc = $itm_dsc = $itm_pic = $itm_avail = $itm_qty = $msg = $err = "";
   if(isset($_POST["submit"])){
     $sel_cat = $_POST["category"];
     $itm_nam = $_POST["item_name"];
@@ -12,11 +12,11 @@
     $itm_avail = $_POST["available"];
     $itm_qty = $_POST["item_qty"];
 
-    if($sel_cat == "") $msg = "Please add category first";
-    elseif($itm_nam == "") $msg = "Please enter Item name";
-    elseif($itm_prc == "") $msg = "Please enter Item price";
-    elseif($itm_dsc == "") $msg = "Please enter Item description";
-    elseif($itm_pic == "") $msg = "Please input Item picture";
+    if($sel_cat == "") $err = "Please add category first";
+    elseif($itm_nam == "") $err = "Please enter Item name";
+    elseif($itm_prc == "") $err = "Please enter Item price";
+    elseif($itm_dsc == "") $err = "Please enter Item description";
+    elseif($itm_pic == "") $err = "Please input Item picture";
     //elseif($itm_qty == "") $itm_qty = "null";
     else {
       if(isset($_SESSION["check"])){
@@ -25,7 +25,7 @@
           if ($conn->query($sql) === TRUE) {
             $msg = "Record updated successfully";
           } else {
-            $msg = "Error updating record: " . $conn->error;
+            $err = "Error updating record: " . $conn->error;
           }
           unset($_SESSION["check"]);
       }
@@ -34,13 +34,11 @@
       if (mysqli_query($conn, $sql)) 
         $msg = "New record created successfully";
       else
-        $msg = "Error: " . $sql . "<br>" . mysqli_error($conn);
+        $err = "Error: " . $sql . "<br>" . mysqli_error($conn);
       }
     }
     if($itm_pic!="")
       move_uploaded_file ($_FILES["picture"]["tmp_name"],"../prdpics/".$_FILES["picture"]["name"]);
-
-    if(!$msg == "") echo "<script> alert('$msg'); </script>";
   }
 
 
@@ -97,9 +95,9 @@
             </div>
             <nav class="tm-nav">
               <ul>
-                <li><a href="../index.php">Home</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
-                <li><a href="#" class="active">Add Product</a></li>
+                <li><a href="addprd" class="active">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -115,8 +113,18 @@
         </div>    
       </div>
     </div>
+      
+    <!----------------- Alert Box -------------------------------->
+    <?php 
 
-
+      if(!$err == "")
+      echo '<div class="err"> '.$err.' </div>';
+    
+      if(!$msg == "")
+        echo '<div class="msg"> '.$msg.' </div>';
+    ?>
+    
+    <!------------------ Main Content ---------------------------->
     <div class="border">
     <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Add Product</h1>
 

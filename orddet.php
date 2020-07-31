@@ -2,7 +2,8 @@
 
   session_start();
   include('conn.php');
-  $ordstatus = $date = $time = $fcod = "";
+  $ordstatus = $date = $time = $fcod = $ordcod = "";
+
 ?>
 
 
@@ -93,6 +94,7 @@
                 <li><a href="menu.php">Menu</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="cart.php" >Cart</a></li>
+                <li><a href="login.php">Login</a></li>
               </ul>
             </nav>   
           </div>           
@@ -134,7 +136,6 @@
                       $row = $result->fetch_assoc();
                       $email = $row["email"];
                       $mobile = $row["mobile"];
-                  
                       echo '</span></h3><hr class="tm-popular-item-hr">
                         <div class="imgdsc">
                         <img src="stupics/'.$row["usrpic"].'" alt="Popular" class="tm-popular-item-img" >
@@ -190,6 +191,19 @@
                                 }
                               }
                               $conn->close();
+
+                              //Submitting data in Orderdetail table
+                              /*include('conn.php');
+                              if(!($prev_ord == $ordcod && $prev_key == $key)){
+                                $sql = "call insorddet($ordcod, $key, $value, $tot)";
+                                mysqli_query($conn, $sql);
+                                echo $prev_key." = ".$key."<br>";
+                                echo $prev_ord." = ".$ordcod;
+                                $prev_key = $key;
+                                $prev_ord = $ordcod;
+                                
+                              }*/
+                              
                             }
                             echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td><td></td></tr>
                                   

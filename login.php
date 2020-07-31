@@ -21,7 +21,7 @@
 
                 if($verification == "Verified"){
                     $_SESSION["ucod"] = $ucod;
-                    if ($rol == "A") header ("location:admin/prdlist.php");
+                    if ($rol == "A") header ("location:admin/dashboard.php");
                     else {
                         if(isset($_SESSION["cart"]))
                             header("location:cart.php");
