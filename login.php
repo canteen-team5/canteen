@@ -4,7 +4,6 @@
 
     error_reporting(0);
     $usr = $pwd = $msg = $ucod = "";
-    
     if(isset($_POST["btnlogin"])){
         $usr = $_POST["username"];
         $pwd = $_POST["password"];
