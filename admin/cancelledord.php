@@ -88,6 +88,9 @@
         width:60%;
         padding:10px;
       }
+      .cat{
+        text-align: center;
+      }
       footer{
         margin: 0;
       }
@@ -99,20 +102,20 @@
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
+            <div class="tm-logo-container" onclick="mobile_icon_off()">
               <img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
             <div class="mobile-menu-icon">
               <i class="fa fa-bars"></i>
             </div>
-            <nav class="tm-nav">
+            <nav class="tm-nav" id="nav_mobile" onclick="mobile_icon()">
               <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
                 <li><a href="addprd.php">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
+                <li class="dropdown"><a class="dropdown-toggle active" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="allorder.php">All orders</a></li>
                     <li><a href="pendingord.php">Pending orders</a></li>
@@ -128,14 +131,14 @@
     </div>
 
 
-     <h1>Cancelled Orders</h1>
+     <h1 onclick="mobile_icon_off()">Cancelled Orders</h1>
      <?php
        include('../conn.php');
        $sql = "select * from tbord where ordstatus='Cancelled' order by ordcod DESC ";
        $result = $conn->query($sql);
        if($result->num_rows > 0){
           while($row = $result->fetch_assoc() ){
-            echo ' <div class="tm-main-section light-gray-bg">
+            echo ' <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
               <div class="container" id="main">
                 <section class="tm-section tm-section-margin-bottom-0 row">
                   <div class="tm-popular-item">
@@ -163,7 +166,7 @@
                             echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row_usr["rollno"].'</br>
                              <i><b>Name: </b></i>'.$row_usr["fname"].' '.$row_usr["lname"].'  <br>
                             <i><b>Contact No.: </b></i> '.$row_usr["mobile"].'<br><i><b>Email: </b></i> '.$row_usr["email"].'<br>
-                            <span class="bttn"><a><i><b>Order Status: </b></i>'. $ordstatus.' </a></span> </p></div>';
+                            <span class="highlight"> <i><b>Order Status: </b></i>'. $ordstatus.' </span> </p></div>';
       
                             }
                           $conn->close();
@@ -225,18 +228,18 @@
               </div>
             </div>';
           }
+        } else{
+          echo "<div class='empty-cart'><p class='cat' ><span class='text'> No Cancelled order </span> </p>
+          <p class='cat'> <span class='text'> <a href='allorder.php'>Go To All Order </a> </span> </p></div>";
         }
 
      ?>
      
             
-    <footer> 
-      <div class="container">
-        <div class="row tm-copyright">
-         <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 MAIMT Canteen</p>
-       </div>  
-     </div> 
-    </footer><!-- Footer content-->  
+    <!-------------------- Footer content--------------------------> 
+    <?php
+      include('footer.html');
+    ?> 
 
  </body>
  </html>

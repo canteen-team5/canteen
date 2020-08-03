@@ -53,12 +53,22 @@
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 
         <!-- Title Page-->
-        <title>Login</title>
+        <title>Canteen</title>
         <link href="css/font-awesome.min.css" rel="stylesheet" media="all">
         
 
         <!-- Main CSS-->
         <link href="css/main.css" rel="stylesheet" media="all">
+        <style>
+            .card-2 .card-body {
+                padding: 50px 90px;
+                padding-bottom: 68px;
+            }
+            .title {
+                margin: 0;
+                margin-bottom: 37px;
+            }
+        </style>
     </head>
 
     <body>

@@ -14,13 +14,13 @@ if (isset($_POST["catsubmit"])) {
     unset($_SESSION['ccod']);
     $sql = "call updcat($ccod,'$catnam')";
     if (mysqli_query($conn, $sql))
-      $msg = "Record updated successfully";
+      $msg = "Category name updated successfully";
     else
       $err = "Error updating record: " . mysqli_error($conn);
   } else {
     $sql = "call inscat('$catnam')";
     if ($conn->query($sql) === true) {
-      $msg = "New record created successfully";
+      $msg = "New category added successfully";
     } else {
       $err = "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -32,7 +32,7 @@ if (isset($_REQUEST["ccod"])) {
   if ($_REQUEST["mod"] == 'D') {
     $catcod = $_REQUEST["ccod"];
     $sql = "call delcat($catcod)";
-    if ($conn->query($sql) === true) $msg = "Record deleted successfully";
+    if ($conn->query($sql) === true) $err = "Category deleted";
     else $err = "Error deleting record: " . $conn->error;
   }
 
@@ -113,10 +113,27 @@ if (isset($_REQUEST["ccod"])) {
 
       .catsubrght{
         width: 50%;
-          float: left;
+        float: left;
       }
       span.text{
         width: auto;
+      }
+      @media screen and (max-width: 780px){
+        .h1{
+          width: 100%;
+        }
+        .catsubrght{
+          width: 65%;
+        }
+        .category_name{
+          width: 100%;
+        }
+        p.cat{
+          max-width: 90%;
+        }
+        .tm-section-header-container, .tm-section-header{
+          width: 100%;
+        }
       }
 
 
@@ -128,14 +145,14 @@ if (isset($_REQUEST["ccod"])) {
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
+            <div class="tm-logo-container" onclick="mobile_icon_off()">
               <img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
-            <div class="mobile-menu-icon">
+            <div class="mobile-menu-icon" onclick="mobile_icon()">
               <i class="fa fa-bars"></i>
             </div>
-            <nav class="tm-nav">
+            <nav class="tm-nav" id="nav_mobile">
               <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="#" class="active">Category</a></li>
@@ -168,8 +185,8 @@ if (isset($_REQUEST["ccod"])) {
 
     <!------------------------------------------------------------------>
 
-    <h1 style="width:85%;">CATEGORY</h1>
-    <form method="post"  action="category.php" name="frmcat" style="padding-bottom: 5em;" >
+    <h1 style="width:85%;" onclick="mobile_icon_off()">CATEGORY</h1>
+    <form method="post"  action="category.php" name="frmcat" style="padding-bottom: 5em;" onclick="mobile_icon_off()">
 
       <div class="row" style="padding:4% 0 0;" >
         <label for="cat_name">Categories Name:</label>
@@ -197,20 +214,16 @@ if (isset($_REQUEST["ccod"])) {
       if ($result_disp->num_rows > 0) {
         while ($row = $result_disp->fetch_assoc()) {
           echo "<p class='cat' ><span class='text'>" . $row["catname"] . "</span> <span class='bttn'> <a href=category.php?ccod=" . $row["catcod"] . "&mod=E >Edit</a>
-            <a href=category.php?ccod=" . $row["catcod"] . "&mod=D >Delete</a> </span> </p>";
+            <a onclick='confirmationDelete($(this));return false;' href='category.php?ccod=" . $row["catcod"] . "&mod=D'  >Delete</a> </span> </p>";
         }
       } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
-
       ?>
     </form>
 
-      <footer>
-        <div class="container">
-          <div class="row tm-copyright">
-           <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2084 Your Canteen</p>
-          </div>  
-        </div>
-      </footer> 
+    <!-------------------- Footer content--------------------------> 
+    <?php
+      include('footer.html');
+    ?> 
 
    </body>
 </html>

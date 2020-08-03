@@ -59,9 +59,10 @@
     else{
       $sql = "call insusr($rollno, '$fname', '$lname', '$usrpic', '$mobile', '$email', '$gender', '$usrname', '$usrpwd')";
       if ($conn->query($sql) === TRUE) {
-        $msg = "New record created successfully";
         if($usrpic!="")
         move_uploaded_file ($_FILES["picture"]["tmp_name"],"stupics/".$_FILES["picture"]["name"]);
+        $msg = "Registration successful";
+        //header('location:index.php');
       } else $err =  $conn->error;
 
     }
@@ -101,14 +102,14 @@
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
+            <div class="tm-logo-container" onclick="mobile_icon_off()">
               <img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
-            <div class="mobile-menu-icon">
+            <div class="mobile-menu-icon" onclick="mobile_icon()">
               <i class="fa fa-bars"></i>
             </div>
-            <nav class="tm-nav">
+            <nav class="tm-nav" id="nav_mobile">
               <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
@@ -134,7 +135,7 @@
     ?>
 
     <!----------------- Registration Form ------------------------>
-    <section class="border">
+    <section class="border" onclick="mobile_icon_off()">
       <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Registeration Form</h1>
 
       <form action="register.php" method="post" enctype="multipart/form-data">
@@ -152,7 +153,7 @@
             <label for="fname">First Name</label>
           </div>
           <div class="col-75">
-            <input type="text" id="fname" name="firstname" placeholder="Your name.." value="<?php echo $fname;?>">
+            <input type="text" id="fname" name="firstname" placeholder="Your first name.." value="<?php echo $fname;?>">
           </div>
         </div>
         
@@ -184,7 +185,7 @@
             <label for="email">Email</label>
           </div>
           <div class="col-75">
-            <input type="text" id="email_id" name="email" placeholder="Your email-id.." value="<?php echo $email;?>">
+            <input type="email" id="email_id" name="email" placeholder="Your email-id.." value="<?php echo $email;?>">
           </div>
         </div>
 
@@ -231,13 +232,9 @@
     </section>
 
     <!-------------------- Footer content--------------------------> 
-    <footer>
-      <div class="container">
-          <div class="row tm-copyright">
-          <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 Your Canteen</p>
-        </div>  
-      </div>
-    </footer>
+    <?php
+      include('footer.html');
+    ?>
      
   </body>
 </html>

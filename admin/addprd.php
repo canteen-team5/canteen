@@ -77,6 +77,7 @@
       body{
         background: #e4e4e4;
       }
+      
     </style>
   </head>
 
@@ -86,14 +87,14 @@
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
+            <div class="tm-logo-container" onclick="mobile_icon_off()">
               <img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
-            <div class="mobile-menu-icon">
+            <div class="mobile-menu-icon" onclick="mobile_icon()">
               <i class="fa fa-bars"></i>
             </div>
-            <nav class="tm-nav">
+            <nav class="tm-nav" id="nav_mobile">
               <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
@@ -125,7 +126,7 @@
     ?>
     
     <!------------------ Main Content ---------------------------->
-    <div class="border">
+    <div class="border" onclick="mobile_icon_off()">
     <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Add Product</h1>
 
       <form method='post' action='addprd.php' enctype="multipart/form-data">
@@ -238,13 +239,10 @@
       </form>
     </div>
 
-    <footer>
-      <div class="container">
-        <div class="row tm-copyright">
-          <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 MAIMT Canteen</p>
-        </div>  
-      </div>
-    </footer>
+    <!-------------------- Footer content--------------------------> 
+    <?php
+      include('footer.html');
+    ?>
     
   </body>
 </html>

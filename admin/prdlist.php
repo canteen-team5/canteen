@@ -55,21 +55,42 @@
     footer{
       margin: 10vh 0 0;
     }
+    @media screen and (max-width: 780px){
+        .h1{
+          width: 100%;
+        }
+        .tm-main-section{
+          padding-top: 30px;
+        }
+        p.cat{
+          max-width: 90%;
+        }
+        .category_name{
+          width: 95%;
+        }
+        .tm-section-header-container{
+          width: 100%;
+        } 
+        .tm-section-header{
+          width: 100%;
+        }
+    }
   </style>
   </head>
+
   <body>
     <div class="tm-top-header">
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
+            <div class="tm-logo-container" onclick="mobile_icon_off()">
               <img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
-            <div class="mobile-menu-icon">
+            <div class="mobile-menu-icon" onclick="mobile_icon()">
               <i class="fa fa-bars"></i>
             </div>
-            <nav class="tm-nav">
+            <nav class="tm-nav" id="nav_mobile" >
               <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
@@ -101,8 +122,8 @@
     ?>
 
     
-    <h1>PRODUCTS</h1>
-    <div class="tm-main-section light-gray-bg">
+    <h1 onclick="mobile_icon_off()">PRODUCTS</h1>
+    <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
         <section class="tm-section tm-section-margin-bottom-0 row">
           <div class="category_name">
             <div class="col-lg-12 tm-section-header-container">
@@ -130,7 +151,7 @@
     </div> 
 
 
-    <div class="tm-main-section light-gray-bg">
+    <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
         <section class="tm-section tm-section-margin-bottom-0 row" id="allprd">
           <div class="category_name">
             <div class="col-lg-12 tm-section-header-container">
@@ -155,9 +176,9 @@
           ?>  
                   
         </section>
-    </div>
+      </div>
 
-    <div class="tm-main-section light-gray-bg">
+      <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
         <section class="tm-section tm-section-margin-bottom-0 row">
           <div class="category_name">
             <div class="col-lg-12 tm-section-header-container">
@@ -184,13 +205,10 @@
     </div> 
 
 
-    <footer>
-      <div class="container">
-        <div class="row tm-copyright">
-         <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 Your Canteen</p>
-        </div>  
-      </div>   
-    </footer> <!-- Footer content-->  
+    <!-------------------- Footer content--------------------------> 
+    <?php
+      include('footer.html');
+    ?>  
 
   </body>
 </html>

@@ -1,6 +1,4 @@
 
-
-
 body { 
   overflow-x: hidden; 
   background: #e4e4e4;
@@ -399,7 +397,8 @@ ol li:before {
   position: relative;
   z-index: 1;
   text-align: center;
-  text-transform: uppercase;  
+  text-transform: uppercase;
+  margin: auto;  
 }
 .tm-side-menu-bg {
   position: absolute;
@@ -517,6 +516,7 @@ margin-left: 300px;
 
 
 @media screen and (max-width: 991px) {
+  .tm-nav { display: flex; }
   .tm-welcome-content { margin-bottom: 250px; }
   .tm-main-section { padding-top: 200px; }
   .light { 
@@ -591,6 +591,18 @@ margin-left: 300px;
         -ms-flex-direction: column;
             flex-direction: column; 
   }
+  .tm-nav li a:hover,
+  .tm-nav li a:focus {  
+   color: #c79c60;
+   text-decoration: none;
+  }
+ .tm-nav li a.active {
+   background:  none;
+   color: #c79c60;
+  }
+  .border{
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 650px) {
@@ -609,6 +621,18 @@ margin-left: 300px;
     text-align: center;
   }
   .tm-product-description { text-align: center; }
+  .tm-nav li a:hover,
+  .tm-nav li a:focus {  
+   color: #c79c60;
+   text-decoration: none;
+ }
+ .tm-nav li a.active {
+   background:  none;
+   color: #c79c60;
+ }
+ .border{
+  width: 100%;
+  }
 }
 
 .menu_page img{
@@ -647,6 +671,7 @@ footer{
   background-color: #d0d0d0;;
   border-radius: 1em;
   padding: 2px;
+  
 }
 span.text{
   width: 50%;
@@ -672,6 +697,18 @@ span.bttn{
   cursor: pointer;
   display: inline-block;
 }
+.bttn a:hover{
+  text-decoration: none;
+}
+.highlight{
+  width: max-content;
+  display: block;
+  margin: auto;
+  background: #4caf50;
+  padding: 12px 20px;
+  color: white;
+  border-radius: 4px;
+}
 
 /*** add prd and usr **/
 .body{
@@ -686,7 +723,7 @@ h2{
   text-align: center;
   margin: 10px 0 22px 0;
 }
-input[type=text], input[type=password], select, textarea {
+input[type=text], input[type=email] input[type=password], select, textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -726,12 +763,10 @@ input[type=submit]:hover {
 
 .border{
   border-radius: 5px;
-  padding: 20px;
+  padding: 30px;
   width: 60%;
   margin: 0% auto 5%;
   font-family: Roboto, Arial, Helvetica Neue, sans-serif;
-
-
 }
 .col-25 {
   float: left;
@@ -757,6 +792,22 @@ input[type=submit]:hover {
   .col-25, .col-75, input[type=submit] {
     width: 100%;
     margin-top: 0;
+  }
+}
+@media screen and (max-width: 780px){
+  .border{
+    width: 100%;
+  }
+  .border input[type=submit]{
+    margin-top: 20px;
+  }
+}
+@media screen and (max-width: 650px){
+  .border{
+    width: 100%;
+  }
+  .border input[type=submit]{
+    margin-top: 20px;
   }
 }
 

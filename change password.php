@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    include('conn.php');
+
+    if(isset($_SESSION["ucod"])){
+        $ucod = $_SESSION["ucod"];
+        $sql = "call dspusr($ucod)";
+        $result = $conn->query($sql);
+        if($result->num_rows > 0){
+            $row = $result->fetch_assoc();
+
+        }
+
+    }
+?>
+
 <!DOCTYPE HTML>
 <html lang="en"><head>
     <!-- Required meta tags-->
@@ -10,7 +26,7 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 
     <!-- Title Page-->
-    <title>Login</title>
+    <title>Canteen</title>
     <link href="css/font-awesome.min.css" rel="stylesheet" media="all">
     
 
@@ -31,22 +47,22 @@
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" class="form-control" name="username" placeholder="Enter Old Password">
+								<input type="password" class="form-control" name="oldpwd" placeholder="Old Password">
 							</div>
 						
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" class="form-control" name="password" placeholder="Enter New Password">
+								<input type="password" class="form-control" name="newpwd" placeholder="New Password">
 							</div>
 							<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" class="form-control" name="username" placeholder="Enter Confirm Password">
+								<input type="password" class="form-control" name="confirmpwd" placeholder="Confirm Password">
 							</div>
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary btn-block btn-lg">Log In</button>
+							<button type="submit" class="btn btn-primary btn-block btn-lg">Change Password</button>
 						</div>
 						</div></form>
 					</div>

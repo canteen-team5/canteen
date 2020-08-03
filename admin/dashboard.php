@@ -185,14 +185,14 @@
       <div class="container" style="max-width:80%">
         <div class="row">
           <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
+            <div class="tm-logo-container" onclick="mobile_icon_off()">
               <img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
-            <div class="mobile-menu-icon">
+            <div class="mobile-menu-icon" onclick="mobile_icon()">
               <i class="fa fa-bars"></i>
             </div>
-            <nav class="tm-nav">
+            <nav class="tm-nav" id="nav_mobile">
               <ul>
                 <li><a href="dashboard.php" class="active">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
@@ -213,7 +213,7 @@
       </div>
     </div>
 
-    <div class="banner">
+    <div class="banner" onclick="mobile_icon_off()">
       <div class="bar"><h1>Dashboard</h1></div>
       <div class="w3l_banner_nav_left">
         <nav class="navbar nav_bottom">
@@ -235,7 +235,7 @@
                 </div>
               </li>
               <li><a href="#">View Profile</a></li>
-              <li><a href="#">Verify User</a></li>
+              <li><a href="verifyusr.php">Verify User</a></li>
               <li><a href="#">View Sales</a></li>
               <li><a href="#">Check Inventary</a></li>
               <li><a href="#">Change Password</a></li>
@@ -356,13 +356,10 @@
       <div class="clearfix"></div>
     </div>
 
-    <footer>
-      <div class="container">
-        <div class="row tm-copyright">
-          <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 MAIMT Canteen</p>
-        </div>  
-      </div>
-    
-    </footer> 
+    <!-------------------- Footer content--------------------------> 
+    <?php
+      include('footer.html');
+    ?> 
+
   </body>
 </html>
