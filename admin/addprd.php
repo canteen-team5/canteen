@@ -2,7 +2,7 @@
   session_start();
   include('../conn.php');
 
-  $sel_cat = $itm_nam = $itm_prc = $itm_dsc = $itm_pic = $itm_avail = $itm_qty = $msg = "";
+  $sel_cat = $itm_nam = $itm_prc = $itm_dsc = $itm_pic = $itm_avail = $itm_qty = $msg = $err = "";
   if(isset($_POST["submit"])){
     $sel_cat = $_POST["category"];
     $itm_nam = $_POST["item_name"];
@@ -12,11 +12,11 @@
     $itm_avail = $_POST["available"];
     $itm_qty = $_POST["item_qty"];
 
-    if($sel_cat == "") $msg = "Please add category first";
-    elseif($itm_nam == "") $msg = "Please enter Item name";
-    elseif($itm_prc == "") $msg = "Please enter Item price";
-    elseif($itm_dsc == "") $msg = "Please enter Item description";
-    elseif($itm_pic == "") $msg = "Please input Item picture";
+    if($sel_cat == "") $err = "Please add category first!";
+    elseif($itm_nam == "") $err = "Please enter Item name!";
+    elseif($itm_prc == "") $err = "Please enter Item price!";
+    elseif($itm_dsc == "") $err = "Please enter an item description!";
+    elseif($itm_pic == "") $err = "Please input Item picture!";
     //elseif($itm_qty == "") $itm_qty = "null";
     else {
       if(isset($_SESSION["check"])){
@@ -25,7 +25,7 @@
           if ($conn->query($sql) === TRUE) {
             $msg = "Record updated successfully";
           } else {
-            $msg = "Error updating record: " . $conn->error;
+            $err = "Error updating record: " . $conn->error;
           }
           unset($_SESSION["check"]);
       }
@@ -34,13 +34,11 @@
       if (mysqli_query($conn, $sql)) 
         $msg = "New record created successfully";
       else
-        $msg = "Error: " . $sql . "<br>" . mysqli_error($conn);
+        $err = "Error: " . $sql . "<br>" . mysqli_error($conn);
       }
     }
     if($itm_pic!="")
       move_uploaded_file ($_FILES["picture"]["tmp_name"],"../prdpics/".$_FILES["picture"]["name"]);
-
-    if(!$msg == "") echo "<script> alert('$msg'); </script>";
   }
 
 
@@ -79,6 +77,7 @@
       body{
         background: #e4e4e4;
       }
+      
     </style>
   </head>
 
@@ -88,18 +87,18 @@
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
+            <div class="tm-logo-container" onclick="mobile_icon_off()">
               <img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
-            <div class="mobile-menu-icon">
+            <div class="mobile-menu-icon" onclick="mobile_icon()">
               <i class="fa fa-bars"></i>
             </div>
-            <nav class="tm-nav">
+            <nav class="tm-nav" id="nav_mobile">
               <ul>
-                <li><a href="../index.php">Home</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
-                <li><a href="#" class="active">Add Product</a></li>
+                <li><a href="addprd" class="active">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -115,10 +114,26 @@
         </div>    
       </div>
     </div>
+      
+    <!----------------- Alert Box -------------------------------->
+    <?php 
 
+<<<<<<< HEAD
 
     <div class="border">
     <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">ADD PRODUCT</h1>
+=======
+      if(!$err == "")
+      echo '<div class="err"> '.$err.' </div>';
+    
+      if(!$msg == "")
+        echo '<div class="msg"> '.$msg.' </div>';
+    ?>
+    
+    <!------------------ Main Content ---------------------------->
+    <div class="border" onclick="mobile_icon_off()">
+    <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Add Product</h1>
+>>>>>>> 2952413c351c4bf3865a7b22d842d762689fbb0c
 
       <form method='post' action='addprd.php' enctype="multipart/form-data">
         <div class="row">
@@ -144,7 +159,11 @@
             <label for="item_desc">Item Description</label>
           </div>
           <div class="col-75">
+<<<<<<< HEAD
             <textarea id="description" name="describe" placeholder="Your item description.." style="height:100px" value=""><?php echo $itm_dsc; ?> </textarea>
+=======
+            <textarea id="description" name="describe" placeholder="Item description.." style="height:100px" value="<?php echo $itm_dsc; ?>"></textarea>
+>>>>>>> 2952413c351c4bf3865a7b22d842d762689fbb0c
           </div>
         </div>
 
@@ -230,13 +249,10 @@
       </form>
     </div>
 
-    <footer>
-      <div class="container">
-        <div class="row tm-copyright">
-          <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 MAIMT Canteen</p>
-        </div>  
-      </div>
-    </footer>
+    <!-------------------- Footer content--------------------------> 
+    <?php
+      include('footer.html');
+    ?>
     
   </body>
 </html>

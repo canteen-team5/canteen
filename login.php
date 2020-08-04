@@ -7,8 +7,8 @@
     if(isset($_POST["btnlogin"])){
         $usr = $_POST["username"];
         $pwd = $_POST["password"];
-        if($usr == "") $msg = "Please enter username";
-        elseif($pwd == "") $msg = "Please enter password";
+        if($usr == "") $msg = "Please enter username!";
+        elseif($pwd == "") $msg = "Please enter password!";
         else { 
             $sql = "call login_check('$usr', '$pwd')";
             $result = $conn->query($sql);
@@ -20,7 +20,7 @@
 
                 if($verification == "Verified"){
                     $_SESSION["ucod"] = $ucod;
-                    if ($rol == "A") header ("location:admin/prdlist.php");
+                    if ($rol == "A") header ("location:admin/dashboard.php");
                     else {
                         if(isset($_SESSION["cart"]))
                             header("location:cart.php");
@@ -53,12 +53,22 @@
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 
         <!-- Title Page-->
-        <title>Login</title>
+        <title>Canteen</title>
         <link href="css/font-awesome.min.css" rel="stylesheet" media="all">
         
 
         <!-- Main CSS-->
         <link href="css/main.css" rel="stylesheet" media="all">
+        <style>
+            .card-2 .card-body {
+                padding: 50px 90px;
+                padding-bottom: 68px;
+            }
+            .title {
+                margin: 0;
+                margin-bottom: 37px;
+            }
+        </style>
     </head>
 
     <body>

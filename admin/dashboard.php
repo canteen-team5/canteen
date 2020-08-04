@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,12 +9,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Canteen</title>
+    
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/templatemo-style.css" rel="stylesheet">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/templatemo-style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
       body{
         background: #ffffff;
@@ -29,8 +38,12 @@
         margin-top: 40px;
         margin-left: 40px;
       }
+      .banner{
+        background: #e4e4e4;
+      }
       .bar{
-        background: #fd3535d4;
+        background: #282726;
+        color: #c79c60;
         text-align: center;
         height: 200px;
         padding: 10px;
@@ -42,7 +55,7 @@
       .w3l_banner_nav_left {
         float: left;
         width: 20%;
-        background: #fbd35f;
+        background: #ffffff;
         height: 560px;
         margin-top: -150px;
         border-radius: 5px;
@@ -100,6 +113,7 @@
       .navbar-nav > li > a {
         color: #212121;
         padding: 10px 0px 10px 40px;
+        width: 100%;
       }
       .bttn a{
         font-size: 18px;
@@ -124,9 +138,7 @@
         text-align: center;
         height: 240px;
         background: #ffffff;
-        box-shadow: 1px 2px 3px rgb(0,0,0,0.3);
-        /* background: #00a1b3; */
-        box-shadow: 6px 5px 7px 4px rgb(3 179 179 / 30%);
+        box-shadow: 9px 8px 6px 2px rgb(0,0,0,0.3);
         padding: 10px;
         border-radius: 5px;
       }
@@ -136,17 +148,16 @@
         font-size: 50px;
       }
       .inr-p{
-        background: #04bf60de;
-          padding: 10%;
-          margin: 0 -10px;
-          font-weight: bold;
-          font-size: 18px;
+        background: #a2a2a2de;
+        padding: 10%;
+        margin: 0 -10px;
+        font-weight: bold;
+        font-size: 18px;
       }
       .row2{
         padding: 10px;
         margin: 20px 0;
         text-align: center;
-        background: #ffffff;
         display: flow-root;
       }
       .row2 h1{
@@ -158,36 +169,57 @@
         padding: 10px;
       }
       .link{
-        background: #ff5252;
+        background: #a2a2a2de;
         padding: 15% 0;
-        box-shadow: 5px 5px 5px 3px rgb(255,0,0,0.3);
+        box-shadow: 5px 5px 7px 3px rgb(64 64 64 / 30%)
       }
       .link a{
         font-size: 30px;
-        color: #fff;
+        color: #000000;
+      }
+      #logout {
+        display: block;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+        border: 0;
+        background: transparent;
+        padding: 0;
+      }
+      #logout:active {
+        border: 0;
       }
 
     </style>
   </head>
   <body>
     <div class="tm-top-header">
-      <div class="container">
+      <div class="container" style="max-width:80%">
         <div class="row">
           <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
-              <img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
+            <div class="tm-logo-container" onclick="mobile_icon_off()">
+              <img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
-            <div class="mobile-menu-icon">
+            <div class="mobile-menu-icon" onclick="mobile_icon()">
               <i class="fa fa-bars"></i>
             </div>
-            <nav class="tm-nav">
+            <nav class="tm-nav" id="nav_mobile">
               <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="dash.html" class="active">Dashboard</a></li>
+                <li><a href="dashboard.php" class="active">Dashboard</a></li>
+                <li><a href="category.php">Category</a></li>
+                <li><a href="addprd.php">Add Product</a></li>
+                <li><a href="prdlist.php">Product List</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="allorder.php">All orders</a></li>
+                    <li><a href="pendingord.php">Pending orders</a></li>
+                    <li><a href="acceptedord.php">Accepted orders</a></li>
+                    <li><a href="cancelledord.php">Cancelled orders</a></li>
+                  </ul>
+                </li>
               </ul>
             </nav>   
           </div>           
@@ -195,7 +227,7 @@
       </div>
     </div>
 
-    <div class="banner">
+    <div class="banner" onclick="mobile_icon_off()">
       <div class="bar"><h1>Dashboard</h1></div>
       <div class="w3l_banner_nav_left">
         <nav class="navbar nav_bottom">
@@ -203,15 +235,26 @@
           <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
             <ul class="nav navbar-nav nav_1">
               <li><div class="w3ls_logo_products_left">
-                <img src="stupics/rajat.jpeg">
+                <?php
+                  include('../conn.php');
+                  $sql = "select * from tbusr where usrrol = 'A' ";
+                  $result = $conn->query($sql);
+                  if($result->num_rows > 0){
+                    $row = $result->fetch_assoc();
+                    $pic = $row["usrpic"];
+                    echo '<img src="../stupics/'.$pic.'">';
+                  }
+                ?>
                 <span class="bttn"><a href="#"><i><b> Admin </b></i> </a></span>
                 </div>
               </li>
               <li><a href="#">View Profile</a></li>
-              <li><a href="#">Verify User</a></li>
-              <li><a href="#">View Sales</a></li>
+              <li><a href="verifyusr.php">Verify User</a></li>
               <li><a href="#">Check Inventary</a></li>
-              <li><a href="#">Edit Profile</a></li>
+              <li><a href="../changepwd.php">Change Password</a></li>
+              <li><a> <form action="../index.php" method="post">
+                <button id="logout" type="submit" name="logout"> Logout </button> </form> </a>
+              </li>
             </ul>
            </div><!-- /.navbar-collapse -->
         </nav>
@@ -224,28 +267,66 @@
           <div class="row">
             <div class="tot">
               <div class="data">
-                <h1 class="inr-h1"> 300 </h1>
+                <h1 class="inr-h1">
+                  <?php
+                    include('../conn.php');
+                    $sql = "select sum(ordcost) from tbord where ordstatus = 'Accepted' ";
+                    $result = $conn->query($sql) ;
+                    $row = $result->fetch_assoc();
+                    if(!$row["sum(ordcost)"] == "")
+                      echo $row["sum(ordcost)"];
+                    else echo "0";
+                    $conn->close();
+                  ?> 
+                </h1>
                 <p class="inr-p"> Total Sales </p>
               </div>
             </div>
 
             <div class="tot">
               <div class="data">
-                <h1 class="inr-h1"> 30 </h1>
+                <h1 class="inr-h1">
+                  <?php
+                    include('../conn.php');
+                    $sql = "select count(ordcod) from tbord ";
+                    $result = $conn->query($sql) ;
+                    $row = $result->fetch_assoc();
+                    echo $row["count(ordcod)"];
+                    $conn->close();
+                  ?> 
+                </h1>
                 <p class="inr-p"> Total Orders </p>
               </div> 
             </div>
 
             <div class="tot">
               <div class="data">
-                <h1 class="inr-h1"> 150 </h1>
+                <h1 class="inr-h1"> 
+                  <?php
+                    include('../conn.php');
+                    $sql = "select count(usrcod) from tbusr where verification = 'Verified' ";
+                    $result = $conn->query($sql) ;
+                    $row = $result->fetch_assoc();
+                    echo $row["count(usrcod)"];
+                    $conn->close();
+                  ?>
+                </h1>
                 <p class="inr-p"> Verified Users </p>
               </div>
             </div>
 
             <div class="tot">
               <div class="data">
-                <h1 class="inr-h1"> 8 </h1>
+                <h1 class="inr-h1">
+                  <?php
+                    include('../conn.php');
+                    $sql = "select count(ordcod) from tbord where ordstatus = 'Pending' ";
+                    $result = $conn->query($sql) ;
+                    $row = $result->fetch_assoc();
+                    echo $row["count(ordcod)"];
+                    $conn->close();
+                  ?>  
+                </h1>
                 <p class="inr-p"> Pending orders </p>
               </div>
             </div>
@@ -261,7 +342,7 @@
 
             <div class="quick_link">
               <div class="link">
-                <a href="#">Top Sellings</a>
+                <a href="prdlist.php">Top Sellings</a>
               </div>
             </div>
 
@@ -273,13 +354,13 @@
 
             <div class="quick_link">
               <div class="link">
-                <a href="#">Orders</a>
+                <a href="allorder.php">Orders</a>
               </div>
             </div>
 
             <div class="quick_link">
               <div class="link">
-                <a href="#">Products</a>
+                <a href="prdlist.php#allprd">Products</a>
               </div>
             </div>
 
@@ -291,13 +372,10 @@
       <div class="clearfix"></div>
     </div>
 
-    <footer>
-      <div class="container">
-        <div class="row tm-copyright">
-          <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2020 MAIMT Canteen</p>
-        </div>  
-      </div>
-    
-    </footer> 
+    <!-------------------- Footer content--------------------------> 
+    <?php
+      include('footer.html');
+    ?> 
+
   </body>
 </html>

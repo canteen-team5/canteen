@@ -1,84 +1,7 @@
 <?php
-
   session_start();
-  include('../conn.php');
-  //error_reporting(0);
-  $msg = $mobile = "";
-
-  require("../PHPMailer/src/PHPMailer.php");
-  require("../PHPMailer/src/SMTP.php");
-
-    $mail = new PHPMailer\PHPMailer\PHPMailer();
-    $mail->IsSMTP(); // enable SMTP
-
-    //$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-    $mail->SMTPAuth = true; // authentication enabled
-    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-    $mail->Host = "smtp.gmail.com";
-    $mail->Port = 465; // or 587
-    $mail->IsHTML(true);
-    $mail->Username = "team5canteen@gmail.com";
-    $mail->Password = "canteen@team5";
-    $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
-    $mail->Subject = "Order Status Changed";
- 
- 
- // for accepting the order
- if((isset($_REQUEST["ordcod"]) && $_REQUEST["action"]) == "accept"){
-
-   $ordcod = $_REQUEST["ordcod"];
-   $sql = "update tbord set ordstatus = 'Accepted' where ordcod = $ordcod";
-   if (mysqli_query($conn, $sql)) {
-     $msg =  "Record updated successfully";
-     $email = $_SESSION["email"];
-
-    
-       $mail->Body = "Hurray! Your has been accepted.\n Thanks for ordering food";
-       
-       $mail->AddAddress($email);
-       $mail->Send();
-       /*if(!$mail->Send()) {
-           echo "Mailer Error: " . $mail->ErrorInfo;
-       } else {
-           echo "Message has been sent";
-       }*/
-       //unset($_SESSION["email"]);
-   } else {
-     $msg =  "Error updating record: " . mysqli_error($conn);
-   }
-   //if(!$msg == "" ) echo "<script> alert('h1'); </script>";
- }
-
- // for cancelling the order
- if(isset($_REQUEST["ordcod"]) && $_REQUEST["action"] == "cancel"){
-   
-   $ordcod = $_REQUEST["ordcod"];
-   $sql = "update tbord set ordstatus = 'Cancelled' where ordcod = $ordcod";
-   if (mysqli_query($conn, $sql)) {
-     $msg =  "Record updated successfully";
-     $email = $_SESSION["email"];
-
-    
-       $mail->Body = "Oops! Your order has been cancelled.";
-     
-       $mail->AddAddress($email);
-       $mail->Send();
-       /*if(!$mail->Send()) {
-           echo "Mailer Error: " . $mail->ErrorInfo;
-       } else {
-           echo "Message has been sent";
-       }*/
-       //unset($_SESSION["email"]);
-   } else {
-     $msg =  "Error updating record: " . mysqli_error($conn);
-   }
-   //if(!$msg == "" ) echo "<script> alert('$msg'); </script>";
- }
-
-
-  
+  include('conn.php');
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -87,14 +10,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Canteen</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/templatemo-style.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/templatemo-style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -164,36 +88,68 @@
       footer{
         margin: 0;
       }
+      .dropdown-menu>li>a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+      }
+      .dropdown-menu>li>a:hover{
+        color: black;
+        background-color: #e4e4e4;
+      }
+      .dropdown-menu>li:hover{
+        color: grey;
+      }
+      .dropdown-menu>li>a>form>button {
+        display: block;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+        border: 0;
+        background: transparent;
+        padding: 0;
+      }
     </style>
   </head>
 
 
   <body>
-    <div class="tm-top-header">
+  <div class="tm-top-header">
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
             <div class="tm-logo-container" onclick="mobile_icon_off()">
-              <img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
+              <img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px">
               <h1 class="tm-site-name tm-handwriting-font">Canteen</h1>
             </div>
-            <div class="mobile-menu-icon" onclick="mobile_icon()">
-              <i class="fa fa-bars"></i>
+            <div class="mobile-menu-icon" id="mobile" onclick="mobile_icon()" >
+              <i class="fa fa-bars" ></i>
             </div>
             <nav class="tm-nav" id="nav_mobile">
               <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="category.php">Category</a></li>
-                <li><a href="addprd.php">Add Product</a></li>
-                <li><a href="prdlist.php">Product List</a></li>
-                <li class="dropdown"><a class="dropdown-toggle active" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
+                <li><a href="index.php" >Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="menu.php">Menu</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <li><a href="cart.php">Cart</a></li>
+                
+                <li class="dropdown"><a class="dropdown-toggle active" data-toggle="dropdown" href="#"><i class="fa fa-user" aria-hidden="true" style="font-size:20px;"> </i> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="allorder.php">All orders</a></li>
-                    <li><a href="pendingord.php">Pending orders</a></li>
-                    <li><a href="acceptedord.php">Accepted orders</a></li>
-                    <li><a href="cancelledord.php">Cancelled orders</a></li>
+                    <li><a href="">View Profile</a></li>
+                      <li><a href="">My Orders</a></li>
+                      <li><a href="changepwd.php">Change Password</a></li>
+                      <li><a> <form action="index.php" method="post">
+                        <button type="submit" name="logout"> Logout </button> </form> </a>
+                      </li> 
                   </ul>
-                </li>
+                </li> 
+                
               </ul>
             </nav>   
           </div>           
@@ -205,8 +161,9 @@
     <h1 onclick="mobile_icon_off()">Total Orders</h1>
 
     <?php
-       include('../conn.php');
-       $sql = "call dspord()";
+       $ucod = $_SESSION["ucod"];
+       include('conn.php');
+       $sql = "select * from tbord where ordusrcod=$ucod order by ordcod DESC ";
        $result = $conn->query($sql);
        if($result->num_rows > 0){
            while($row = $result->fetch_assoc() ){
@@ -216,14 +173,14 @@
                   <div class="tm-popular-item">
                     <div class="tm-popular-item-description">
                       <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">';
-                      $ucod = $row["ordusrcod"];
+
                       $time = $row["ordtime"];
                       $date = $row["orddate"];
                       $ordstatus = $row["ordstatus"];
                       $fcod = $row["ordfoodcod"];
                       echo 'Order No. '.$row["ordcod"];
                       //$conn->close();
-                      include('../conn.php');
+                      include('conn.php');
                       $sql_usr = "call fndusr($ucod)";
                       $result_usr = $conn->query($sql_usr);
                       if($result_usr->num_rows > 0){
@@ -232,7 +189,7 @@
                         $mobile = $row_usr["mobile"];
                         echo '</span></h3><hr class="tm-popular-item-hr">
                         <div class="imgdsc">
-                          <img src="../stupics/'.$row_usr["usrpic"].'" alt="User Picture" class="tm-popular-item-img" >
+                          <img src="stupics/'.$row_usr["usrpic"].'" alt="User Picture" class="tm-popular-item-img" >
                         <p class="det" >';
                           
                         echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row_usr["rollno"].'</br>
@@ -243,7 +200,7 @@
                       $conn->close();
                       echo '<hr class="tm-popular-item-hr">';
 
-                      include('../conn.php');
+                      include('conn.php');
                       if(isset($fcod)){
                         $str = $fcod;
                         $arr = explode("," , $str);
@@ -264,7 +221,7 @@
                           </thead>
                           <tbody>';
                           foreach($contents as $key => $value){
-                            include('../conn.php');
+                            include('conn.php');
                             $tot = 0;
                             $sql_menu = "call fndmenu($key)";
                             $result_menu = $conn->query($sql_menu);
@@ -285,11 +242,7 @@
                                 
                               </tbody>
                             </table>';
-                            if($row["ordstatus"] == "Pending")
-                              echo '<hr class="tm-popular-item-hr">
-                              <span class="bttn"><a href="allorder.php?ordcod='.$row["ordcod"].'&action=accept"><i><b> Accept the Order  </b></i> </a></span>
-                              <span class="bttn"><a href="allorder.php?ordcod='.$row["ordcod"].'&action=cancel"><i><b> Cancel the Order  </b></i> </a></span>';
-                          echo '</div>';
+                           echo '</div>';
                         } 
                       } else{
                         echo "<div class='empty-cart'><p class='cat' ><span class='text'> Something went wrong! </span> </p>
