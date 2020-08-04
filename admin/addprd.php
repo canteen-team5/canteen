@@ -118,7 +118,7 @@
 
 
     <div class="border">
-    <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Add Product</h1>
+    <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">ADD PRODUCT</h1>
 
       <form method='post' action='addprd.php' enctype="multipart/form-data">
         <div class="row">
@@ -144,7 +144,7 @@
             <label for="item_desc">Item Description</label>
           </div>
           <div class="col-75">
-            <textarea id="description" name="describe" placeholder="Item description.." style="height:100px" value=""><?php echo $itm_dsc; ?> </textarea>
+            <textarea id="description" name="describe" placeholder="Your item description.." style="height:100px" value=""><?php echo $itm_dsc; ?> </textarea>
           </div>
         </div>
 
@@ -215,7 +215,7 @@
             <label for="item_name">Item Quantity</label>
           </div>
           <div class="col-75">
-            <input type="text"  name="item_qty" placeholder="Product Quantity.." value="<?php echo $itm_qty; ?>">
+            <input type="text"  name="item_qty" placeholder="Your item Quantity.." value="<?php echo $itm_qty; ?>">
           </div>
         </div>
         
