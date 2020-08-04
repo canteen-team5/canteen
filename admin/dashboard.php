@@ -177,6 +177,20 @@
         font-size: 30px;
         color: #000000;
       }
+      #logout {
+        display: block;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+        border: 0;
+        background: transparent;
+        padding: 0;
+      }
+      #logout:active {
+        border: 0;
+      }
 
     </style>
   </head>
@@ -236,9 +250,11 @@
               </li>
               <li><a href="#">View Profile</a></li>
               <li><a href="verifyusr.php">Verify User</a></li>
-              <li><a href="#">View Sales</a></li>
               <li><a href="#">Check Inventary</a></li>
-              <li><a href="#">Change Password</a></li>
+              <li><a href="../changepwd.php">Change Password</a></li>
+              <li><a> <form action="../index.php" method="post">
+                <button id="logout" type="submit" name="logout"> Logout </button> </form> </a>
+              </li>
             </ul>
            </div><!-- /.navbar-collapse -->
         </nav>

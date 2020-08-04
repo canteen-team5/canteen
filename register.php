@@ -16,17 +16,17 @@
     
     // validating Form
     if($rollno == "")
-      $err = "Please enter Roll no";
+      $err = "Please enter Roll no!";
     elseif(!preg_match("/^[0-9]{3,20}$/", $rollno))
       $err = "Roll no. must contain only number and should be greater than equal to 3 and less than 20";
 
     elseif($fname == "")
-      $err = "Please enter First Name";
+      $err = "Please enter First Name!";
     elseif(!preg_match("/^[A-Z][a-zA-Z ]{2,19}$/", $fname))
       $err = "First name must contain only alphabets and should be greater than equal to 3 and less than 20";
 
     elseif($lname == "")
-      $err = "Please enter Last Name";
+      $err = "Please enter Last Name!";
     elseif(!preg_match("/^[A-Z][a-zA-Z ]{2,19}$/", $lname))
       $err = "Last name must contain only alphabets and should be greater than equal to 3 and less than 20";
 
@@ -34,27 +34,27 @@
       $err = "Please select gender!";
 
     elseif($email == "")
-      $err = "Please enter your email";
+      $err = "Please enter your email!";
     elseif(!filter_var($email, FILTER_VALIDATE_EMAIL))
       $err = "Inavlid email format";
 
     elseif($mobile == "")
-      $err = "Please enter First Name";
+      $err = "Please enter Mobile Number!";
     elseif(!preg_match("/^[6-9]\d{9}$/", $mobile))
-      $err = "Mobile number should be 10 digit long and must start with 6-9";
+      $err = "Mobile number should be 10 digits long and must start with 6-9";
 
     elseif($usrname == "")
-      $err = "Please enter Username";
+      $err = "Please enter Username!";
     elseif(!preg_match("/^[^`]{5,20}$/", $usrname))
-      $err = "Username should be 5 to 20 charaters long";
+      $err = "Username should be 5 to 20 characters long";
 
     elseif($usrpwd == "")
-      $err = "Please enter Password";
+      $err = "Please enter Password!";
     elseif(!preg_match("/^[^`]{5,20}$/", $usrpwd))
-      $err = "Username should be 5 to 20 charaters long";
+      $err = "Username should be 5 to 20 characters long";
 
     elseif($usrpic == "") 
-      $err = "Please input your picture";
+      $err = "Please input your picture!";
 
     else{
       $sql = "call insusr($rollno, '$fname', '$lname', '$usrpic', '$mobile', '$email', '$gender', '$usrname', '$usrpwd')";
@@ -79,13 +79,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Canteen</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/templatemo-style.css" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <style>
       body{
         background: #e4e4e4;
@@ -93,6 +98,7 @@
       h2{
         font-size: 40px;
       }
+      
     </style>
   </head>
   <body>
@@ -116,7 +122,7 @@
                 <li><a href="menu.php">Menu</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="cart.php">Cart</a></li>
-                <li><a href="login.php">Login</a></li>
+                <li><a href="login.php">Sign In</a></li>               
               </ul>
             </nav>   
           </div>           

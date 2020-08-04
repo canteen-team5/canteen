@@ -1,5 +1,12 @@
-</php
+<?php
   session_start();
+  include('conn.php');
+
+  if(isset($_POST["logout"])){
+    unset($_SESSION["ucod"]);
+  }
+
+  
 
 ?>
 
@@ -12,18 +19,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Canteen</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/templatemo-style.css" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    
 
     <style>
       .tm-popular-item-img{
         width: 100%;
       }
-      
+      .dropdown-menu>li>a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+      }
+      .dropdown-menu>li>a:hover{
+        color: black;
+        background-color: #e4e4e4;
+      }
+      .dropdown-menu>li:hover{
+        color: grey;
+      }
+      .dropdown-menu>li>a>form>button {
+        display: block;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+        border: 0;
+        background: transparent;
+        padding: 0;
+      }
+
+          
     </style>
   </head>
 
@@ -47,7 +89,25 @@
                 <li><a href="menu.php">Menu</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="cart.php">Cart</a></li>
-                <li><a href="login.php">Login</a></li>
+                
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user" aria-hidden="true" style="font-size:20px;"> </i> <span class="caret"></span></a>
+                  <ul class="dropdown-menu"> 
+                    <?php 
+                      if(isset($_SESSION["ucod"])){
+                        echo '<li><a href="">View Profile</a></li>
+                        <li><a href="myord.php">My Orders</a></li>
+                        <li><a href="changepwd.php">Change Password</a></li>
+                        <li><a> <form action="index.php" method="post">
+                          <button type="submit" name="logout"> Logout </button> 
+                        </form> </a></li>';
+                      }
+                      else
+                        echo '<li><a href="login.php">Sign In</a></li>
+                        <li><a href="register.php">Sign Up</a></li>';
+                    ?>
+                  </ul>
+                </li> 
+
               </ul>
             </nav>   
           </div>           

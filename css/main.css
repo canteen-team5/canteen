@@ -105,6 +105,7 @@ body {
   font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
   font-weight: 400;
   font-size: 14px;
+  background: url(../images/bg1.jpg);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -137,7 +138,7 @@ h6 {
 
 
 .p-t-180 {
-  padding-top: 15vh;
+  padding-top: 9em;
 }
 
 .p-t-20 {
@@ -277,9 +278,9 @@ input {
 
 
 .blurr{
-  background: url(../images/fastfood.jpg);
-  height: 625px;
-  filter: blur(8px);
+  background: url(../images/bg1.jpg);
+  height: 630px;
+  filter: blur(1px);
 }
 .modal-content {
 	padding: 20px;

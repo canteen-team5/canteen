@@ -1,11 +1,12 @@
 <?php
   session_start();
   include('../conn.php');
+  $msg = $err = "";
 
   if(isset($_REQUEST["ucod"]) && $_REQUEST["mod"] == 'V'){
     $ucod = $_REQUEST["ucod"];
     $sql = "update tbusr set verification='Verified' where usrcod=$ucod ";
-    if(mysqli_query($conn, $sql)) echo "User verified successfully";
+    if(mysqli_query($conn, $sql)) $msg = "User verified successfully";
     else echo mysqli_error($conn);
     unset($_SESSION["pic"]);
   }
@@ -14,7 +15,7 @@
     $ucod = $_REQUEST["ucod"];
     $sql = "delete from tbusr where usrcod=$ucod ";
     if(mysqli_query($conn, $sql)) {
-      echo "Verification Rejected";
+      $err = "Verification Rejected";
       $pic = $_SESSION["pic"];
       $file = "../stupics/$pic";
       unlink($file);
@@ -92,10 +93,10 @@
       .tm-popular-item-title{
           text-align: left;
       }
-      .tm-popular-item:hover .tm-popular-item-title { color: #888;; }
-      .tm-popular-item:hover hr {
-        border-color: #888;
-        transition: all 0.3s ease;
+      .tm-popular-item:hover .tm-popular-item-title { color: #888; }
+      
+      .tm-popular-item:hover .dark{
+        color: #4e4944;
       }
       .tm-popular-item:hover .order-now-link {
         border-color: #c79c60;
@@ -112,6 +113,7 @@
       .empty-cart{
         margin: 5em auto;
       }
+      
      
     </style>
   </head>
@@ -159,7 +161,7 @@
             $ucod = $row["usrcod"];
             $rollno = $row["rollno"];
             $pic = $row["usrpic"];
-            $name = $row["fname"].$row["lname"];
+            $name = $row["fname"]." ".$row["lname"];
             $gen = $row["gender"];
             $email = $row["email"];
             $mob = $row["mobile"];
@@ -172,9 +174,9 @@
               
                     <div class="tm-popular-item-description">
                       <h3 class="tm-handwriting-font tm-popular-item-title" style="text-align: center;">
-                        <span class="tm-handwriting-font bigger-first-letter">Roll no: '.$rollno.'</span>
+                        <span class="tm-handwriting-font bigger-first-letter"> Roll no: <span class="dark tm-handwriting-font"> '.$rollno.' </span> </span>
                       </h3>
-                      <hr class="tm-popular-item-hr">
+                      <hr class="gold">
                       <div class="imgdsc" >
                         <div class="bkpic"></div>
                         <div >
@@ -186,18 +188,18 @@
                       </div>
 
                       <h3 class=" tm-popular-item-title" style="width: 60%;float: left;">
-                        Name: '.$name.'
+                        Name: <span class="dark">'.$name.'</span>
                       </h3>
                       <h3 class=" tm-popular-item-title">
-                        Gender: '.$gen.'
-                      </h3><hr class="">
+                        Gender: <span class="dark">'.$gen.'</span>
+                      </h3><hr class="gold">
                       <h3 class=" tm-popular-item-title" style="width: 60%;float: left;FONT-SIZE: 30px;">
-                        Email: '.$email.'
+                        Email: <span class="dark">'.$email.'</span>
                       </h3>
                       <h3 class=" tm-popular-item-title">
-                        Mobile: '.$mob.'
+                        Mobile: <span class="dark">'.$mob.'</span>
                       </h3>
-                      <hr class="">
+                      <hr class="gold">
                       
                       <h3 style="display: grid;">
                         <span class="bttn"> 

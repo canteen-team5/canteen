@@ -46,7 +46,6 @@
     }
     h1{
       text-align: center;
-      font-style: italic;
       margin-top: 50px;
     }
     p.cat{
@@ -122,7 +121,7 @@
     ?>
 
     
-    <h1 onclick="mobile_icon_off()">PRODUCTS</h1>
+    <h1 onclick="mobile_icon_off()"> <span> PRODUCTS </span> </h1>
     <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
         <section class="tm-section tm-section-margin-bottom-0 row">
           <div class="category_name">

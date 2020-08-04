@@ -1,21 +1,51 @@
 <?php
     session_start();
     include('conn.php');
+    $err = $msg = "";
 
-    if(isset($_SESSION["ucod"])){
+    if(isset($_SESSION["ucod"]) && isset($_POST["btnsubmit"])){
         $ucod = $_SESSION["ucod"];
-        $sql = "call dspusr($ucod)";
-        $result = $conn->query($sql);
-        if($result->num_rows > 0){
-            $row = $result->fetch_assoc();
+        $oldpwd = $_POST["oldpwd"];
+        $newpwd = $_POST["newpwd"];
+        $confirmpwd = $_POST["confirmpwd"];
 
+        if ($oldpwd == "") $err = "Please enter the old password!";
+        //elseif(!preg_match("/^[0-9]{3,20}$/", $rollno))
+           //$err = "";
+        elseif ($newpwd == "") $err = "Please enter the new password!";
+        elseif ($confirmpwd == "") $err = "Please enter confirm password!";
+        elseif ($confirmpwd != $newpwd) $err = "Confirm password didn't match!";
+        else{
+            $sql = "call fndusr($ucod)";
+            $result = $conn->query($sql);
+            if($result->num_rows > 0){
+                $row = $result->fetch_assoc();
+                if($oldpwd == $row["usrpwd"]){
+                    $conn->close();
+                    include('conn.php');
+                    $sql_upd = "update tbusr set usrpwd='$newpwd' where usrcod=$ucod ";
+                    if ($conn->query($sql_upd) === TRUE) {
+                        //$msg = "Password changed successfully";
+
+                    } else {
+                        $err =  $conn->error;
+                    }
+                    
+                    $conn->close();
+                }
+                else echo "You have entered wrong password";    
+
+            }
         }
+        if(!$err == "") echo $err;
+        if(!$msg == "") echo $msg;
 
     }
 ?>
 
 <!DOCTYPE HTML>
-<html lang="en"><head>
+<html lang="en">
+<head>
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,6 +55,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 
+    
     <!-- Title Page-->
     <title>Canteen</title>
     <link href="css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -43,7 +74,7 @@
                 <div class="card-body">
                     <h2 class="title">Change Password</h2>
                     <div class="modal-body">
-					<form>
+					<form action="changepwd.php" method="post">
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
@@ -62,7 +93,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary btn-block btn-lg">Change Password</button>
+							<button type="submit" class="btn btn-primary btn-block btn-lg" name="btnsubmit">Change Password</button>
 						</div>
 						</div></form>
 					</div>
@@ -73,5 +104,5 @@
 
 
 
-
-<!-- end document--></body><!-- This templates was made by Colorlib (https://colorlib.com) --></html>
+</body>
+</html>

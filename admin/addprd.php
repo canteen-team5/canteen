@@ -12,11 +12,11 @@
     $itm_avail = $_POST["available"];
     $itm_qty = $_POST["item_qty"];
 
-    if($sel_cat == "") $err = "Please add category first";
-    elseif($itm_nam == "") $err = "Please enter Item name";
-    elseif($itm_prc == "") $err = "Please enter Item price";
-    elseif($itm_dsc == "") $err = "Please enter Item description";
-    elseif($itm_pic == "") $err = "Please input Item picture";
+    if($sel_cat == "") $err = "Please add category first!";
+    elseif($itm_nam == "") $err = "Please enter Item name!";
+    elseif($itm_prc == "") $err = "Please enter Item price!";
+    elseif($itm_dsc == "") $err = "Please enter an item description!";
+    elseif($itm_pic == "") $err = "Please input Item picture!";
     //elseif($itm_qty == "") $itm_qty = "null";
     else {
       if(isset($_SESSION["check"])){
@@ -153,7 +153,7 @@
             <label for="item_desc">Item Description</label>
           </div>
           <div class="col-75">
-            <textarea id="description" name="describe" placeholder="Item description.." style="height:100px" value=""><?php echo $itm_dsc; ?> </textarea>
+            <textarea id="description" name="describe" placeholder="Item description.." style="height:100px" value="<?php echo $itm_dsc; ?>"></textarea>
           </div>
         </div>
 

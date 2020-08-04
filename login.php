@@ -7,8 +7,8 @@
     if(isset($_POST["btnlogin"])){
         $usr = $_POST["username"];
         $pwd = $_POST["password"];
-        if($usr == "") $msg = "Please enter username";
-        elseif($pwd == "") $msg = "Please enter password";
+        if($usr == "") $msg = "Please enter username!";
+        elseif($pwd == "") $msg = "Please enter password!";
         else { 
             $sql = "call login_check('$usr', '$pwd')";
             $result = $conn->query($sql);
