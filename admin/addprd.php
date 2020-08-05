@@ -79,6 +79,9 @@
       body{
         background: #e4e4e4;
       }
+      label{
+        font-weight: normal;
+      }
     </style>
   </head>
 
