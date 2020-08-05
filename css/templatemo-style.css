@@ -299,9 +299,7 @@ ul {
       -ms-flex-pack: center;
           justify-content: center;
   color: white;
-  position: absolute;
-  left: 92px;
-  bottom: -50px;
+  margin-top: -50px;
 }
 .tm-special-item {
   display: inline-block;
@@ -723,7 +721,7 @@ h2{
   text-align: center;
   margin: 10px 0 22px 0;
 }
-input[type=text], input[type=email], input[type=password], select, textarea {
+input[type=text], input[type=email], input[type=search], input[type=password], select, textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -762,6 +760,7 @@ input[type=submit]:hover {
 
 .add{
   font-size: large;
+  font-weight: 500;
 }
 .border{
   border-radius: 5px;

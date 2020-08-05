@@ -37,6 +37,28 @@
       .tm-popular-item-img{
         width: 100%;
       }
+
+      .tm-popular-item{
+        margin-bottom: 0;
+      }
+      .pop_info{
+        height: 600px;
+        overflow: hidden;
+      }
+      .tm-popular-item-description{
+        height: 260px;
+        overflow: hidden;
+      }
+      .pop_dsc{
+        height: 160px;
+        overflow: auto;
+      }
+      .order-now-link:hover{
+        border-color: #c79c60;
+        color: #c79c60;
+        text-decoration: none;
+      }
+
       .dropdown-menu>li>a {
         display: block;
         padding: 3px 20px;
@@ -164,55 +186,26 @@
               $i = 0;
               if($result_disp->num_rows > 0){
                 while ($row = $result_disp->fetch_assoc()){
-                  echo '<div class="tm-popular-item">
-                  <img src="img/'.$row["foodpic"].'" alt="Popular" class="tm-popular-item-img" width="286px" height="286px">
-                  <div class="tm-popular-item-description">
-                    <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">'.$row["foodname"].'</span></h3><hr class="tm-popular-item-hr">
-                    <p>'.$row["fooddsc"].'</p>
-                    <div class="order-now-container">
-                      <a href="cart.php?fcod='.$row["foodcod"].'&action=add " class="order-now-link tm-handwriting-font">Order Now</a>
+                  echo '<div class="tm-popular-item-row">
+                  <div class="tm-popular-item">
+                    <div class="pop_info">
+                      <img src="img/'.$row["foodpic"].'" alt="Popular" class="tm-popular-item-img"width="286px" height="286px">
+                      <div class="tm-popular-item-description">
+                        <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter"></span>'.$row["foodname"].'</h3><hr class="tm-popular-item-hr">
+                        <p class="pop_dsc">'.$row["fooddsc"].'</p>
+                      </div>
                     </div>
-                  </div>              
+                  </div>
+                  <div class="order-now-container">
+                        <a href="cart.php?fcod='.$row["foodcod"].'&action=add " class="order-now-link tm-handwriting-font">Order Now</a>
+                      </div>              
                 </div>';
                   $i++;
                   if($i == 3) break;
                 }
               } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
               $conn->close();
-            ?>
-
-            <div class="tm-popular-item">
-              <img src="img/popular-1.jpg" alt="Popular" class="tm-popular-item-img" width="286px" height="286px">
-              <div class="tm-popular-item-description">
-                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">m</span>aggie</h3><hr class="tm-popular-item-hr">
-                <p>Maggie is an international brand of seasonings, instant soups, and noodles that originated in Switzerland in late 19th century.Maggie is a 2015 American post-apocalyptic horror drama film directed by Henry Hobson.</p>
-                <div class="order-now-container">
-                  <a href="menu.php" class="order-now-link tm-handwriting-font">Order Now</a>
-                </div>
-              </div>              
-            </div>
-
-            <div class="tm-popular-item">
-              <img src="img/popular-2.jfif" alt="Popular" class="tm-popular-item-img"width="286px" height="286px">
-              <div class="tm-popular-item-description">
-                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">p</span>asta</h3><hr class="tm-popular-item-hr">
-                <p>Pasta is the Italian designation or name given to a type of starchy noodle or dish typically made from grain flour, commonly wheat, mixed into a paste or dough, usually with water or eggs, and formed or cut into sheets or other shapes. </p>
-                <div class="order-now-container">
-                  <a href="menu.php" class="order-now-link tm-handwriting-font">Order Now</a>
-                </div>
-              </div>              
-            </div>
-
-            <div class="tm-popular-item">
-              <img src="img/popular-3.webp" alt="Popular" class="tm-popular-item-img" width="286px" height="286px">
-              <div class="tm-popular-item-description">
-                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">s</span>amosa</h3><hr class="tm-popular-item-hr">
-                <p>A samosa is a fried or baked pastry with a savoury filling, such as spiced potatoes, onions, peas, cheese, beef and other meats, or lentils. It may take different forms, including triangular, cone, or half-moon shapes, depending on the region. </p>
-                <div class="order-now-container">
-                  <a href="menu.php" class="order-now-link tm-handwriting-font">Order Now</a>
-                </div>
-              </div>              
-            </div>
+            ?>  
 
           </div>          
         </section>

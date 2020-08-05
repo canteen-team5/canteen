@@ -76,6 +76,13 @@
         background: transparent;
         padding: 0;
       }
+      button{
+        font-size: 25px;
+        border: 0;
+        background: #339033;
+        border-radius: 4px;
+        padding: 0.3em 3em;
+      }
     </style>
   </head>
 
@@ -145,6 +152,19 @@
             <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Our Menu  </h2>
             <div class="tm-hr-container"><hr class="tm-hr"></div>
           </div>
+                      
+          <form action="menu.php" method="post"  class="add">
+            <div class="row">
+              
+              <div class="col-75">
+                <input type="search" name="search" placeholder="search...." value="">
+              </div>
+
+              <div class="col-25">
+                <button type="submit" name="btnsubmit" class="btn">Search</button>
+              </div>
+            </div>
+          </form>
 
           <div>
             <div class="col-lg-3 col-md-3">
