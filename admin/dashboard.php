@@ -208,7 +208,7 @@
             </div>
             <nav class="tm-nav" id="nav_mobile">
               <ul>
-                <li><a href="dashboard.php" class="active">Dashboard</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
                 <li><a href="addprd.php">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
@@ -248,9 +248,9 @@
                 <span class="bttn"><a href="#"><i><b> Admin </b></i> </a></span>
                 </div>
               </li>
-              <li><a href="#">View Profile</a></li>
+              <li><a href="viewprofile.php">View Profile</a></li>
               <li><a href="verifyusr.php">Verify User</a></li>
-              <li><a href="#">Check Inventary</a></li>
+              <li><a href="">Check Inventary</a></li>
               <li><a href="../changepwd.php">Change Password</a></li>
               <li><a> <form action="../index.php" method="post">
                 <button id="logout" type="submit" name="logout"> Logout </button> </form> </a>
@@ -348,7 +348,7 @@
 
             <div class="quick_link">
               <div class="link">
-                <a href="#">Special Products</a>
+                <a href="specialitem.php">Special Products</a>
               </div>
             </div>
 

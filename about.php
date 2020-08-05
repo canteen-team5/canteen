@@ -79,7 +79,7 @@
                   <ul class="dropdown-menu"> 
                     <?php 
                       if(isset($_SESSION["ucod"])){
-                        echo '<li><a href="">View Profile</a></li>
+                        echo '<li><a href="viewprofile.php">View Profile</a></li>
                         <li><a href="myord.php">My Orders</a></li>
                         <li><a href="changepwd.php">Change Password</a></li>
                         <li><a> <form action="index.php" method="post">

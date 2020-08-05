@@ -130,7 +130,7 @@
                 
                 <li class="dropdown"><a class="dropdown-toggle active" data-toggle="dropdown" href="#"><i class="fa fa-user" aria-hidden="true" style="font-size:20px;"> </i> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="">View Profile</a></li>
+                    <li><a href="viewprofile.php">View Profile</a></li>
                       <li><a href="myord.php">My Orders</a></li>
                       <li><a href="changepwd.php">Change Password</a></li>
                       <li><a> <form action="index.php" method="post">

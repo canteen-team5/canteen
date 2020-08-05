@@ -10,7 +10,7 @@
     $gender = $_POST["gender"];
     $email = $_POST["email"];
     $mobile = $_POST["mobile_no"];
-    $usrpic = $_FILES["picture"]["name"];
+    $usrpic = $rollno.$_FILES["picture"]["name"];
     $usrname = $_POST["user_name"];
     $usrpwd = $_POST["password"];
     
@@ -60,7 +60,7 @@
       $sql = "call insusr($rollno, '$fname', '$lname', '$usrpic', '$mobile', '$email', '$gender', '$usrname', '$usrpwd')";
       if ($conn->query($sql) === TRUE) {
         if($usrpic!="")
-        move_uploaded_file ($_FILES["picture"]["tmp_name"],"stupics/".$_FILES["picture"]["name"]);
+        move_uploaded_file ($_FILES["picture"]["tmp_name"],"stupics/".$rollno.$_FILES["picture"]["name"]);
         $msg = "Registration successful";
         //header('location:index.php');
       } else $err =  $conn->error;
@@ -144,7 +144,7 @@
     <section class="border" onclick="mobile_icon_off()">
       <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Registeration Form</h1>
 
-      <form action="register.php" method="post" enctype="multipart/form-data">
+      <form action="register.php" method="post" enctype="multipart/form-data" class="add">
         <div class="row">
           <div class="col-25">
             <label for="roll no">Roll No</label>

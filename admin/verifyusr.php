@@ -80,7 +80,7 @@
         margin: 10px 0
       }
       .bkpic{
-        background: #282726;
+        background: #33312f;
         height: 100px;
       }
       .img{
