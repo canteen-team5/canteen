@@ -185,10 +185,10 @@
                         <img src="stupics/'.$row["usrpic"].'" alt="Popular" class="tm-popular-item-img" >
                         <p class="det" >';
                       
-                      echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row["rollno"].'</br>
-                        <i><b>Name: </b></i>'.$row["fname"].' '.$row["lname"].'  <br>
-                        <i><b>Contact No.: </b></i> '.$row["mobile"].'<br><i><b>Email: </b></i> '.$row["email"].'<br>
-                        <span class="bttn"><a><i><b>Order Status: </b></i>'. $ordstatus.' </a></span></p></div>';
+                      echo '<i>Date: </i><b>'.$date.' '.date("g:i a", strtotime("$time")).'</b></br> <i>Roll No: </i><b>'.$row["rollno"].'</b></br>
+                        <i>Name: </i><b>'.$row["fname"].' '.$row["lname"].' </b> <br>
+                        <i>Contact No.: </i><b> '.$row["mobile"].'</b><br><i>Email: </i><b> '.$row["email"].'</b><br>
+                        <span class="bttn"><a><i>Order Status: </i><b>'. $ordstatus.' </b></a></span></p></div>';
 
                     }
                     $conn->close();

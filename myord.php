@@ -192,10 +192,10 @@
                           <img src="stupics/'.$row_usr["usrpic"].'" alt="User Picture" class="tm-popular-item-img" >
                         <p class="det" >';
                           
-                        echo '<i><b>Date: </b></i>'.$date.' '.date("g:i a", strtotime("$time")).'</br> <i><b>Roll No: </b></i>'.$row_usr["rollno"].'</br>
-                        <i><b>Name: </b></i>'.$row_usr["fname"].' '.$row_usr["lname"].'  <br>
-                        <i><b>Contact No.: </b></i> '.$row_usr["mobile"].'<br><i><b>Email: </b></i> '.$row_usr["email"].'<br>
-                        <span class="highlight"> <i><b>Order Status: </b></i>'. $ordstatus.' </span> </p></div>';
+                        echo '<i>Date: </i><b>'.$date.' '.date("g:i a", strtotime("$time")).'</b></br> <i>Roll No: </i><b>'.$row_usr["rollno"].'</b></br>
+                        <i>Name: </i><b>'.$row_usr["fname"].' '.$row_usr["lname"].'  </b><br>
+                        <i>Contact No.: </i><b> '.$row_usr["mobile"].'</b><br><i>Email: </i><b> '.$row_usr["email"].'</b><br>
+                        <span class="highlight"> <i>Order Status: </i><b>'. $ordstatus.' </b></span> </p></div>';
                       }
                       $conn->close();
                       echo '<hr class="tm-popular-item-hr">';
