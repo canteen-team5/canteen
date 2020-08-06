@@ -213,13 +213,14 @@
     #suborder{
       font-size: 25px;
       border: 0;
-      background: #339033;
+      background: #4CAF50;
+      color: white;
       border-radius: 4px;
       box-shadow: 4px 5px 8px grey;
       padding: 0.5em 3em;
     }
     #suborder:hover{
-      background: #57b557;
+      background: #309034;
     }
     .dropdown-menu>li>a {
         display: block;

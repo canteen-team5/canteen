@@ -669,6 +669,7 @@ footer{
   background-color: #d0d0d0;;
   border-radius: 1em;
   padding: 2px;
+  display: flow-root;
   
 }
 span.text{
@@ -761,6 +762,7 @@ input[type=submit]:hover {
 .add{
   font-size: large;
   font-weight: 500;
+  padding: 20px 0;
 }
 .border{
   border-radius: 5px;

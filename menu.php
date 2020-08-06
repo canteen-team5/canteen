@@ -1,6 +1,7 @@
 <?php
   session_start();
   include('conn.php');
+
 ?>
 
 
@@ -76,13 +77,17 @@
         background: transparent;
         padding: 0;
       }
-      button{
+      #btn{
         font-size: 25px;
         border: 0;
-        background: #339033;
+        background: #4CAF50;
+        color: white;
         border-radius: 4px;
         padding: 0.3em 3em;
       }
+    #btn:hover{
+      background: #309034;
+    }
     </style>
   </head>
 
@@ -148,73 +153,113 @@
     <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
       <div class="container" id="main">  
         <section class="tm-section row">
+
           <div class="col-lg-12 tm-section-header-container margin-bottom-30">
-            <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Our Menu  </h2>
+            <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Search here..  </h2>
             <div class="tm-hr-container"><hr class="tm-hr"></div>
           </div>
-                      
+
           <form action="menu.php" method="post"  class="add">
-            <div class="row">
+            <div class="row" style="width: 80%; margin:auto;">
               
               <div class="col-75">
-                <input type="search" name="search" placeholder="search...." value="">
+                <input type="search" name="search" placeholder="Search...." value="" style="width: 90%;">
               </div>
 
               <div class="col-25">
-                <button type="submit" name="btnsubmit" class="btn">Search</button>
+                <button type="submit" name="btnsubmit" class="btn" id="btn">Search</button>
               </div>
             </div>
           </form>
 
-          <div>
-            <div class="col-lg-3 col-md-3">
-              <div class="tm-position-relative margin-bottom-30">              
-                <nav class="tm-side-menu">
-                  <ul>
-                    <?php
-                      $i = 0;
-                      $sql = "call dspmenu";
-                      $result = $conn->query($sql);
-                      if($result->num_rows > 0){
-                        while($row = $result->fetch_assoc()){
-                          if($row["foodisavl"] == "True"){
-                            $i++;
-                            echo '<li><a href="#itm'.$i.'">'.$row["foodname"].'</a></li>';
-                          }
+          <?php
+            if(isset($_POST["btnsubmit"])){
+              $search = $_POST["search"];
+              $search = htmlspecialchars($search);
+              $search = mysqli_real_escape_string($conn, $search);
+              if(strlen($search) > 2){
+                $sql = "select * from tbmenu where (`foodname` like '%".$search."%')";
+                $result = $conn->query($sql);
+                echo '<div class="col-lg-12 tm-section-header-container margin-bottom-30">
+                  <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Search results  </h2>
+                  <div class="tm-hr-container"><hr class="tm-hr"></div>
+                  </div>';
+                if($result->num_rows > 0){ 
+                  while($row = $result->fetch_assoc()){
+                    if($row["foodisavl"] == "True"){
+                      echo '<div class="tm-product" >
+                      <img src="prdpics/'.$row["foodpic"].' " alt="Product" >
+                      <div class="tm-product-text">
+                      <h3 class="tm-product-title">'.$row["foodname"].'</h3>
+                      <p class="tm-product-description">'.$row["fooddsc"].'</p>
+                      <span class="bttn"> <a href="cart.php?fcod='.$row["foodcod"].'&action=add ">Add to Cart</a></span></div>
+                      <div class="tm-product-price">
+                      <span class="tm-product-price-link tm-handwriting-font">₹'.$row["foodprc"].'</span>
+                      </div>
+                      </div>';
+                    }
+                  }
+                } else echo "<div class='empty-cart'><p class='cat' ><span class='text'> No matching record found </span> </p>
+                <p class='cat'> <span class='text'> <a href='menu.php'>Go to Menu</a> </span> </p></div>";
+                $conn->close();
+              }
+            }
+            else {
+              echo'
+                <div class="col-lg-12 tm-section-header-container margin-bottom-30" id="fullmenu">
+                  <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Our Menu  </h2>
+                  <div class="tm-hr-container"><hr class="tm-hr"></div>
+                </div>
+
+                <div>
+                  <div class="col-lg-3 col-md-3">
+                    <div class="tm-position-relative margin-bottom-30">              
+                      <nav class="tm-side-menu">
+                        <ul>';
+                            include('conn.php');
+                            $i = 0;
+                            $sql = "call dspmenu";
+                            $result = $conn->query($sql);
+                            if($result->num_rows > 0){
+                              while($row = $result->fetch_assoc()){
+                                if($row["foodisavl"] == "True"){
+                                  $i++;
+                                  echo '<li><a href="#itm'.$i.'">'.$row["foodname"].'</a></li>';
+                                }
+                              }
+                            }
+                            $conn->close();
+                          echo'
+                        </ul>              
+                      </nav>    
+                    </div>  
+                  </div> 
+                  
+                  
+                  <div class="tm-menu-product-content col-lg-9 col-md-9"> <!-- menu content -->';
+                    $j = 0;
+                    include('conn.php');
+                    $sql = "call dspmenu";
+                    $result = $conn->query($sql);
+                    if($result->num_rows > 0){
+                      while($row = $result->fetch_assoc()){
+                        if($row["foodisavl"] == "True"){
+                          $j++;
+                          echo '<div class="tm-product" id="itm'.$j.'">
+                          <img src="prdpics/'.$row["foodpic"].' " alt="Product" >
+                          <div class="tm-product-text">
+                          <h3 class="tm-product-title">'.$row["foodname"].'</h3>
+                          <p class="tm-product-description">'.$row["fooddsc"].'</p>
+                          <span class="bttn"> <a href="cart.php?fcod='.$row["foodcod"].'&action=add ">Add to Cart</a></span></div>
+                          <div class="tm-product-price">
+                          <span class="tm-product-price-link tm-handwriting-font">₹'.$row["foodprc"].'</span>
+                          </div>
+                          </div>';
                         }
                       }
-                      $conn->close();
-                    ?>
-                  </ul>              
-                </nav>    
-              </div>  
-            </div> 
-            
-            
-            <div class="tm-menu-product-content col-lg-9 col-md-9"> <!-- menu content -->
-            <?php 
-              $j = 0;
-              include('conn.php');
-              $sql = "call dspmenu";
-              $result = $conn->query($sql);
-              if($result->num_rows > 0){
-                while($row = $result->fetch_assoc()){
-                  if($row["foodisavl"] == "True"){
-                    $j++;
-                    echo '<div class="tm-product" id="itm'.$j.'">
-                    <img src="prdpics/'.$row["foodpic"].' " alt="Product" >
-                    <div class="tm-product-text">
-                    <h3 class="tm-product-title">'.$row["foodname"].'</h3>
-                    <p class="tm-product-description">'.$row["fooddsc"].'</p>
-                    <span class="bttn"> <a href="cart.php?fcod='.$row["foodcod"].'&action=add ">Add to Cart</a></span></div>
-                    <div class="tm-product-price">
-                    <span class="tm-product-price-link tm-handwriting-font">₹'.$row["foodprc"].'</span>
-                    </div>
-                    </div>';
-                  }
-                }
-              } 
-            ?>
+                    } 
+            }
+          ?>
               
               </div>
             </div>

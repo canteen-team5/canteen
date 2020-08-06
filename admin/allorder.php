@@ -237,7 +237,7 @@
                           
                         echo '<i>Date: </i><b>'.$date.' '.date("g:i a", strtotime("$time")).'</b></br> <i>Roll No: </i><b>'.$row_usr["rollno"].'</b></br>
                         <i>Name: </i><b>'.$row_usr["fname"].' '.$row_usr["lname"].' </b> <br>
-                        <i>Contact No.: </i><b> '.$row_usr["mobile"].'</b><br><i>Email: </i><b> '.$row_usr["email"].'</<br>
+                        <i>Contact No.: </i><b> '.$row_usr["mobile"].'</b><br><i>Email: </i><b> '.$row_usr["email"].'</b></<br>
                         <span class="highlight"> <i>Order Status: </i><b>'. $ordstatus.' </b></span> </p></div>';
                       }
                       $conn->close();
