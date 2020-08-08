@@ -1,5 +1,10 @@
 <?php
   session_start();
+
+  if(!isset($_SESSION["ucod"])){
+    header('location:index.php');
+  }
+
   include('conn.php');
 ?>
 

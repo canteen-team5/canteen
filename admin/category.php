@@ -1,13 +1,21 @@
 <?php
 session_start();
+
+if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
+  header('location:../index.php');
+}
+
 include('../conn.php');
     //error_reporting(0);
 
 $catnam = $cnam = $msg = $result_disp = $err = "";
 
 if (isset($_POST["catsubmit"])) {
-  $catnam = $_POST["cat_name"];
-  if ($catnam == "") $err = "Please input name";
+  $catnam = secure($_POST["cat_name"]);
+  if ($catnam == "") 
+    $err = "Please input name";
+  elseif(!preg_match("/^[A-Z][a-zA-Z ]{2,19}$/", $catnam))
+    $err = "Category name must contain only alphabets and should be greater than equal to 3 and less than 20";
 
   elseif (isset($_SESSION["ccod"])) {
     $ccod = $_SESSION["ccod"];
@@ -25,6 +33,12 @@ if (isset($_POST["catsubmit"])) {
       $err = "Error: " . $sql . "<br>" . $conn->error;
     }
   }
+}
+function secure($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
 
 if (isset($_REQUEST["ccod"])) {
@@ -186,7 +200,7 @@ if (isset($_REQUEST["ccod"])) {
     <!------------------------------------------------------------------>
 
     <h1 style="width:85%;" onclick="mobile_icon_off()">CATEGORY</h1>
-    <form method="post"  action="category.php" name="frmcat" style="padding-bottom: 5em;" onclick="mobile_icon_off()">
+    <form method="post"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="frmcat" style="padding-bottom: 5em;" onclick="mobile_icon_off()">
 
       <div class="row" style="padding:4% 0 0;" >
         <label for="cat_name">Categories Name:</label>

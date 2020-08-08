@@ -3,12 +3,20 @@
     include('conn.php');
 
     error_reporting(0);
-    $usr = $pwd = $msg = $ucod = "";
+    $usr = $pwd = $err = $ucod = "";
     if(isset($_POST["btnlogin"])){
-        $usr = $_POST["username"];
-        $pwd = $_POST["password"];
-        if($usr == "") $msg = "Please enter username!";
-        elseif($pwd == "") $msg = "Please enter password!";
+        $usr = secure($_POST["username"]);
+        $pwd = secure($_POST["password"]);
+        if($usr == "")
+            $err = "Please enter Username!";
+        elseif(!preg_match("/^[\w@&%$]{5,20}$/", $usr))
+            $err = "Username should be 5 to 20 characters long and must only contain alphabets, numbers and @,%,$,&";
+  
+        elseif($pwd == "")
+            $err = "Please enter Password!";
+        elseif(!preg_match("/^[\w@&%$]{5,20}$/", $pwd))
+            $err = "Password should be 5 to 20 characters longand must only contain alphabets, numbers and @,%,$,&";
+
         else { 
             $sql = "call login_check('$usr', '$pwd')";
             $result = $conn->query($sql);
@@ -20,11 +28,14 @@
 
                 if($verification == "Verified"){
                     $_SESSION["ucod"] = $ucod;
-                    if ($rol == "A") header ("location:admin/dashboard.php");
+                    if ($rol == "A") {
+                        $_SESSION["rol"] = 'A';
+                        header ("location:admin/dashboard.php");
+                    }
                     else {
                         if(isset($_SESSION["cart"]))
                             header("location:cart.php");
-                        else
+                        else ;
                             header("location:index.php");
                     }
                 }
@@ -34,7 +45,13 @@
             }
             else echo "<script type='text/javascript'> alert('Incorrect Password'); </script>";
         }
-        if(!$msg == "") echo "<script type='text/javascript'> alert('$msg'); </script>";
+        if(!$err == "") echo "<script type='text/javascript'> alert('$err'); </script>";
+    }
+    function secure($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 ?>
 
@@ -80,7 +97,7 @@
                     <div class="card-body">
                         <h2 class="title">User Login</h2>
                         <div class="modal-body">
-                            <form method="post" action="login.php" name="login_form">
+                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="login_form">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>

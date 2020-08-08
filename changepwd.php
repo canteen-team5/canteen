@@ -1,20 +1,36 @@
 <?php
     session_start();
+
+    if(!isset($_SESSION["ucod"])){
+        header('location:index.php');
+    }
+    
     include('conn.php');
     $err = $msg = "";
 
     if(isset($_SESSION["ucod"]) && isset($_POST["btnsubmit"])){
         $ucod = $_SESSION["ucod"];
-        $oldpwd = $_POST["oldpwd"];
-        $newpwd = $_POST["newpwd"];
-        $confirmpwd = $_POST["confirmpwd"];
+        $oldpwd = secure($_POST["oldpwd"]);
+        $newpwd = secure($_POST["newpwd"]);
+        $confirmpwd = secure($_POST["confirmpwd"]);
 
-        if ($oldpwd == "") $err = "Please enter the old password!";
-        //elseif(!preg_match("/^[0-9]{3,20}$/", $rollno))
-           //$err = "";
-        elseif ($newpwd == "") $err = "Please enter the new password!";
-        elseif ($confirmpwd == "") $err = "Please enter confirm password!";
+        if($oldpwd == "")
+            $err = "Please enter Username!";
+        elseif(!preg_match("/^[\w@&%$]{5,20}$/", $oldpwd))
+            $err = "Old Password should be 5 to 20 characters long and must only contain alphabets, numbers and @,%,$,&";
+  
+        elseif($newpwd == "")
+            $err = "Please enter Password!";
+        elseif(!preg_match("/^[\w@&%$]{5,20}$/", $newpwd))
+            $err = "New Password should be 5 to 20 characters longand must only contain alphabets, numbers and @,%,$,&";
+
+        elseif($confirmpwd == "")
+            $err = "Please enter Password!";
+        elseif(!preg_match("/^[\w@&%$]{5,20}$/", $confirmpwd))
+            $err = "Confirm Password should be 5 to 20 characters longand must only contain alphabets, numbers and @,%,$,&";
+
         elseif ($confirmpwd != $newpwd) $err = "Confirm password didn't match!";
+
         else{
             $sql = "call fndusr($ucod)";
             $result = $conn->query($sql);
@@ -37,10 +53,14 @@
 
             }
         }
-        if(!$err == "") echo $err;
-        if(!$msg == "") echo $msg;
-
+        if(!$err == "") echo "<script type='text/javascript'> alert('$err'); </script>";
     }
+    function secure($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
 ?>
 
 <!DOCTYPE HTML>
@@ -74,7 +94,7 @@
                 <div class="card-body">
                     <h2 class="title">Change Password</h2>
                     <div class="modal-body">
-					<form action="changepwd.php" method="post">
+					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>

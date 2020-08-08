@@ -670,6 +670,7 @@ footer{
   border-radius: 1em;
   padding: 2px;
   display: flow-root;
+  text-align: center;
   
 }
 span.text{

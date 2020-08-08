@@ -1,5 +1,14 @@
 <?php
   session_start();
+
+  if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
+    header('location:../index.php');
+  }
+  if(isset($_POST["logout"])){
+    unset($_SESSION["ucod"]);
+    unset($_SESSION["rol"]);
+    header('location:../index.php');
+  }
 ?>
 
 <!DOCTYPE html>
@@ -208,7 +217,7 @@
             </div>
             <nav class="tm-nav" id="nav_mobile">
               <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="dashboard.php" class="active">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
                 <li><a href="addprd.php">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
@@ -250,9 +259,9 @@
               </li>
               <li><a href="viewprofile.php">View Profile</a></li>
               <li><a href="verifyusr.php">Verify User</a></li>
-              <li><a href="">Check Inventary</a></li>
+              <li><a href="inventry.php">Check Inventary</a></li>
               <li><a href="../changepwd.php">Change Password</a></li>
-              <li><a> <form action="../index.php" method="post">
+              <li><a> <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                 <button id="logout" type="submit" name="logout"> Logout </button> </form> </a>
               </li>
             </ul>

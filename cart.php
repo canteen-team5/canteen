@@ -20,11 +20,75 @@
     if(mysqli_query($conn, $sql)){
       $_SESSION["time"] = $time;
 
+      //for inserting data into orddet table
+      $conn->close();
+      include('conn.php');
+      $sql = "select * from tbord where ordusrcod = $usrcod and ordtime = '$time'";
+      $result = $conn->query($sql);
+      if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        $ordcod = $row["ordcod"];
+      
+        $conn->close();
+        include('conn.php');
+        $str_det = $_SESSION["cart"];
+        $arr_det = explode(',', $str_det);
+        foreach($arr_det as $item){
+          $contents[$item] = isset($contents[$item]) ? $contents[$item] + 1 : 1 ;
+        }
+        foreach($contents as $key=>$value){
+          $sql_ins = "call insorddet($ordcod, $key, $value)";
+          if(mysqli_query($conn, $sql_ins)) {
+            //echo "sucess";
 
-      $msg = "Order Placed successfully";
+            // updating menu table
+            $result_menu = $conn->query("select foodqty from tbmenu where foodcod = $key");
+            $fqty = 0;
+            if($result_menu->num_rows > 0){
+              $row_menu = $result_menu->fetch_assoc();
+              $fqty = $row_menu["foodqty"];
+            }
+            $conn->close();
+            include('conn.php');
+            $tot_qty = $fqty - $value;
+
+            //updating menu table
+            if($fqty == $value){
+              $sql_menu = "update tbmenu set foodqty=$tot_qty where foodcod=$key ";
+              if(mysqli_query($conn, $sql_menu)){
+                $sql = "update tbmenu set foodisavl='False' where foodcod=$key";
+                if(mysqli_query($conn, $sql)){
+                  //echo "false";
+                } 
+              }
+            }
+            elseif($fqty < $value){
+              $sql_delord = "delete from tbord where ordcod=$ordcod;";
+              $sql_delorddet = "delete from tborddet where orddetordcod=$ordcod ";
+              if( mysqli_query($conn, $sql_delord) && mysqli_query($conn, $sql_delorddet) ) {
+                echo "cancelled";
+                header('location:index.php');
+              }
+            }
+            else{
+              $sql_menu = "update tbmenu set foodqty=$tot_qty where foodcod=$key ";
+              if(mysqli_query($conn, $sql_menu)) {
+                //echo "done";
+              }
+            }
+
+          }
+        }
+
+      }
+
+      
+
+
+      //echo "Order Placed successfully";
 
       //fetching usr-email;
-      $result = $conn->query("call fndusr($usrcod)");
+      /*$result = $conn->query("call fndusr($usrcod)");
       if($result->num_rows > 0){
         $row = $result->fetch_assoc();
         $email = $row["email"];
@@ -50,7 +114,7 @@
         $mail->Body = "Thanks for ordering food";
         $mail->AddAddress($email);
         $mail->Send();
-
+      
 
         //for sending messages
         
@@ -80,7 +144,7 @@
         CURLOPT_HTTPHEADER => array(
           "authorization: wSxrquok0NJQCMad2DgBPjHlznZhLE68iFbImy9RA14Y3s5p7f8hI3XsobKBJZ1ElfumQvAWy9cV5iGS",
           "cache-control: no-cache",
-          "accept: */*",
+          "accept: *//*",
           "content-type: application/json"
         ),
       ));
@@ -94,7 +158,7 @@
         echo "cURL Error #:" . $err;
       } else {
         echo $response;
-      }
+      }*/
           // end of sending msg
       
       unset($_SESSION["cart"]);
@@ -338,14 +402,13 @@
                     $tot_all += $tot;
                     echo '<td>'.$tot.'</td>
                     <td><button type="submit" name="update"> <a> Update </a> </button>&nbsp;
-                    <button><a href="cart.php?fcod='.$row["foodcod"].'&action=delete ">Delete</a></button></td>
+                    <button><a href="cart.php?fcod='.$row["foodcod"].'&action=delete">Delete</a></button></td>
                     </tr>';
                   }
                 }
                 $conn->close();
               }
               echo '<tr><td></td> <td></td> <td><b>Total Amount:</b></td><td><b>'.$tot_all.'</b></td><td></td></tr>
-                    
                   </tbody>
                 </table>
                 <div class="btnsubmit">

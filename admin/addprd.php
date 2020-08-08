@@ -1,23 +1,44 @@
 <?php
   session_start();
+
+  if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
+    header('location:../index.php');
+  }
+
   include('../conn.php');
 
   $sel_cat = $itm_nam = $itm_prc = $itm_dsc = $itm_pic = $itm_avail = $itm_qty = $msg = $err = "";
   if(isset($_POST["submit"])){
     $sel_cat = $_POST["category"];
-    $itm_nam = $_POST["item_name"];
-    $itm_prc = $_POST["price"];
-    $itm_dsc = $_POST["describe"];
+    $itm_nam = secure($_POST["item_name"]);
+    $itm_prc = secure($_POST["price"]);
+    $itm_dsc = secure($_POST["describe"]);
     $itm_pic = $_FILES["picture"]["name"];
     $itm_avail = $_POST["available"];
-    $itm_qty = $_POST["item_qty"];
+    $itm_qty = secure($_POST["item_qty"]);
 
-    if($sel_cat == "") $err = "Please add category first!";
-    elseif($itm_nam == "") $err = "Please enter Item name!";
-    elseif($itm_prc == "") $err = "Please enter Item price!";
-    elseif($itm_dsc == "") $err = "Please enter an item description!";
+    if($itm_nam == "") 
+      $err = "Please enter Item name!";
+    elseif(!preg_match("/^[A-Z][a-zA-Z ]{2,19}$/", $itm_nam))
+      $err = "Item name must contain only alphabets and should be greater than equal to 3 and less than 20";
+
+    elseif($itm_prc == "") 
+      $err = "Please enter Item price!";
+    elseif(!preg_match("/^[1-9][0-9]{0,10}$/", $itm_prc))
+      $err = "Price must not be zero";
+
+    elseif($itm_dsc == "") 
+      $err = "Please enter an item description!";
+    elseif(!preg_match("/^[A-Z][a-zA-Z ]{4,500}$/", $itm_dsc))
+      $err = "Item name must contain only alphabets and should be greater than equal to 5 and less than 500";
+
+    elseif($itm_qty == "") 
+      $err = "Please enter Item price!";
+    elseif(!preg_match("/^[1-9][0-9]{0,10}$/", $itm_qty))
+      $err = "Quantity must not be zero";
+      
     elseif($itm_pic == "") $err = "Please input Item picture!";
-    //elseif($itm_qty == "") $itm_qty = "null";
+
     else {
       if(isset($_SESSION["check"])){
           $fcod = $_SESSION['fcod'];
@@ -50,6 +71,13 @@
     $itm_avail = $_SESSION["favl"];
     $itm_qty = $_SESSION["fqty"];
     $_SESSION["check"] = 1;
+  }
+
+  function secure($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
   }
 ?>
 
@@ -128,7 +156,7 @@
     <div class="border" onclick="mobile_icon_off()">
     <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Add Product</h1>
 
-      <form method='post' action='addprd.php' enctype="multipart/form-data" class="add">
+      <form method='post' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' enctype="multipart/form-data" class="add">
         <div class="row">
           <div class="col-25">
             <label for="item_name">Item Name</label>

@@ -4,21 +4,21 @@
   $rollno = $fname = $lname = $gender = $email = $mobile = $usrpic = $usrname = $usrpwd = $err = $msg = "";
 
   if(isset($_POST["submit"])){
-    $rollno = $_POST["roll_no"];
-    $fname = $_POST["firstname"];
-    $lname = $_POST["lastname"];
-    $gender = $_POST["gender"];
-    $email = $_POST["email"];
-    $mobile = $_POST["mobile_no"];
+    $rollno = secure($_POST["roll_no"]);
+    $fname = secure($_POST["firstname"]);
+    $lname = secure($_POST["lastname"]);
+    $gender = secure($_POST["gender"]);
+    $email = secure($_POST["email"]);
+    $mobile = secure($_POST["mobile_no"]);
     $usrpic = $rollno.$_FILES["picture"]["name"];
-    $usrname = $_POST["user_name"];
-    $usrpwd = $_POST["password"];
+    $usrname = secure($_POST["user_name"]);
+    $usrpwd = secure($_POST["password"]);
     
     // validating Form
     if($rollno == "")
       $err = "Please enter Roll no!";
-    elseif(!preg_match("/^[0-9]{3,20}$/", $rollno))
-      $err = "Roll no. must contain only number and should be greater than equal to 3 and less than 20";
+    elseif(!preg_match("/^[1-9][0-9]{2,10}$/", $rollno))
+      $err = "Roll no. must contain only number and should be greater than equal to 3 and less than 11";
 
     elseif($fname == "")
       $err = "Please enter First Name!";
@@ -45,13 +45,13 @@
 
     elseif($usrname == "")
       $err = "Please enter Username!";
-    elseif(!preg_match("/^[^`]{5,20}$/", $usrname))
-      $err = "Username should be 5 to 20 characters long";
+    elseif(!preg_match("/^[\w@&%$]{5,20}$/", $usrname))
+      $err = "Username should be 5 to 20 characters long and must only contain alphabets, numbers and @,%,$,&";
 
     elseif($usrpwd == "")
       $err = "Please enter Password!";
-    elseif(!preg_match("/^[^`]{5,20}$/", $usrpwd))
-      $err = "Username should be 5 to 20 characters long";
+    elseif(!preg_match("/^[\w@&%$]{5,20}$/", $usrpwd))
+      $err = "Password should be 5 to 20 characters longand must only contain alphabets, numbers and @,%,$,&";
 
     elseif($usrpic == "") 
       $err = "Please input your picture!";
@@ -67,6 +67,13 @@
 
     }
     //if($err != "") echo $err;
+    
+  }
+  function secure($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
   }
 
 ?>
@@ -144,7 +151,7 @@
     <section class="border" onclick="mobile_icon_off()">
       <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Registeration Form</h1>
 
-      <form action="register.php" method="post" enctype="multipart/form-data" class="add">
+      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" class="add">
         <div class="row">
           <div class="col-25">
             <label for="roll no">Roll No</label>

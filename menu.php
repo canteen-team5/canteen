@@ -159,7 +159,7 @@
             <div class="tm-hr-container"><hr class="tm-hr"></div>
           </div>
 
-          <form action="menu.php" method="post"  class="add">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"  class="add">
             <div class="row" style="width: 80%; margin:auto;">
               
               <div class="col-75">

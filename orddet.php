@@ -2,7 +2,7 @@
 
   session_start();
   include('conn.php');
-  $ordstatus = $date = $time = $fcod = $ordcod = "";
+  $ordstatus = $date = $time = $fcod = $ordcod = $prev_key = $prev_ord = "";
 
 ?>
 
@@ -104,6 +104,9 @@
           background: transparent;
           padding: 0;
         }
+        .empty-cart{
+          padding: 50px;
+        }
       </style>
   </head>
 
@@ -148,114 +151,107 @@
 
 
      <h1 onclick="mobile_icon_off()">Description of Order</h1>
-     <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
-         <div class="container" id="main">
-          <section class="tm-section tm-section-margin-bottom-0 row">
-            <div class="tm-popular-item">
-                <div class="tm-popular-item-description">
-                  <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">
-                  <?php
-                    include('conn.php');
-                    $ucod = $_SESSION["ucod"];
-                    $time = $_SESSION["time"];
-                    $sql = "select * from tbord where ordusrcod = $ucod and ordtime = '$time'";
-                    $result = $conn->query($sql);
-                    if($result->num_rows > 0){
-                      $row = $result->fetch_assoc();
-                      $ordcod = $row["ordcod"];
-                      $ordstatus = $row["ordstatus"];
-                      $date = $row["orddate"];
-                      $time = $row["ordtime"];
-                      $fcod = $row["ordfoodcod"];
+     <?php
+     include('conn.php');
+     $ucod = $_SESSION["ucod"];
+     $time = $_SESSION["time"];
+     $sql = "select * from tbord where ordusrcod = $ucod and ordtime = '$time'";
+     $result = $conn->query($sql);
+     if($result->num_rows > 0){
+       $row = $result->fetch_assoc();
+       $ordcod = $row["ordcod"];
+       $ordstatus = $row["ordstatus"];
+       $date = $row["orddate"];
+       $time = $row["ordtime"];
+       $fcod = $row["ordfoodcod"];
+        echo '
+        <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
+            <div class="container" id="main">
+              <section class="tm-section tm-section-margin-bottom-0 row">
+                <div class="tm-popular-item">
+                    <div class="tm-popular-item-description">
+                      <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">';
+                  
+                    
                       echo 'Order No. '.$ordcod;
-                    }
-                    else echo 'Order No. #';
-                    //unset($_SESSION["time"]); 
+                    
 
-                    include('conn.php');
-                    $ucod = $_SESSION["ucod"];
-                    $sql = "call fndusr($ucod)";
-                    $result = $conn->query($sql);
-                    if($result->num_rows > 0){
-                      $row = $result->fetch_assoc();
-                      $email = $row["email"];
-                      $mobile = $row["mobile"];
-                      echo '</span></h3><hr class="tm-popular-item-hr">
-                        <div class="imgdsc">
-                        <img src="stupics/'.$row["usrpic"].'" alt="Popular" class="tm-popular-item-img" >
-                        <p class="det" >';
-                      
-                      echo '<i>Date: </i><b>'.$date.' '.date("g:i a", strtotime("$time")).'</b></br> <i>Roll No: </i><b>'.$row["rollno"].'</b></br>
-                        <i>Name: </i><b>'.$row["fname"].' '.$row["lname"].' </b> <br>
-                        <i>Contact No.: </i><b> '.$row["mobile"].'</b><br><i>Email: </i><b> '.$row["email"].'</b><br>
-                        <span class="bttn"><a><i>Order Status: </i><b>'. $ordstatus.' </b></a></span></p></div>';
+                      include('conn.php');
+                      $ucod = $_SESSION["ucod"];
+                      $sql = "call fndusr($ucod)";
+                      $result = $conn->query($sql);
+                      if($result->num_rows > 0){
+                        $row = $result->fetch_assoc();
+                        $email = $row["email"];
+                        $mobile = $row["mobile"];
+                        echo '</span></h3><hr class="tm-popular-item-hr">
+                          <div class="imgdsc">
+                          <img src="stupics/'.$row["usrpic"].'" alt="Popular" class="tm-popular-item-img" >
+                          <p class="det" >';
+                        
+                        echo '<i>Date: </i><b>'.$date.' '.date("g:i a", strtotime("$time")).'</b></br> <i>Roll No: </i><b>'.$row["rollno"].'</b></br>
+                          <i>Name: </i><b>'.$row["fname"].' '.$row["lname"].' </b> <br>
+                          <i>Contact No.: </i><b> '.$row["mobile"].'</b><br><i>Email: </i><b> '.$row["email"].'</b><br>
+                          <span class="bttn"><a><i>Order Status: </i><b>'. $ordstatus.' </b></a></span></p></div>
+                          <hr class="tm-popular-item-hr">';
 
-                    }
-                    $conn->close();
-                  ?>
-
-                  <hr class="tm-popular-item-hr">
-
-                  <?php
-                    if($fcod){
-                      $str = $fcod;
-                      $arr = explode("," , $str);
-                      foreach($arr as $item){
-                        $contents[$item] = isset($contents[$item])?$contents[$item]+1:1;
                       }
-                      if(count($contents) != 0){
-                        $tot_all = 0;
-                        echo '
-                        <div class = "cart">
-                          <table class="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>Item</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Amount</th>
-                              </tr>
-                            </thead>
-                            <tbody>';
+                      $conn->close();
+                  
+                      if($fcod){
+                        $str = $fcod;
+                        $arr = explode("," , $str);
+                        foreach($arr as $item){
+                          $contents[$item] = isset($contents[$item])?$contents[$item]+1:1;
+                        }
+                        if(count($contents) != 0){
+                          $tot_all = 0;
+                          echo '
+                          <div class = "cart">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Item</th>
+                                  <th>Price</th>
+                                  <th>Quantity</th>
+                                  <th>Amount</th>
+                                </tr>
+                              </thead>
+                              <tbody>';
 
-                            foreach($contents as $key => $value){
-                              include('conn.php');
-                              $tot = 0;
-                              $sql = "call fndmenu($key)";
-                              $result = $conn->query($sql);
-                              if($result->num_rows > 0){
-                                while($row = $result->fetch_assoc()){
-                                  echo '<tr>
-                                  <td>'.$row["foodname"].'</td>
-                                  <td>'.$row["foodprc"].'</td>
-                                  <td>'.$value.'</td>';
-                                  $tot += $row["foodprc"] * $value;
-                                  $tot_all += $tot;
-                                  echo '<td>'.$tot.'</td> </tr>';
+                              foreach($contents as $key => $value){
+                                include('conn.php');
+                                $tot = 0;
+                                $sql = "call fndmenu($key)";
+                                $result = $conn->query($sql);
+                                if($result->num_rows > 0){
+                                  while($row = $result->fetch_assoc()){
+                                    $foodcod = $row["foodcod"];
+                                    echo '<tr>
+                                    <td>'.$row["foodname"].'</td>
+                                    <td>'.$row["foodprc"].'</td>
+                                    <td>'.$value.'</td>';
+                                    $tot += $row["foodprc"] * $value;
+                                    $tot_all += $tot;
+                                    echo '<td>'.$tot.'</td> </tr>';
+                                  }
                                 }
-                              }
-                              $conn->close();
-
-                              //Submitting data in Orderdetail table
-                              /*include('conn.php');
-                              if(!($prev_ord == $ordcod && $prev_key == $key)){
-                                $sql = "call insorddet($ordcod, $key, $value, $tot)";
-                                mysqli_query($conn, $sql);
-                                echo $prev_key." = ".$key."<br>";
-                                echo $prev_ord." = ".$ordcod;
-                                $prev_key = $key;
-                                $prev_ord = $ordcod;
+                                $conn->close();
                                 
-                              }*/
-                              
-                            }
-                            echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td><td></td></tr>
-                                  
-                            </tbody>
-                          </table> 
-                        </div>';
+                              }
+                              echo '<tr><td></td> <td></td> <td>Total Amount:</td><td>'.$tot_all.'</td><td></td></tr>
+                                    
+                              </tbody>
+                            </table> 
+                          </div>
+                          <hr class="tm-popular-item-hr">
+                        </div>
+                      </section>
+                    </div>
+                </div>';
+                        }
                       } 
-                      
+                         
                     } else{
                       echo "<div class='empty-cart'><p class='cat' ><span class='text'> Something went wrong! </span> </p>
                       <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
@@ -263,11 +259,7 @@
 
                   ?>
             
-                 <hr class="tm-popular-item-hr">
-              </div>
-            </section>
-          </div>
-      </div>
+                 
             
     <?php
       include('footer.html');

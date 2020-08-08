@@ -1,5 +1,10 @@
 <?php
   session_start();
+
+  if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
+    header('location:../index.php');
+  }
+  
   include('../conn.php');
   $msg = $err = "";
   
@@ -94,7 +99,7 @@
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
                 <li><a href="addprd.php">Add Product</a></li>
-                <li><a href="prdist.php" class="active">Product List</a></li>
+                <li><a href="prdlist.php" class="active">Product List</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="allorder.php">All orders</a></li>
