@@ -1,7 +1,7 @@
 <?php
-session_start();
-include('../conn.php');
-    //error_reporting(0);
+
+include('../header.php');
+
 
 $catnam = $cnam = $msg = $result_disp = $err = "";
 
@@ -88,6 +88,7 @@ if (isset($_REQUEST["ccod"])) {
         margin: 20px auto;
         text-align: center;
         width: 90%;
+        font-size: large;
       }
 
       label {
@@ -105,6 +106,7 @@ if (isset($_REQUEST["ccod"])) {
         display: block;
         width: 90%;
         margin: 0;
+        font-size: large;
       }
 
       input[type=submit]:hover {

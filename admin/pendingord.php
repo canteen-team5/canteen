@@ -1,8 +1,8 @@
 <?php
 
-  session_start();
-  include('../conn.php');
-  //error_reporting(0);
+  
+  include('../header.php');
+
   $msg = $mobile = "";
    // for sending mail
    require("../PHPMailer/src/PHPMailer.php");

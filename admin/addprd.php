@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  include('../conn.php');
+ 
+  include('../header.php');
 
   $sel_cat = $itm_nam = $itm_prc = $itm_dsc = $itm_pic = $itm_avail = $itm_qty = $msg = $err = "";
   if(isset($_POST["submit"])){
@@ -213,7 +213,7 @@
                     echo '<option name="not-avail" value="False">Not Available</option>';
                   }
 
-                ?>	
+                ?>  
               </select>
           </div>
         </div>

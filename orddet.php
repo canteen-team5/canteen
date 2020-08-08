@@ -1,7 +1,7 @@
 <?php
 
-  session_start();
-  include('conn.php');
+  
+  include('header.php');
   $ordstatus = $date = $time = $fcod = $ordcod = "";
 
 ?>

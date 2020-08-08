@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  include('conn.php');
+  
+  include('header.php');
   $rollno = $fname = $lname = $gender = $email = $mobile = $usrpic = $usrname = $usrpwd = $err = $msg = "";
 
   if(isset($_POST["submit"])){

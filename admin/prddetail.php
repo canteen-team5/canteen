@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  include('../conn.php');
+  
+  include('../header.php');
 
   $fnam = $fpic = $fdsc = $favl = $fqty = $fprc = $msg ="";
   $_SESSION["fcod"] = $_REQUEST["fcod"];

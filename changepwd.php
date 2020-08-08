@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    include('conn.php');
+    
+    include('header.php');
     $err = $msg = "";
 
     if(isset($_SESSION["ucod"]) && isset($_POST["btnsubmit"])){

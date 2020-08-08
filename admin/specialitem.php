@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  include('../conn.php');
+  
+  include('../header.php');
   $msg = $err = "";
   
   if(isset($_REQUEST["fcod"]) && isset($_REQUEST["ispopular"])){
