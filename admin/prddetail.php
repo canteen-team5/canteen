@@ -1,16 +1,6 @@
 <?php
-<<<<<<< HEAD
-  session_start();
-
-  if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
-    header('location:../index.php');
-  }
-
-  include('../conn.php');
-=======
   
-  include('../header.php');
->>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
+  include('header.php');
 
   $fnam = $fpic = $fdsc = $favl = $fqty = $fprc = $msg ="";
   $_SESSION["fcod"] = $_REQUEST["fcod"];

@@ -3,7 +3,6 @@
     include('header.php');
 
     error_reporting(0);
-<<<<<<< HEAD
     $usr = $pwd = $err = $ucod = "";
     if(isset($_POST["btnlogin"])){
         $usr = secure($_POST["username"]);
@@ -18,15 +17,6 @@
         elseif(!preg_match("/^[\w@&%$]{5,20}$/", $pwd))
             $err = "Password should be 5 to 20 characters longand must only contain alphabets, numbers and @,%,$,&";
 
-=======
-    $usr = $pwd = $msg = $ucod = "";
-    
-    if(isset($_POST["btnlogin"])){
-        $usr = $_POST["username"];
-        $pwd = $_POST["password"];
-        if($usr == "") $msg = "Please enter username";
-        elseif($pwd == "") $msg = "Please enter password";
->>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
         else { 
             $sql = "call login_check('$usr', '$pwd')";
             $result = $conn->query($sql);
@@ -38,14 +28,10 @@
 
                 if($verification == "Verified"){
                     $_SESSION["ucod"] = $ucod;
-<<<<<<< HEAD
                     if ($rol == "A") {
                         $_SESSION["rol"] = 'A';
                         header ("location:admin/dashboard.php");
                     }
-=======
-                    if ($rol == "A") header ("location:admin/prdlist.php");
->>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
                     else {
                         if(isset($_SESSION["cart"]))
                             header("location:cart.php");

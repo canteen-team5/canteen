@@ -1,10 +1,7 @@
 <?php
-  session_start();
 
-  if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
-    header('location:../index.php');
-  }
-  
+  include('header.php');
+
   $ucod = $_SESSION["ucod"];
 
 ?>

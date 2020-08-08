@@ -1,10 +1,10 @@
 <?php
-  session_start();
+  include('header.php');
 
   if(!isset($_SESSION["ucod"])){
     header('location:index.php');
   }
-  
+
   $ucod = $_SESSION["ucod"];
 
 ?>

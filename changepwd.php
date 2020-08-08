@@ -1,16 +1,11 @@
 <?php
-<<<<<<< HEAD
-    session_start();
+    
+    include('header.php');
 
     if(!isset($_SESSION["ucod"])){
         header('location:index.php');
     }
     
-    include('conn.php');
-=======
-    
-    include('header.php');
->>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
     $err = $msg = "";
 
     if(isset($_SESSION["ucod"]) && isset($_POST["btnsubmit"])){

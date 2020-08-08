@@ -1,9 +1,7 @@
 <?php
-  session_start();
 
-  if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
-    header('location:../index.php');
-  }
+  include('header.php');
+
   if(isset($_POST["logout"])){
     unset($_SESSION["ucod"]);
     unset($_SESSION["rol"]);

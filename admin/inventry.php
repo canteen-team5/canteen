@@ -1,11 +1,7 @@
 <?php
-  session_start();
+  
+  include('header.php');
 
-  if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
-    header('location:../index.php');
-  }
-
-  include('../conn.php');
   $addqty = $fqty = "";
 
   if(isset($_REQUEST["fcod"]) && isset($_POST["submit"])){
