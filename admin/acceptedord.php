@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
   session_start();
 
   if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
@@ -10,6 +11,11 @@
   
 
   
+=======
+
+include('../header.php');
+ 
+>>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
 ?>
 
 

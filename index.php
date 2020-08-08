@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  include('conn.php');
+ 
+  include('header.php');
 
   if(isset($_POST["logout"])){
     unset($_SESSION["ucod"]);

@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 session_start();
 
 if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
@@ -7,6 +8,11 @@ if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] =
 
 include('../conn.php');
     //error_reporting(0);
+=======
+
+include('../header.php');
+
+>>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
 
 $catnam = $cnam = $msg = $result_disp = $err = "";
 
@@ -102,6 +108,7 @@ if (isset($_REQUEST["ccod"])) {
         margin: 20px auto;
         text-align: center;
         width: 90%;
+        font-size: large;
       }
 
       label {
@@ -119,6 +126,7 @@ if (isset($_REQUEST["ccod"])) {
         display: block;
         width: 90%;
         margin: 0;
+        font-size: large;
       }
 
       input[type=submit]:hover {

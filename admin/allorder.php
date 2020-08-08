@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
   session_start();
 
   if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
@@ -7,6 +8,12 @@
 
   include('../conn.php');
   //error_reporting(0);
+=======
+
+  
+  include('../header.php');
+  
+>>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
   $msg = $mobile = "";
 
   require("../PHPMailer/src/PHPMailer.php");

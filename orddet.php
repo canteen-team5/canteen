@@ -1,8 +1,14 @@
 <?php
 
+<<<<<<< HEAD
   session_start();
   include('conn.php');
   $ordstatus = $date = $time = $fcod = $ordcod = $prev_key = $prev_ord = "";
+=======
+  
+  include('header.php');
+  $ordstatus = $date = $time = $fcod = $ordcod = "";
+>>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
 
 ?>
 

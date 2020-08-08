@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  include('conn.php');
+  
+  include('header.php');
 
   //for submitting order
   if(isset($_POST["btnsubmit"])){

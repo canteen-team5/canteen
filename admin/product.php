@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
   session_start();
 
   if( !isset($_SESSION["ucod"]) || (!isset($_SESSION["rol"]) && $_SESSION["rol"] == 'A')){
@@ -6,6 +7,10 @@
   }
   
   include('../conn.php');
+=======
+ 
+  include('../header.php');
+>>>>>>> 0381feff0a1521b6a2328945084526e7c5cf6b24
 
   $sel_cat = $itm_nam = $itm_prc = $itm_dsc = $itm_pic = $itm_avail = $itm_qty = $msg = "";
   if(isset($_POST["submit"])){
