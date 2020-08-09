@@ -279,7 +279,7 @@ input {
 
 .blurr{
   background: url(../images/bg1.jpg);
-  height: 630px;
+  height: 100vh;
   filter: blur(1px);
 }
 .modal-content {
@@ -351,7 +351,8 @@ label {
   cursor: pointer;
 }
 .btn:hover, .btn:focus {
-	background: #179b81 !important;
+  background: #179b81 !important;
+  outline: none;
 }
 .hint-text {
 	text-align: center;
@@ -362,7 +363,6 @@ label {
 	color: #999;
 	border-color: #dee4e7;
 	text-align: center;
-	margin: 0 -25px -25px;
 	font-size: 13px;
 	justify-content: center;
 }

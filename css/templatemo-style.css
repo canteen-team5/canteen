@@ -754,10 +754,15 @@ input[type=file]{
   border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
-} 
+}
 
-input[type=submit]:hover {
+button:active{
+  outline: none;
+}
+
+input[type=submit]:hover,input[type=submit]:active {
   background-color: #45a049;
+  outline: none;
 }
 
 .add{

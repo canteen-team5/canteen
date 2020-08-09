@@ -186,12 +186,17 @@
                   </div>';
                 if($result->num_rows > 0){ 
                   while($row = $result->fetch_assoc()){
+                    $fqty = $row["foodqty"];
                     if($row["foodisavl"] == "True"){
                       echo '<div class="tm-product" >
                       <img src="prdpics/'.$row["foodpic"].' " alt="Product" >
                       <div class="tm-product-text">
                       <h3 class="tm-product-title">'.$row["foodname"].'</h3>
-                      <p class="tm-product-description">'.$row["fooddsc"].'</p>
+                      <p class="tm-product-description">'.$row["fooddsc"];
+                      if($fqty < 6){
+                        echo '<br><p style="color:red;"><sup>*</sup>Only '.$fqty.' left in stock </p> ';
+                      }
+                      echo '</p>
                       <span class="bttn"> <a href="cart.php?fcod='.$row["foodcod"].'&action=add ">Add to Cart</a></span></div>
                       <div class="tm-product-price">
                       <span class="tm-product-price-link tm-handwriting-font">₹'.$row["foodprc"].'</span>
@@ -243,13 +248,18 @@
                     $result = $conn->query($sql);
                     if($result->num_rows > 0){
                       while($row = $result->fetch_assoc()){
+                        $fqty = $row["foodqty"];
                         if($row["foodisavl"] == "True"){
                           $j++;
                           echo '<div class="tm-product" id="itm'.$j.'">
                           <img src="prdpics/'.$row["foodpic"].' " alt="Product" >
                           <div class="tm-product-text">
                           <h3 class="tm-product-title">'.$row["foodname"].'</h3>
-                          <p class="tm-product-description">'.$row["fooddsc"].'</p>
+                          <p class="tm-product-description">'.$row["fooddsc"];
+                          if($fqty < 6){
+                            echo '<br><p style="color:red;"> <sup>*</sup>Only '.$fqty.' left in stock </p> ';
+                          }
+                          echo '</p>
                           <span class="bttn"> <a href="cart.php?fcod='.$row["foodcod"].'&action=add ">Add to Cart</a></span></div>
                           <div class="tm-product-price">
                           <span class="tm-product-price-link tm-handwriting-font">₹'.$row["foodprc"].'</span>

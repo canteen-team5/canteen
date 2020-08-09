@@ -388,12 +388,20 @@
               <tbody>
               <form action="cart.php?action=update" method="post">';
               foreach($contents as $key => $value){
+                if($value > 5) {
+                  $value = 5;
+                  $err = "Maximum qunatity per item in an order is five";
+                }
                 include('conn.php');
                 $tot = 0;
                 $sql = "call fndmenu($key)";
                 $result = $conn->query($sql);
                 if($result->num_rows > 0){
                   while($row = $result->fetch_assoc()){
+                    if($value > $row["foodqty"]){
+                      $value = $row["foodqty"];
+                      $err = 'Only '.$value.' '.$row["foodname"].' left in stock';
+                    }
                     echo '<tr>
                     <td>'.$row["foodname"].'</td>
                     <td>'.$row["foodprc"].'</td>
@@ -421,7 +429,7 @@
             echo "<div class='empty-cart'><p class='cat' ><span class='text'> Your cart is Empty </span> </p>
             <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
           }
-
+          if(isset($err) ) echo $err;
         ?>
 
       
