@@ -8,7 +8,7 @@ $catnam = $cnam = $msg = $result_disp = $err = "";
 if (isset($_POST["catsubmit"])) {
   $catnam = secure($_POST["cat_name"]);
   if ($catnam == "") 
-    $err = "Please input name";
+    $err = "Please input Category name";
   elseif(!preg_match("/^[A-Z][a-zA-Z ]{2,19}$/", $catnam))
     $err = "Category name must contain only alphabets and should be greater than equal to 3 and less than 20";
 
@@ -197,12 +197,12 @@ if (isset($_REQUEST["ccod"])) {
     <!------------------------------------------------------------------>
 
     <h1 style="width:85%;" onclick="mobile_icon_off()">CATEGORY</h1>
-    <form method="post"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="frmcat" style="padding-bottom: 5em;" onclick="mobile_icon_off()">
+    <form method="post"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="frmcat" style="padding-bottom: 5em;" onclick="mobile_icon_off()" onsubmit="return(checkCat())">
 
       <div class="row" style="padding:4% 0 0;" >
         <label for="cat_name">Categories Name:</label>
         <div class="catsubrght">
-          <input type="text" name="cat_name" placeholder="Your category name.." value="<?php echo$cnam;?>">   
+          <input type="text" id="name" name="cat_name" placeholder="Your category name.." value="<?php echo$cnam;?>">   
           <?php
             if (isset($_REQUEST["ccod"]) && $_REQUEST["mod"] == "E")
               echo '<input type="submit" value="Update" name="catsubmit" >';
@@ -225,7 +225,7 @@ if (isset($_REQUEST["ccod"])) {
       if ($result_disp->num_rows > 0) {
         while ($row = $result_disp->fetch_assoc()) {
           echo "<p class='cat' ><span class='text'>" . $row["catname"] . "</span> <span class='bttn'> <a href=category.php?ccod=" . $row["catcod"] . "&mod=E >Edit</a>
-            <a onclick='confirmationDelete($(this));return false;' href='category.php?ccod=" . $row["catcod"] . "&mod=D'  >Delete</a> </span> </p>";
+            <a onclick='confirmationCatDelete($(this));return false;' href='category.php?ccod=" . $row["catcod"] . "&mod=D'  >Delete</a> </span> </p>";
         }
       } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
       ?>

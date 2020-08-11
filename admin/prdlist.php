@@ -139,7 +139,7 @@
               while ($row = $result_disp->fetch_assoc()){
                 echo "<p class='cat' ><span class='text'> 
                 <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-                </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
+                </span> <span class='bttn'> <a onclick='confirmationPrdDelete($(this));return false;' href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
                 $i++;
                 if($i == 3) break;
               }
@@ -169,7 +169,7 @@
               while ($row = $result_disp->fetch_assoc()){
                 echo "<p class='cat' ><span class='text'> 
                 <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-                </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
+                </span> <span class='bttn'> <a onclick='confirmationPrdDelete($(this));return false;' href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
               }
             } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
             $conn->close();
@@ -192,10 +192,10 @@
             $result_disp = $conn->query($sql_disp); 
             if($result_disp->num_rows > 0){
               while ($row = $result_disp->fetch_assoc()){
-                if($row["foodisavl"] == "False"){
+                if($row["foodqty"] < 1){
                   echo "<p class='cat' ><span class='text'> 
                   <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-                  </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
+                  </span> <span class='bttn'> <a onclick='confirmationPrdDelete($(this));return false;' href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
                 }
               }
             } else echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";

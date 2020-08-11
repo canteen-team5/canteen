@@ -15,7 +15,7 @@
     $conn->close();
     include('../conn.php');
     $tot_qty = $fqty + $addqty;
-    $sql = "update tbmenu set foodqty=$tot_qty,foodisavl='True' where foodcod=$fcod ";
+    $sql = "update tbmenu set foodqty=$tot_qty where foodcod=$fcod ";
     if(mysqli_query($conn, $sql)){
     }
   }

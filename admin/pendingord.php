@@ -56,18 +56,41 @@
     if (mysqli_query($conn, $sql)) {
       $msg =  "Record updated successfully";
       $email = $_SESSION["email"];
-
      
         $mail->Body = "Oops! Your order has been cancelled.";
-      
         $mail->AddAddress($email);
         $mail->Send();
-        /*if(!$mail->Send()) {
-            echo "Mailer Error: " . $mail->ErrorInfo;
-        } else {
-            echo "Message has been sent";
-        }*/
-        //unset($_SESSION["email"]);
+        //
+
+        //for updating menu table for wrong order
+        $conn->close();
+        include('../conn.php');
+        $sql_det = "select * from tborddet where orddetordcod=$ordcod";
+        $result_det = $conn->query($sql_det);
+        if($result_det->num_rows > 0){
+          while( $row_det = $result_det->fetch_assoc()){
+            $fcod = $row_det["orddetfoodcod"];
+            $fqty_det = $row_det["orddetfoodqty"];
+
+            $conn->close();
+            include('../conn.php');
+            $sql_menu = "select * from tbmenu where foodcod=$fcod ";
+            $result_menu = $conn->query($sql_menu);
+            $fqty_menu = 0;
+            if($result_menu->num_rows > 0){
+              $row_menu = $result_menu->fetch_assoc();
+              $fqty_menu = $row_menu["foodqty"];
+            }
+            $conn->close();
+            include('../conn.php');
+            $tot_qty = $fqty_menu + $fqty_det;
+            $sql_menu = "update tbmenu set foodqty=$tot_qty where foodcod=$fcod ";
+            if(mysqli_query($conn, $sql_menu)) {
+              //echo "done";
+            }
+          }
+        } //end
+
     } else {
       $msg =  "Error updating record: " . mysqli_error($conn);
     }

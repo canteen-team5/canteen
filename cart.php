@@ -20,6 +20,35 @@
     if(mysqli_query($conn, $sql)){
       $_SESSION["time"] = $time;
 
+      //setup for sending email
+      //fetching usr-email;
+      /*$result = $conn->query("call fndusr($usrcod)");
+      if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        $email = $row["email"];
+        $mob = $row["mobile"];
+      }
+      // for sending mail
+      require("PHPMailer/src/PHPMailer.php");
+      require("PHPMailer/src/SMTP.php");
+
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
+        $mail->IsSMTP(); // enable SMTP
+
+        //$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+        $mail->SMTPAuth = true; // authentication enabled
+        $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 465; // or 587
+        $mail->IsHTML(true);
+        $mail->Username = "team5canteen@gmail.com";
+        $mail->Password = "canteen@team5";
+        $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
+        $mail->Subject = "Order Placed";
+        $mail->Body = "Thanks for ordering food";
+        $mail->AddAddress($email);
+        */
+
       //for inserting data into orddet table
       $conn->close();
       include('conn.php');
@@ -56,29 +85,64 @@
             if($fqty == $value){
               $sql_menu = "update tbmenu set foodqty=$tot_qty where foodcod=$key ";
               if(mysqli_query($conn, $sql_menu)){
-                $sql = "update tbmenu set foodisavl='False' where foodcod=$key";
-                if(mysqli_query($conn, $sql)){
-                  //echo "false";
-                } 
+                //$mail->Send();
               }
             }
             elseif($fqty < $value){
+              $wrong_ord = 1;
               $sql_delord = "delete from tbord where ordcod=$ordcod;";
-              $sql_delorddet = "delete from tborddet where orddetordcod=$ordcod ";
+              $sql_delorddet = "delete from tborddet where orddetordcod=$ordcod and orddetfoodcod=$key  ";
               if( mysqli_query($conn, $sql_delord) && mysqli_query($conn, $sql_delorddet) ) {
-                echo "cancelled";
-                header('location:index.php');
+                //echo "cancelled";
+                //header('location:index.php');
               }
             }
             else{
               $sql_menu = "update tbmenu set foodqty=$tot_qty where foodcod=$key ";
               if(mysqli_query($conn, $sql_menu)) {
-                //echo "done";
+                //$mail->Send();
               }
             }
 
           }
         }
+
+        //updating food quantity for wrong order
+        if(isset($wrong_ord)){
+          $conn->close();
+          include('conn.php');
+          $sql_det = "select * from tborddet where orddetordcod=$ordcod";
+          $result_det = $conn->query($sql_det);
+          if($result_det->num_rows > 0){
+            while( $row_det = $result_det->fetch_assoc()){
+              $fcod = $row_det["orddetfoodcod"];
+              $fqty_det = $row_det["orddetfoodqty"];
+
+              $conn->close();
+              include('conn.php');
+              $sql_menu = "select * from tbmenu where foodcod=$fcod ";
+              $result_menu = $conn->query($sql_menu);
+              $fqty_menu = 0;
+              if($result_menu->num_rows > 0){
+                $row_menu = $result_menu->fetch_assoc();
+                $fqty_menu = $row_menu["foodqty"];
+              }
+              $conn->close();
+              include('conn.php');
+              $tot_qty = $fqty_menu + $fqty_det;
+              $sql_menu = "update tbmenu set foodqty=$tot_qty where foodcod=$fcod ";
+              if(mysqli_query($conn, $sql_menu)) {
+                //echo "done";
+              }
+            }
+            $sql_delorddet = "delete from tborddet where orddetordcod=$ordcod ";
+            if(mysqli_query($conn, $sql_delorddet) ) {
+              //echo "cancelled update";
+              //header('location:index.php');
+            }
+          }
+        } //end
+
 
       }
 
@@ -87,38 +151,12 @@
 
       //echo "Order Placed successfully";
 
-      //fetching usr-email;
-      /*$result = $conn->query("call fndusr($usrcod)");
-      if($result->num_rows > 0){
-        $row = $result->fetch_assoc();
-        $email = $row["email"];
-        $mob = $row["mobile"];
-      }
-      // for sending mail
-      require("PHPMailer/src/PHPMailer.php");
-      require("PHPMailer/src/SMTP.php");
-
-        $mail = new PHPMailer\PHPMailer\PHPMailer();
-        $mail->IsSMTP(); // enable SMTP
-
-        //$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-        $mail->SMTPAuth = true; // authentication enabled
-        $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-        $mail->Host = "smtp.gmail.com";
-        $mail->Port = 465; // or 587
-        $mail->IsHTML(true);
-        $mail->Username = "team5canteen@gmail.com";
-        $mail->Password = "canteen@team5";
-        $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
-        $mail->Subject = "Order Placed";
-        $mail->Body = "Thanks for ordering food";
-        $mail->AddAddress($email);
-        $mail->Send();
+      
       
 
         //for sending messages
         
-        $field = array(
+        /*$field = array(
           "sender_id" => "FSTSMS",
           "language" => "english",
           "route" => "qt",
@@ -183,8 +221,29 @@
   //for updating the quantity
   if(!isset($_POST["btnsubmit"]) && isset($_REQUEST["action"]) && $_REQUEST["action"] == "update"){
     foreach($_POST as $key=>$value){
+      if($value > 5) {
+        $value = 5;
+        $err = "Maximum qunatity per item in an order is five";
+      }
+      
       if(strstr($key,'qty')){
         $fcod = str_replace('qty', '', $key);
+
+        // contranint for value
+        include('conn.php');
+        $sql = "call fndmenu($fcod)";
+        $result = $conn->query($sql);
+        if($result->num_rows > 0){
+          while($row = $result->fetch_assoc()){
+            if($value > $row["foodqty"]){
+              $value = $row["foodqty"];
+              $err = 'Only '.$value.' '.$row["foodname"].' left in stock';
+            }
+          }
+        }
+        $conn->close();
+        // end of constraint
+
         for($i = 0; $i < $value; $i++){
           if(isset($newcart))
             $newcart .= ','.$fcod;
@@ -388,20 +447,13 @@
               <tbody>
               <form action="cart.php?action=update" method="post">';
               foreach($contents as $key => $value){
-                if($value > 5) {
-                  $value = 5;
-                  $err = "Maximum qunatity per item in an order is five";
-                }
+                
                 include('conn.php');
                 $tot = 0;
                 $sql = "call fndmenu($key)";
                 $result = $conn->query($sql);
                 if($result->num_rows > 0){
                   while($row = $result->fetch_assoc()){
-                    if($value > $row["foodqty"]){
-                      $value = $row["foodqty"];
-                      $err = 'Only '.$value.' '.$row["foodname"].' left in stock';
-                    }
                     echo '<tr>
                     <td>'.$row["foodname"].'</td>
                     <td>'.$row["foodprc"].'</td>

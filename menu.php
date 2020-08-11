@@ -187,7 +187,7 @@
                 if($result->num_rows > 0){ 
                   while($row = $result->fetch_assoc()){
                     $fqty = $row["foodqty"];
-                    if($row["foodisavl"] == "True"){
+                    if($fqty > 0 ){
                       echo '<div class="tm-product" >
                       <img src="prdpics/'.$row["foodpic"].' " alt="Product" >
                       <div class="tm-product-text">
@@ -227,7 +227,7 @@
                             $result = $conn->query($sql);
                             if($result->num_rows > 0){
                               while($row = $result->fetch_assoc()){
-                                if($row["foodisavl"] == "True"){
+                                if($row["foodqty"] > 0){
                                   $i++;
                                   echo '<li><a href="#itm'.$i.'">'.$row["foodname"].'</a></li>';
                                 }
@@ -249,7 +249,7 @@
                     if($result->num_rows > 0){
                       while($row = $result->fetch_assoc()){
                         $fqty = $row["foodqty"];
-                        if($row["foodisavl"] == "True"){
+                        if($fqty > 0){
                           $j++;
                           echo '<div class="tm-product" id="itm'.$j.'">
                           <img src="prdpics/'.$row["foodpic"].' " alt="Product" >

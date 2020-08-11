@@ -9,7 +9,6 @@
     $itm_prc = secure($_POST["price"]);
     $itm_dsc = secure($_POST["describe"]);
     $itm_pic = $_FILES["picture"]["name"];
-    $itm_avail = $_POST["available"];
     $itm_qty = secure($_POST["item_qty"]);
 
     if($itm_nam == "") 
@@ -25,10 +24,10 @@
     elseif($itm_dsc == "") 
       $err = "Please enter an item description!";
     elseif(!preg_match("/^[A-Z][a-zA-Z ]{4,500}$/", $itm_dsc))
-      $err = "Item name must contain only alphabets and should be greater than equal to 5 and less than 500";
+      $err = "Item description must contain only alphabets and should be greater than equal to 5 and less than 500";
 
     elseif($itm_qty == "") 
-      $err = "Please enter Item price!";
+      $err = "Please enter Item Quantity!";
     elseif(!preg_match("/^[1-9][0-9]{0,10}$/", $itm_qty))
       $err = "Quantity must not be zero";
       
@@ -37,7 +36,7 @@
     else {
       if(isset($_SESSION["check"])){
           $fcod = $_SESSION['fcod'];
-          $sql = "call updmenu($fcod, '$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, '$itm_avail', $itm_qty)";
+          $sql = "call updmenu($fcod, '$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, $itm_qty)";
           if ($conn->query($sql) === TRUE) {
             $msg = "Record updated successfully";
           } else {
@@ -46,7 +45,7 @@
           unset($_SESSION["check"]);
       }
       else{
-        $sql = "call insmenu('$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, '$itm_avail', $itm_qty)";
+        $sql = "call insmenu('$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, $itm_qty)";
       if (mysqli_query($conn, $sql)) 
         $msg = "New record created successfully";
       else
@@ -151,13 +150,13 @@
     <div class="border" onclick="mobile_icon_off()">
     <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Add Product</h1>
 
-      <form method='post' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' enctype="multipart/form-data" class="add">
+      <form method='post' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' enctype="multipart/form-data" class="add" onsubmit="return(checkAddPrd())">
         <div class="row">
           <div class="col-25">
             <label for="item_name">Item Name</label>
           </div>
           <div class="col-75">
-            <input type="text"  name="item_name" placeholder="Your product name.." value="<?php echo $itm_nam; ?>">
+            <input type="text" id="name" name="item_name" placeholder="Your product name.." value="<?php echo $itm_nam; ?>">
           </div>
         </div>
 
@@ -166,7 +165,7 @@
             <label for="item_price">Item Price</label>
           </div>
           <div class="col-75">
-            <input type="text"  name="price" placeholder="Your Item price.." value="<?php echo $itm_prc; ?>">
+            <input type="text" id="prc" name="price" placeholder="Your Item price.." value="<?php echo $itm_prc; ?>">
           </div>
         </div>
 
@@ -184,7 +183,7 @@
             <label for="item_picture">Item Picture</label>
           </div>
           <div class="col-75">
-            <input type="file"  name="picture" placeholder="Choose File" >
+            <input type="file" id="picture" name="picture" placeholder="Choose File" >
           </div>
         </div>
 
@@ -216,37 +215,10 @@
 
         <div class="row">
           <div class="col-25">
-            <label for="item_available">Item Available</label>
+            <label for="qty">Item Quantity</label>
           </div>
           <div class="col-75">
-            <select id="Available" name="available">
-                <?php
-                  if(isset($_REQUEST["fcod"])){
-                    if($itm_avail == "True"){
-                      echo '<option name="Avail" value="True" selected>Available</option>';
-                      echo '<option name="not-avail" value="False">Not Available</option>';
-                    }
-                    else{
-                      echo '<option name="Avail" value="True">Available</option>';
-                      echo '<option name="not-avail" value="False" selected >Not Available</option>';
-                    }
-                  }
-                  else{
-                    echo '<option name="Avail" value="True">Available</option>';
-                    echo '<option name="not-avail" value="False">Not Available</option>';
-                  }
-
-                ?>  
-              </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-25">
-            <label for="item_name">Item Quantity</label>
-          </div>
-          <div class="col-75">
-            <input type="text"  name="item_qty" placeholder="Product Quantity.." value="<?php echo $itm_qty; ?>">
+            <input type="text" id="qty" name="item_qty" placeholder="Product Quantity.." value="<?php echo $itm_qty; ?>">
           </div>
         </div>
 

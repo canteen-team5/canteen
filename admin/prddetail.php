@@ -13,14 +13,16 @@
     $fnam = $row["foodname"];
     $fpic = $row["foodpic"];
     $fdsc = $row["fooddsc"];
-    $favl = $row["foodisavl"];
     $fqty = $row["foodqty"];
     $fprc = $row["foodprc"];
+    if($fqty > 0)
+      $favl = "True";
+    else
+      $favl = "False"; 
 
     $_SESSION["fnam"] = $fnam;
     $_SESSION["fdsc"] = $fdsc;
     $_SESSION["fnam"] = $fnam;
-    $_SESSION["favl"] = $favl;
     $_SESSION["fprc"] = $fprc;
     $_SESSION["fqty"] = $fqty;
     $_SESSION["fpic"] = $fpic;
@@ -176,7 +178,7 @@
                 <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">P</span>rice: ₹<?php echo $fprc; ?></h3><hr class="tm-popular-item-hr">
                    
                 <?php echo '<h3 <span class="bttn"> <a href="addprd.php?fcod='.$_SESSION["fcod"].'&mod=E ">Edit</a>
-                  <a href="prddetail.php?fcod='.$_SESSION["fcod"].'&mod=D&pic='.$_SESSION["fpic"].' ">Delete</a> </span></h3>'; ?>
+                  <a onclick="confirmationPrdDelete($(this));return false;" href="prddetail.php?fcod='.$_SESSION["fcod"].'&mod=D&pic='.$_SESSION["fpic"].' ">Delete</a> </span></h3>'; ?>
               </div>
             </div>
           </section>

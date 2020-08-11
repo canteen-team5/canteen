@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 09, 2020 at 04:59 AM
+-- Generation Time: Aug 11, 2020 at 04:56 PM
 -- Server version: 8.0.18
 -- PHP Version: 7.3.12
 
@@ -79,13 +79,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `inscat` (IN `catnam` VARCHAR(50))  
 INSERT tbcat VALUES(null,catnam)$$
 
 DROP PROCEDURE IF EXISTS `insmenu`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insmenu` (IN `fnam` VARCHAR(50), IN `fdsc` VARCHAR(500), IN `fpic` VARCHAR(100), IN `fprc` INT, IN `fcatcod` INT, IN `fisavl` CHAR(5), IN `fqty` INT, IN `fpop` VARCHAR(10))  NO SQL
-INSERT tbmenu VALUES(null,fnam,fdsc,fpic,fprc,fcatcod,fisavl,fqty,fpop)$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insmenu` (IN `fnam` VARCHAR(50), IN `fdsc` VARCHAR(500), IN `fpic` VARCHAR(100), IN `fprc` INT, IN `fcatcod` INT, IN `fqty` INT)  NO SQL
+INSERT tbmenu VALUES(null,fnam,fdsc,fpic,fprc,fcatcod,fqty,'no')$$
 
 DROP PROCEDURE IF EXISTS `insord`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insord` (IN `odate` DATE, IN `ousrcod` INT, IN `ofoodcod` VARCHAR(500), IN `otime` TIME, IN `ostatus` VARCHAR(20), IN `ocost` INT)  NO SQL
 BEGIN
-INSERT tbord VALUES(null, odate, ousrcod, ofoodcod, otime, ostatus, ocost);
+INSERT tbord VALUES(null, odate, ousrcod, ofoodcod, otime, ostatus, ocost, 'COD');
 END$$
 
 DROP PROCEDURE IF EXISTS `insorddet`$$
@@ -105,8 +105,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updcat` (IN `ccod` INT, IN `cnam` V
 UPDATE tbcat SET catname = cnam WHERE catcod = ccod$$
 
 DROP PROCEDURE IF EXISTS `updmenu`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updmenu` (IN `fcod` INT, IN `fnam` VARCHAR(50), IN `fdsc` VARCHAR(500), IN `fpic` VARCHAR(100), IN `fprc` INT, IN `fcatcod` INT, IN `fisavl` CHAR(5), IN `fqty` INT)  NO SQL
-UPDATE tbmenu set foodname=fnam, fooddsc=fdsc, foodpic=fpic, foodprc=fprc, foodcatcod=fcatcod, foodisavl=fisavl, foodqty=fqty where foodcod = fcod$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updmenu` (IN `fcod` INT, IN `fnam` VARCHAR(50), IN `fdsc` VARCHAR(500), IN `fpic` VARCHAR(100), IN `fprc` INT, IN `fcatcod` INT, IN `fqty` INT)  NO SQL
+UPDATE tbmenu set foodname=fnam, fooddsc=fdsc, foodpic=fpic, foodprc=fprc, foodcatcod=fcatcod, foodqty=fqty where foodcod = fcod$$
 
 DROP PROCEDURE IF EXISTS `updord`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updord` (IN `ocod` INT, IN `oqty` INT, IN `ostatus` VARCHAR(20))  NO SQL
@@ -154,20 +154,19 @@ CREATE TABLE IF NOT EXISTS `tbmenu` (
   `foodpic` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `foodprc` int(11) NOT NULL,
   `foodcatcod` int(11) NOT NULL,
-  `foodisavl` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `foodqty` int(11) NOT NULL,
   `foodispopular` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`foodcod`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbmenu`
 --
 
-INSERT INTO `tbmenu` (`foodcod`, `foodname`, `fooddsc`, `foodpic`, `foodprc`, `foodcatcod`, `foodisavl`, `foodqty`, `foodispopular`) VALUES
-(36, 'Maggie', 'Maggie is an international brand of seasonings, instant soups, and noodles that originated in Switzerland in late 19th century.Maggie is a 2015 American post-apocalyptic horror drama film directed by Henry Hobson.  ', 'maggie.jpg', 20, 26, 'True', 2, 'yes'),
-(39, 'Samosa', 'A samosa is a fried or baked pastry with a savoury filling, such as spiced potatoes, onions, peas, cheese, beef and other meats, or lentils. It may take different forms, including triangular, cone, or half-moon shapes, depending on the region.', 'samosa.webp', 8, 26, 'True', 2, 'yes'),
-(40, 'Cold Drink', 'A soft drink is a drink that usually contains carbonated water, a sweetener, and a natural or artificial flavoring. The sweetener may be a sugar, high-fructose corn syrup, fruit juice, a sugar substitute, or some combination of these.', 'cold_drink.jpg', 20, 42, 'True', 3, 'yes');
+INSERT INTO `tbmenu` (`foodcod`, `foodname`, `fooddsc`, `foodpic`, `foodprc`, `foodcatcod`, `foodqty`, `foodispopular`) VALUES
+(36, 'Maggie', 'Maggie is an international brand of seasonings, instant soups, and noodles that originated in Switzerland in late 19th century.Maggie is a 2015 American post-apocalyptic horror drama film directed by Henry Hobson.  ', 'maggie.jpg', 20, 26, 42, 'yes'),
+(39, 'Samosa', 'A samosa is a fried or baked pastry with a savoury filling, such as spiced potatoes, onions, peas, cheese, beef and other meats, or lentils. It may take different forms, including triangular, cone, or half-moon shapes, depending on the region.', 'samosa.webp', 8, 26, 2, 'yes'),
+(40, 'Cold Drink', 'A soft drink is a drink that usually contains carbonated water, a sweetener, and a natural or artificial flavoring. The sweetener may be a sugar, high-fructose corn syrup, fruit juice, a sugar substitute, or some combination of these.', 'cold_drink.jpg', 20, 42, 4, 'yes');
 
 -- --------------------------------------------------------
 
@@ -186,17 +185,19 @@ CREATE TABLE IF NOT EXISTS `tbord` (
   `ordcost` int(11) NOT NULL,
   `payment` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`ordcod`)
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbord`
 --
 
 INSERT INTO `tbord` (`ordcod`, `orddate`, `ordusrcod`, `ordfoodcod`, `ordtime`, `ordstatus`, `ordcost`, `payment`) VALUES
-(66, '2020-07-31', 10, '36,39,39', '17:13:44', 'Accepted', 36, ''),
-(81, '2020-07-31', 10, '39,40', '17:41:05', 'Accepted', 28, ''),
-(84, '2020-08-01', 10, '36,36,36,39', '10:22:15', 'Accepted', 68, ''),
-(138, '2020-08-08', 11, '40', '19:30:27', 'Pending', 20, '');
+(66, '2020-07-31', 10, '36,39,39', '17:13:44', 'Accepted', 36, 'COD'),
+(81, '2020-07-31', 10, '39,40', '17:41:05', 'Accepted', 28, 'COD'),
+(84, '2020-08-01', 10, '36,36,36,39', '10:22:15', 'Accepted', 68, 'COD'),
+(166, '2020-08-11', 10, '40,40', '14:51:03', 'Cancelled', 40, 'COD'),
+(167, '2020-08-11', 11, '36', '14:52:54', 'Accepted', 20, 'COD'),
+(168, '2020-08-11', 11, '36', '14:56:56', 'Cancelled', 20, 'COD');
 
 -- --------------------------------------------------------
 
@@ -211,15 +212,16 @@ CREATE TABLE IF NOT EXISTS `tborddet` (
   `orddetfoodcod` int(11) NOT NULL,
   `orddetfoodqty` int(11) NOT NULL,
   PRIMARY KEY (`orddetcod`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tborddet`
 --
 
 INSERT INTO `tborddet` (`orddetcod`, `orddetordcod`, `orddetfoodcod`, `orddetfoodqty`) VALUES
-(119, 138, 40, 1),
-(121, 139, 36, 5);
+(172, 166, 40, 2),
+(173, 167, 36, 1),
+(174, 168, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -254,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `tbusr` (
 
 INSERT INTO `tbusr` (`usrcod`, `rollno`, `fname`, `lname`, `usrpic`, `mobile`, `email`, `gender`, `usrname`, `usrpwd`, `usrrol`, `verification`) VALUES
 (10, 18409, 'Rajat', 'Sharma', 'rajat.jpeg', 8679688146, 'rajat18111999@gmail.com', 'Male', 'user1', 'pwd123', 'U', 'Verified'),
-(11, 0, '', '', 'rajat.jpeg\r\n\r\n', 0, '', '', 'admin', 'admin', 'A', 'Verified'),
+(11, 0, '', '', 'rajat.jpeg\r\n\r\n', 0, 'rs97404632@gmail.com', '', 'admin', 'admin', 'A', 'Verified'),
 (23, 18430, 'Rohit', 'Kumar', '18430dummy.png', 7807043627, 'rk@gmail.com', 'Male', 'rohit', 'rohit', 'U', 'Pending');
 COMMIT;
 

@@ -2,7 +2,6 @@
     
     include('header.php');
 
-    error_reporting(0);
     $usr = $pwd = $err = $ucod = "";
     if(isset($_POST["btnlogin"])){
         $usr = secure($_POST["username"]);
@@ -87,17 +86,17 @@
                     <div class="card-body">
                         <h2 class="title">User Login</h2>
                         <div class="modal-body">
-                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="login_form">
+                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="login_form" onsubmit="return(checkLogin())">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" class="form-control" name="username" placeholder="Username" value="<?php echo $usr;?>">
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="<?php echo $usr;?>">
                                     </div>
                                 
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                            <input type="password" class="form-control" name="password" placeholder="Password" value="" >
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="" >
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -111,6 +110,8 @@
                 </div>
             </div>
         </div>
+        
+        <script src="js/script.js"></script>
         <!-- end document-->
     </body>
     <!-- This templates was made by Colorlib (https://colorlib.com) -->

@@ -355,7 +355,7 @@
 
             <div class="quick_link">
               <div class="link">
-                <a href="specialitem.php">Special Products</a>
+                <a href="specialitem.php">Popular Products</a>
               </div>
             </div>
 

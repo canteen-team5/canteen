@@ -94,22 +94,22 @@
                 <div class="card-body">
                     <h2 class="title">Change Password</h2>
                     <div class="modal-body">
-					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" onsubmit="return(checkChangePwd())">
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" class="form-control" name="oldpwd" placeholder="Old Password">
+								<input type="password" class="form-control" id="oldpwd" name="oldpwd" placeholder="Old Password">
 							</div>
 						
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" class="form-control" name="newpwd" placeholder="New Password">
+								<input type="password" class="form-control" id="newpwd" name="newpwd" placeholder="New Password">
 							</div>
 							<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" class="form-control" name="confirmpwd" placeholder="Confirm Password">
+								<input type="password" class="form-control" id="confirmpwd" name="confirmpwd" placeholder="Confirm Password">
 							</div>
 						</div>
 						<div class="form-group">
@@ -122,7 +122,7 @@
         </div>
     </div>
 
-
+    <script src="js/script.js"></script>
 
 </body>
 </html>

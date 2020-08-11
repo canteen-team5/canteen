@@ -148,16 +148,16 @@
     ?>
 
     <!----------------- Registration Form ------------------------>
-    <section class="border" onclick="mobile_icon_off()">
+    <section class="border" onclick=mobile_icon_off()>
       <h1 style="text-align: center; font-size: 40px; margin: 20px 0 30px; width: 85%;">Registeration Form</h1>
 
-      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" class="add">
+      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" class="add" onsubmit="return(checkSignUp())">
         <div class="row">
           <div class="col-25">
-            <label for="roll no">Roll No</label>
+            <label for="roll_no">Roll No</label>
           </div>
           <div class="col-75">
-            <input type="text" id="roll no" name="roll_no" placeholder="Your roll no.." value="<?php echo $rollno;?>">
+            <input type="text" id="roll_no" name="roll_no" placeholder="Your roll no.." value="<?php echo $rollno;?>">
           </div>
         </div>
 
@@ -216,7 +216,7 @@
             <label for="item_picture">Image</label>
           </div>
           <div class="col-75">
-            <input type="file"  name="picture" placeholder="Choose File" value="<?php echo $usrpic;?>">
+            <input type="file" id="picture"  name="picture" placeholder="Choose File" value="<?php echo $usrpic;?>">
           </div>
         </div>
 
@@ -225,7 +225,7 @@
             <label for="user name">User Name</label>
           </div>
           <div class="col-75">
-            <input type="text" id="user name" name="user_name" placeholder="Your user name.." value="<?php echo $usrname;?>">
+            <input type="text" id="username" name="user_name" placeholder="Your user name.." value="<?php echo $usrname;?>">
           </div>
         </div>
 
@@ -239,7 +239,7 @@
         </div>
         
         <div class="row">
-          <input type="submit" value="Submit" name="submit">
+          <input type="submit" value="Submit" name="submit" >
         </div>
       </form>
     </section>
