@@ -85,12 +85,12 @@
     <link href="css/main.css" rel="stylesheet" media="all">
 </head>
 
-<body>
+<body id="lgn">
     <div class="blurr"></div>
     <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
         <div class="wrapper wrapper--w960">
             <div class="card card-2">
-                <div class="card-heading"></div>
+                <div class="card-heading"><img src="img/ctnn.jpeg" class="top_img"></div>
                 <div class="card-body">
                     <h2 class="title">Change Password</h2>
                     <div class="modal-body">

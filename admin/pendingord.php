@@ -4,7 +4,7 @@
 
   $msg = $mobile = "";
    // for sending mail
-   require("../PHPMailer/src/PHPMailer.php");
+   /*require("../PHPMailer/src/PHPMailer.php");
    require("../PHPMailer/src/SMTP.php");
 
      $mail = new PHPMailer\PHPMailer\PHPMailer();
@@ -19,7 +19,7 @@
      $mail->Username = "team5canteen@gmail.com";
      $mail->Password = "canteen@team5";
      $mail->SetFrom("team5canteen@gmail.com", 'Canteen');
-     $mail->Subject = "Order Status Changed";
+     $mail->Subject = "Order Status Changed";*/
   
   
   // for accepting the order
@@ -32,7 +32,7 @@
       $email = $_SESSION["email"];
 
      
-        $mail->Body = "Hurray! Your order has been accepted. Thanks for ordering.";
+        /*$mail->Body = "Hurray! Your order has been accepted. Thanks for ordering.";
         
         $mail->AddAddress($email);
         $mail->Send();
@@ -57,9 +57,9 @@
       $msg =  "Record updated successfully";
       $email = $_SESSION["email"];
      
-        $mail->Body = "Oops! Your order has been cancelled.";
+        /*$mail->Body = "Oops! Your order has been cancelled.";
         $mail->AddAddress($email);
-        $mail->Send();
+        $mail->Send();*/
         //
 
         //for updating menu table for wrong order
@@ -192,6 +192,23 @@
       footer{
         margin: 0;
       }
+      @media screen and (max-width: 767px){
+          .det{
+            font-size: 18px;
+            width: 100%;
+            padding: 1em;
+            float: none;
+          }
+          .imgdsc{
+            display: block;
+          }
+          .tm-popular-item-description {
+            padding: 0;
+          }
+          .bigger-first-letter {
+            font-size: 50px;
+          }
+        }
     </style>
   </head>
 
@@ -254,7 +271,7 @@
                           
                         //$conn->close();
                         include('../conn.php');
-                        $sql_usr = "call fndusr($ucod)";
+                        $sql_usr = "SELECT * FROM tbusr where usrcod=$ucod";
                         $result_usr = $conn->query($sql_usr);
                         if($result_usr->num_rows > 0){
                           $row_usr = $result_usr->fetch_assoc();
@@ -283,7 +300,7 @@
                           }
                           if(count($contents) != 0){
                             $tot_all = 0;
-                            echo '<div class = "cart">
+                            echo '<div class = "cart table-responsive">
                             <table class="table table-striped">
                             <thead>
                               <tr>
@@ -297,7 +314,7 @@
                             foreach($contents as $key => $value){
                               include('../conn.php');
                               $tot = 0;
-                              $sql_menu = "call fndmenu($key)";
+                              $sql_menu = "SELECT * FROM tbmenu where foodcod=$key";
                               $result_menu = $conn->query($sql_menu);
                               if($result_menu->num_rows > 0){
                                 while($row_menu = $result_menu->fetch_assoc()){

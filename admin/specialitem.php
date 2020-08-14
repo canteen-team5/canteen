@@ -194,7 +194,7 @@
             $result_disp = $conn->query($sql_disp); 
             if($result_disp->num_rows > 0){
               while ($row = $result_disp->fetch_assoc()){
-                if($row["foodisavl"] == "False"){
+                if($row["foodqty"] < 1){
                   echo "<p class='cat' ><span class='text'> 
                   <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
                   </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";

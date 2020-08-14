@@ -88,6 +88,19 @@
     #btn:hover{
       background: #309034;
     }
+    #row{
+      width: 80%; 
+      margin: auto;
+    }
+    @media screen and (max-width: 767px){
+      #btn{
+        width: 90%;
+        margin: 15px 0 0;
+      }
+      #row{
+        width: 100%;
+      }
+    }
     </style>
   </head>
 
@@ -160,7 +173,7 @@
           </div>
 
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"  class="add">
-            <div class="row" style="width: 80%; margin:auto;">
+            <div class="row" id="row">
               
               <div class="col-75">
                 <input type="search" name="search" placeholder="Search...." value="" style="width: 90%;">
@@ -223,7 +236,7 @@
                         <ul>';
                             include('conn.php');
                             $i = 0;
-                            $sql = "call dspmenu";
+                            $sql = "SELECT * from tbmenu";
                             $result = $conn->query($sql);
                             if($result->num_rows > 0){
                               while($row = $result->fetch_assoc()){
@@ -244,7 +257,7 @@
                   <div class="tm-menu-product-content col-lg-9 col-md-9"> <!-- menu content -->';
                     $j = 0;
                     include('conn.php');
-                    $sql = "call dspmenu";
+                    $sql = "SELECT * from tbmenu ";
                     $result = $conn->query($sql);
                     if($result->num_rows > 0){
                       while($row = $result->fetch_assoc()){

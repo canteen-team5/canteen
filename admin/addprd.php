@@ -36,7 +36,7 @@
     else {
       if(isset($_SESSION["check"])){
           $fcod = $_SESSION['fcod'];
-          $sql = "call updmenu($fcod, '$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, $itm_qty)";
+          $sql = "UPDATE tbmenu set foodname='$itm_nam', fooddsc='$itm_dsc', foodpic='$itm_pic', foodprc=$itm_prc, foodcatcod=$sel_cat, foodqty=$itm_qty where foodcod = $fcod ";
           if ($conn->query($sql) === TRUE) {
             $msg = "Record updated successfully";
           } else {
@@ -45,7 +45,7 @@
           unset($_SESSION["check"]);
       }
       else{
-        $sql = "call insmenu('$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, $itm_qty)";
+        $sql = "INSERT tbmenu VALUES('', '$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, $itm_qty, 'no') ";
       if (mysqli_query($conn, $sql)) 
         $msg = "New record created successfully";
       else
@@ -62,7 +62,6 @@
     $itm_nam = $_SESSION["fnam"];
     $itm_prc = $_SESSION["fprc"];
     $itm_dsc = $_SESSION["fdsc"];
-    $itm_avail = $_SESSION["favl"];
     $itm_qty = $_SESSION["fqty"];
     $_SESSION["check"] = 1;
   }
@@ -194,7 +193,7 @@
           <div class="col-75">
             <select id="category" name="category">
               <?php
-                $sql = "call dspcat";
+                $sql = "SELECT * from tbcat";
                 $result = $conn->query($sql);
                 if($result->num_rows >0){
                   while($row = $result->fetch_assoc()){

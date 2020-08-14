@@ -25,18 +25,22 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Canteen</title>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/font-awesome.min.css" rel="stylesheet">
-  <link href="../css/templatemo-style.css" rel="stylesheet">
-  <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canteen</title>
+    
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/templatemo-style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
     h1{
       font-size: 50px;
@@ -113,7 +117,7 @@
       $result = $conn->query($sql);
       if($result->num_rows > 0){
         echo '<section>
-        <table class="table table-striped">
+        <table class="table table-striped table-responsive">
           <thead>
             <tr>
               <th>Category</th>
@@ -130,7 +134,7 @@
             <td>';
               include('../conn.php');
               $catcod = $row["foodcatcod"];
-              $sql_cat = "call fndcat($catcod)";
+              $sql_cat = "SELECT * FROM tbcat where catcod=$catcod";
               $result_cat = $conn->query($sql_cat);
               if($result_cat->num_rows > 0 ){
                 $row_cat = $result_cat->fetch_assoc();

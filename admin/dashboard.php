@@ -124,6 +124,13 @@
       }
       .bttn a{
         font-size: 18px;
+        cursor: default;
+      }
+      .bttn a:hover{
+        text-decoration: none;
+        font-size: 18px;
+        color: #ffffff;
+        cursor: default;
       }
       span.bttn {
         float: none; 

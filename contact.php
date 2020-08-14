@@ -75,6 +75,14 @@
         background: transparent;
         padding: 0;
       }
+      @media screen and (max-width: 767px){
+      .input{
+        width: 100%;
+      }
+      .tm-section {
+        padding: 1em;
+      }
+    }
     </style>
   </head>
 

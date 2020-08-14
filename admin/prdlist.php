@@ -9,7 +9,7 @@
     if($_REQUEST["mod"] == 'D'){
       $pic = $_REQUEST["pic"];
       $file = "../prdpics/$pic";
-      $sql = "call delmenu($fcod)";
+      $sql = "DELETE from tbmenu WHERE foodcod =$fcod";
       if ($conn->query($sql) === TRUE) {
         $msg = "Record deleted successfully";
         unlink($file);
@@ -132,7 +132,7 @@
             </div>
           </div>
           <?php
-            $sql_disp = "call dspmenu";
+            $sql_disp = "SELECT * FROM tbmenu";
             $result_disp = $conn->query($sql_disp); 
             $i = 0;
             if($result_disp->num_rows > 0){
@@ -162,7 +162,7 @@
 
           <?php
             include('../conn.php');
-            $sql_disp = "call dspmenu";
+            $sql_disp = "SELECT * FROM tbmenu";
             $result_disp = $conn->query($sql_disp); 
             //$i = 0;
             if($result_disp->num_rows > 0){
@@ -188,7 +188,7 @@
           </div>
           <?php
             include('../conn.php');
-            $sql_disp = "call dspmenu";
+            $sql_disp = "SELECT * FROM tbmenu";
             $result_disp = $conn->query($sql_disp); 
             if($result_disp->num_rows > 0){
               while ($row = $result_disp->fetch_assoc()){

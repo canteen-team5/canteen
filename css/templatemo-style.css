@@ -651,6 +651,10 @@ footer{
 
 @media screen and (max-width: 550px) {
   .tm-welcome-content { margin-bottom: 130px; }
+  .menu_page img{
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -671,7 +675,13 @@ footer{
   padding: 2px;
   display: flow-root;
   text-align: center;
-  
+}
+.empty-cart{
+  padding: 50px;
+}
+@media screen and (max-width: 767px) {
+  .empty-cart { padding: 20px }
+  p.cat { max-width: 100%}
 }
 span.text{
   width: 50%;

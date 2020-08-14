@@ -16,13 +16,13 @@
     $time =  date("H:i:s", strtotime($temp_time));
     $status = "Pending";
     $total = $_SESSION["tot_all"];
-    $sql = "call insord('$date', $usrcod, '$fcod', '$time', '$status', $total)";
+    $sql = "INSERT tbord VALUES(null,'$date', $usrcod, '$fcod', '$time', '$status', $total, 'COD' )";
     if(mysqli_query($conn, $sql)){
       $_SESSION["time"] = $time;
 
       //setup for sending email
       //fetching usr-email;
-      /*$result = $conn->query("call fndusr($usrcod)");
+      /*$result = $conn->query("SELECT * FROM tbusr where usrcod=$usrcod)");
       if($result->num_rows > 0){
         $row = $result->fetch_assoc();
         $email = $row["email"];
@@ -60,15 +60,15 @@
       
         $conn->close();
         include('conn.php');
-        $str_det = $_SESSION["cart"];
+        $str_det = $fcod;
         $arr_det = explode(',', $str_det);
         foreach($arr_det as $item){
           $contents[$item] = isset($contents[$item]) ? $contents[$item] + 1 : 1 ;
         }
         foreach($contents as $key=>$value){
-          $sql_ins = "call insorddet($ordcod, $key, $value)";
+          $sql_ins = "INSERT tborddet VALUES (null, $ordcod, $key, $value)";
           if(mysqli_query($conn, $sql_ins)) {
-            //echo "sucess";
+            echo "sucess";
 
             // updating menu table
             $result_menu = $conn->query("select foodqty from tbmenu where foodcod = $key");
@@ -231,7 +231,7 @@
 
         // contranint for value
         include('conn.php');
-        $sql = "call fndmenu($fcod)";
+        $sql = "SELECT * from tbmenu WHERE foodcod=$fcod";
         $result = $conn->query($sql);
         if($result->num_rows > 0){
           while($row = $result->fetch_assoc()){
@@ -322,12 +322,11 @@
       text-align: center;
       padding: 50px;
     }
-    .empty-cart{
-      padding: 50px;
-    }
+    
     .cart{
-      min-height: 61.1vh;
+      min-height: 66.1vh;
     }
+    
     .btnsubmit{
       padding: 2em;
       width: 100%;
@@ -370,7 +369,17 @@
         background: transparent;
         padding: 0;
       }
-
+      @media screen and (max-width: 767px){
+        .cart{
+          margin-top: 30px;
+        }
+        .btnsubmit {
+          padding: 0;
+        }
+        .table-responsive{
+            border: 0;
+        }
+      }
     </style>
   </head>
 
@@ -421,7 +430,7 @@
     </div>
 
 
-    <h1>SHOPPING CART</h1 onclick="mobile_icon_off()">
+    <h1 onclick="mobile_icon_off()">FOOD CART</h1>
 
         <?php
         include('conn.php');
@@ -434,7 +443,8 @@
             if(count($contents) != 0){
               $tot_all = 0;
               echo '
-              <div class = "cart" onclick="mobile_icon_off()">
+              <div class = "cart " onclick="mobile_icon_off()">
+              <div class = "table-responsive">
               <table class="table table-striped">
               <thead>
                 <tr>
@@ -450,7 +460,7 @@
                 
                 include('conn.php');
                 $tot = 0;
-                $sql = "call fndmenu($key)";
+                $sql = "SELECT * from tbmenu WHERE foodcod=$key";
                 $result = $conn->query($sql);
                 if($result->num_rows > 0){
                   while($row = $result->fetch_assoc()){
@@ -471,6 +481,7 @@
               echo '<tr><td></td> <td></td> <td><b>Total Amount:</b></td><td><b>'.$tot_all.'</b></td><td></td></tr>
                   </tbody>
                 </table>
+                </div>
                 <div class="btnsubmit">
                 <div class="btn"><button type="submit" name="btnsubmit" id="suborder">Make Payment</button></div> </div>
                 </form>
@@ -478,7 +489,7 @@
               $_SESSION["tot_all"] = $tot_all;
             } 
           } else{
-            echo "<div class='empty-cart'><p class='cat' ><span class='text'> Your cart is Empty </span> </p>
+            echo "<div class='empty-cart' onclick='mobile_icon_off()'><p class='cat' ><span class='text'> Your cart is Empty </span> </p>
             <p class='cat'> <span class='text'> <a href='menu.php'>Go To Menu</a> </span> </p></div>";
           }
           if(isset($err) ) echo $err;

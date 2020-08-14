@@ -6,7 +6,7 @@
   $_SESSION["fcod"] = $_REQUEST["fcod"];
   $fcod = $_SESSION["fcod"];
   
-  $sql = "call fndmenu($fcod)";
+  $sql = "SELECT * from tbmenu WHERE foodcod=$fcod ";
   $result = $conn->query($sql);
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
@@ -35,7 +35,7 @@
     if($_REQUEST["mod"] == 'D'){
       $pic = $_REQUEST["pic"];
       $file = "../prdpics/$pic";
-      $sql = "call delmenu($fcod)";
+      $sql = "DELETE from tbmenu WHERE foodcod =$fcod";
       if($conn->query($sql) === TRUE) {
         $msg = "Record deleted successfully";
         if(!$msg == "") echo "<script> alert('$msg'); </script>";

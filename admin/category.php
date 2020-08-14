@@ -1,6 +1,7 @@
 <?php
 
   include('header.php');
+  
 
 
 $catnam = $cnam = $msg = $result_disp = $err = "";
@@ -15,20 +16,24 @@ if (isset($_POST["catsubmit"])) {
   elseif (isset($_SESSION["ccod"])) {
     $ccod = $_SESSION["ccod"];
     unset($_SESSION['ccod']);
-    $sql = "call updcat($ccod,'$catnam')";
-    if (mysqli_query($conn, $sql))
+    $sql = "UPDATE tbcat SET catname = '$catnam' WHERE catcod =$ccod ";
+    if (mysqli_query($conn, $sql)){
       $msg = "Category name updated successfully";
+      $catnam = "";
+    }
     else
       $err = "Error updating record: " . mysqli_error($conn);
   } else {
-    $sql = "call inscat('$catnam')";
+    $sql = "INSERT tbcat VALUES('','$catnam')";
     if ($conn->query($sql) === true) {
       $msg = "New category added successfully";
+      $catnam = "";
     } else {
       $err = "Error: " . $sql . "<br>" . $conn->error;
     }
   }
 }
+
 function secure($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -40,7 +45,7 @@ if (isset($_REQUEST["ccod"])) {
 
   if ($_REQUEST["mod"] == 'D') {
     $catcod = $_REQUEST["ccod"];
-    $sql = "call delcat($catcod)";
+    $sql = "DELETE from tbcat WHERE catcod = $catcod";
     if ($conn->query($sql) === true) $err = "Category deleted";
     else $err = "Error deleting record: " . $conn->error;
   }
@@ -48,18 +53,16 @@ if (isset($_REQUEST["ccod"])) {
   if ($_REQUEST["mod"] == 'E') {
     $_SESSION["ccod"] = $_REQUEST["ccod"];
     $catcod = $_REQUEST["ccod"];
-    $sql = "call fndcat($catcod)";
+    $sql = "SELECT * from tbcat WHERE catcod = $catcod";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
-      $cnam = $row["catname"];
+      $catnam = $row["catname"];
     }
     $conn->close();
-        /*$sql_disp = "call dspcat";
-        $result_disp = $conn->query($sql_disp); 
-        print_r($result_disp); */
   }
 }
+
 
 ?>
 
@@ -118,8 +121,9 @@ if (isset($_REQUEST["ccod"])) {
         font-size: large;
       }
 
-      input[type=submit]:hover {
+      input[type=submit]:hover ,input[type=submit]:active{
         background-color: #45a049;
+        border: 0;
       }
 
       .catsubrght{
@@ -128,6 +132,9 @@ if (isset($_REQUEST["ccod"])) {
       }
       span.text{
         width: auto;
+      }
+      .alert{
+        text-align: center;
       }
       @media screen and (max-width: 780px){
         .h1{
@@ -185,13 +192,48 @@ if (isset($_REQUEST["ccod"])) {
     </div>
 
     <!----------------- Alert Box -------------------------------->
-    <?php 
+    <?php
+      //echo $err.$msg;
+      /*if( $err != "" || $msg != ""){
+        echo '
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">';
 
-      if(!$err == "")
-      echo '<div class="err"> '.$err.' </div>';
-    
-      if(!$msg == "")
-        echo '<div class="msg"> '.$msg.' </div>';
+                  if($err != "")
+                    echo '<p> '.$err.' </p>';
+
+                  if($msg != "")
+                    echo '<p> '.$msg.' </p>';
+
+                    $err = $msg = "";
+                    
+                echo '  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>';*/
+     // }
+    ?>
+    <?php 
+      if($err != ""){
+        //echo '<div class="alert alert-danger">'.$err.'</div>';
+        echo '<div class="err"> '.$err.' </div>';
+      }
+
+      if($msg != ""){
+        //echo '<div class="alert alert-success">'.$msg.'</div>';
+        echo '<div class="msg"> '.$msg.' </div>'; 
+      }
     ?>
 
     <!------------------------------------------------------------------>
@@ -199,15 +241,15 @@ if (isset($_REQUEST["ccod"])) {
     <h1 style="width:85%;" onclick="mobile_icon_off()">CATEGORY</h1>
     <form method="post"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="frmcat" style="padding-bottom: 5em;" onclick="mobile_icon_off()" onsubmit="return(checkCat())">
 
-      <div class="row" style="padding:4% 0 0;" >
+      <div class="row" style="padding:4% 0 0;"  >
         <label for="cat_name">Categories Name:</label>
         <div class="catsubrght">
-          <input type="text" id="name" name="cat_name" placeholder="Your category name.." value="<?php echo$cnam;?>">   
+          <input type="text" id="name" name="cat_name" placeholder="Your category name.." value="<?php echo $catnam;?>">   
           <?php
             if (isset($_REQUEST["ccod"]) && $_REQUEST["mod"] == "E")
-              echo '<input type="submit" value="Update" name="catsubmit" >';
+              echo '<input type="submit" value="Update" name="catsubmit"  data-toggle="modal" data-target="#myModal">';
             else
-              echo '<input type="submit" value="Add Category" name="catsubmit" >';
+              echo '<input type="submit" value="Add Category" name="catsubmit"  data-toggle="modal" data-target="#myModal" >';
           ?>
         </div>
       </div>
@@ -220,12 +262,12 @@ if (isset($_REQUEST["ccod"])) {
       </div>
       <?php
       include('../conn.php');
-      $sql_disp = "call dspcat";
+      $sql_disp = "SELECT * FROM tbcat";
       $result_disp = $conn->query($sql_disp);
       if ($result_disp->num_rows > 0) {
         while ($row = $result_disp->fetch_assoc()) {
-          echo "<p class='cat' ><span class='text'>" . $row["catname"] . "</span> <span class='bttn'> <a href=category.php?ccod=" . $row["catcod"] . "&mod=E >Edit</a>
-            <a onclick='confirmationCatDelete($(this));return false;' href='category.php?ccod=" . $row["catcod"] . "&mod=D'  >Delete</a> </span> </p>";
+          echo "<p class='cat' ><span class='text'>" . $row["catname"] . "</span> <span class='bttn'> <a href=category.php?ccod=" . $row["catcod"] . "&mod=E >Edit</a>  
+            <a onclick='confirmationCatDelete($(this));return false;' href='category.php?ccod=" . $row["catcod"] . "&mod=D' data-toggle='modal' data-target='#myModal' >Delete</a> </span> </p>";
         }
       } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
       ?>

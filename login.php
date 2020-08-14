@@ -17,7 +17,7 @@
             $err = "Password should be 5 to 20 characters longand must only contain alphabets, numbers and @,%,$,&";
 
         else { 
-            $sql = "call login_check('$usr', '$pwd')";
+            $sql = "select * from tbusr where usrname='$usr' and usrpwd='$pwd' ";
             $result = $conn->query($sql);
             if($result->num_rows > 0){
                 $row = $result->fetch_assoc();
@@ -34,7 +34,7 @@
                     else {
                         if(isset($_SESSION["cart"]))
                             header("location:cart.php");
-                        else ;
+                        else 
                             header("location:index.php");
                     }
                 }
@@ -75,14 +75,17 @@
 
         <!-- Main CSS-->
         <link href="css/main.css" rel="stylesheet" media="all">
+        <style>
+            
+        </style>
     </head>
 
-    <body>
+    <body id="lgn">
         <div class="blurr"></div>
         <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
             <div class="wrapper wrapper--w960">
                 <div class="card card-2">
-                    <div class="card-heading"></div>
+                    <div class="card-heading"><img src="img/ctnn.jpeg" class="top_img"></div>
                     <div class="card-body">
                         <h2 class="title">User Login</h2>
                         <div class="modal-body">

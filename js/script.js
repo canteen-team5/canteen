@@ -133,7 +133,7 @@ function checkChangePwd() {
   var confirmpwd = document.getElementById("confirmpwd").value;
 
   if(oldpwd == null || oldpwd == "") {
-    window.alert("Please enter Old Username!");
+    window.alert("Please enter Old Password!");
     document.getElementById("oldpwd").focus();
     return false;
   }
@@ -255,7 +255,7 @@ function confirmationCatDelete(anchor){
 }
 
 function confirmationPrdDelete(anchor){
-  var conf = confirm('Are you sure want to delete this produvt?');
+  var conf = confirm('Are you sure want to delete this product?');
   if(conf)
     window.location=anchor.attr("href");
 }

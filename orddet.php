@@ -80,6 +80,23 @@
         footer{
           margin: 0;
         }
+        @media screen and (max-width: 767px){
+          .det{
+            font-size: 18px;
+            width: 100%;
+            padding: 1em;
+            float: none;
+          }
+          .imgdsc{
+            display: block;
+          }
+          .tm-popular-item-description {
+            padding: 0;
+          }
+          .bigger-first-letter {
+            font-size: 50px;
+          }
+        }
         .dropdown-menu>li>a {
         display: block;
         padding: 3px 20px;
@@ -181,7 +198,7 @@
 
                       include('conn.php');
                       $ucod = $_SESSION["ucod"];
-                      $sql = "call fndusr($ucod)";
+                      $sql = "SELECT * FROM tbusr where usrcod=$ucod";
                       $result = $conn->query($sql);
                       if($result->num_rows > 0){
                         $row = $result->fetch_assoc();
@@ -210,7 +227,7 @@
                         if(count($contents) != 0){
                           $tot_all = 0;
                           echo '
-                          <div class = "cart">
+                          <div class = "cart table-responsive">
                             <table class="table table-striped">
                               <thead>
                                 <tr>
@@ -225,7 +242,7 @@
                               foreach($contents as $key => $value){
                                 include('conn.php');
                                 $tot = 0;
-                                $sql = "call fndmenu($key)";
+                                $sql = "SELECT * FROM tbmenu where foodcod=$key";
                                 $result = $conn->query($sql);
                                 if($result->num_rows > 0){
                                   while($row = $result->fetch_assoc()){

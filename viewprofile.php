@@ -71,7 +71,7 @@
         width: 150px;
         height: 150px;
         border-radius: 50%;
-        margin-top: -10%;
+        margin-top: -75px;
       }
       
       .tm-popular-item-title{
@@ -97,6 +97,36 @@
       .empty-cart{
         margin: 5em auto;
       }
+      .left{
+        width: 60%;
+        float: left;
+        FONT-SIZE: 30px;">
+      }
+      #lft_gold{
+        display: none;
+      }
+      @media screen and (max-width: 767px){
+        .tm-popular-item-description {
+          padding: 0;
+        }
+        .bigger-first-letter{
+          font-size: 35px
+        }
+        .left{
+          width: 100%;>
+        }
+        .tm-popular-item {
+          margin-bottom: 0;
+        }
+        .gold{
+          display: none;
+        }
+        .tm-popular-item-title{
+          font-size: 20px;
+          margin: 5px 0;
+        }
+      }
+
       .dropdown-menu>li>a {
         display: block;
         padding: 3px 20px;
@@ -189,7 +219,7 @@
               
                     <div class="tm-popular-item-description">
                       <h3 class="tm-handwriting-font tm-popular-item-title" style="text-align: center;">
-                        <span class="tm-handwriting-font bigger-first-letter"> Roll no: <span class="dark tm-handwriting-font"> '.$rollno.' </span> </span>
+                        <span class="tm-handwriting-font bigger-first-letter"><b> Roll no: <span class="dark tm-handwriting-font"> '.$rollno.'</b> </span> </span>
                       </h3>
                       <hr class="gold">
                       <div class="imgdsc" >
@@ -202,15 +232,15 @@
                         </h3>
                       </div>
 
-                      <h3 class=" tm-popular-item-title" style="width: 60%;float: left;">
+                      <h3 class=" tm-popular-item-title left" >
                         Name: <span class="dark">'.$name.'</span>
-                      </h3>
+                      </h3><hr class="gold " id="lft_gold">
                       <h3 class=" tm-popular-item-title">
                         Gender: <span class="dark">'.$gen.'</span>
                       </h3><hr class="gold">
-                      <h3 class=" tm-popular-item-title" style="width: 60%;float: left;FONT-SIZE: 30px;">
+                      <h3 class=" tm-popular-item-title left">
                         Email: <span class="dark">'.$email.'</span>
-                      </h3>
+                      </h3><hr class="gold" id="lft_gold">
                       <h3 class=" tm-popular-item-title">
                         Mobile: <span class="dark">'.$mob.'</span>
                       </h3>

@@ -105,7 +105,7 @@ body {
   font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
   font-weight: 400;
   font-size: 14px;
-  background: url(../images/bg1.jpg);
+  background: url(../img/bg1.jpeg);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -245,7 +245,7 @@ input {
 }
 
 .card-2 .card-heading {
-  background: url("../images/ctn.jpg") repeat;
+  background: url("../img/ctn.jpeg") repeat;
   /*background: url("../images/school.jpg") top left/cover no-repeat;*/
   width: 50%;
   display: table-cell;
@@ -266,6 +266,7 @@ input {
     display: block;
     padding-top: 300px;
     background-position: left center;
+    
   }
   .card-2 .card-body {
     display: block;
@@ -278,7 +279,7 @@ input {
 
 
 .blurr{
-  background: url(../images/bg1.jpg);
+  background: url(../img/bg1.jpeg);
   height: 100vh;
   filter: blur(1px);
 }
@@ -389,4 +390,41 @@ a:hover {
 .trigger-btn {
 	display: inline-block;
 	margin: 100px auto;
+}
+.top_img{
+  display: none;
+}
+
+@media screen and (max-width: 767px){
+  #lgn{
+    background: transparent;
+  }
+  .blurr{
+      display: none;
+  }
+  .page-wrapper {
+      min-height: 100vh;
+      position: inherit;
+      transform: translate(0, 0);
+  }
+  .p-t-180 {
+      padding-top: 0;
+  }
+  .card-2{
+      border: 0;
+      padding: 1em;
+  }
+  .card-2 .card-body {
+      padding: 20px 10px;
+  }
+  .card-2 .card-heading {
+      border-radius: 10px;
+      background: transparent;
+      padding-top: 0px;
+  }
+  .top_img{
+    border-radius: 10px;
+    max-width: 100%;
+    display: inline-block;
+  }
 }

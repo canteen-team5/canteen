@@ -57,7 +57,7 @@
       $err = "Please input your picture!";
 
     else{
-      $sql = "call insusr($rollno, '$fname', '$lname', '$usrpic', '$mobile', '$email', '$gender', '$usrname', '$usrpwd')";
+      $sql = "INSERT tbusr VALUES (null, $rollno, '$fname', '$lname', '$usrpic', '$mobile', '$email', '$gender', '$usrname', '$usrpwd', 'U', 'Pending')";
       if ($conn->query($sql) === TRUE) {
         if($usrpic!="")
         move_uploaded_file ($_FILES["picture"]["tmp_name"],"stupics/".$rollno.$_FILES["picture"]["name"]);
