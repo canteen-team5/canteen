@@ -9,7 +9,7 @@
     if($_REQUEST["ispopular"] == 'Y'){
       $sql = "Update tbmenu set foodispopular ='yes' where foodcod=$fcod ";
       if ($conn->query($sql) === TRUE) {
-        $msg = "Record updated successfully";
+        $msg = "Product marked as popular";
       } else {
         $err = "Error deleting record: " . $conn->error;
       }
@@ -17,7 +17,7 @@
     if($_REQUEST["ispopular"] == 'N'){
       $sql = "Update tbmenu set foodispopular ='no' where foodcod=$fcod ";
       if ($conn->query($sql) === TRUE) {
-        $msg = "Record updated successfully";
+        $msg = "Product unmarked from popular";
       } else {
         $err = "Error deleting record: " . $conn->error;
       }
@@ -60,6 +60,9 @@
     footer{
       margin: 10vh 0 0;
     }
+    #head_big, #head_big1{
+      width: 450px;
+    }
     @media screen and (max-width: 780px){
         .h1{
           width: 100%;
@@ -77,6 +80,12 @@
           width: 100%;
         } 
         .tm-section-header{
+          width: 100%;
+        }
+        .tm-section-header {
+            width: 450px;
+        }
+        #head_big, #head_big1{
           width: 100%;
         }
     }
@@ -132,7 +141,7 @@
         <section class="tm-section tm-section-margin-bottom-0 row">
           <div class="category_name">
             <div class="col-lg-12 tm-section-header-container">
-              <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Popular Products</h2>
+              <h2 class="tm-section-header gold-text tm-handwriting-font" id="head_big1"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Popular Items</h2>
               <div class="tm-hr-container"><hr class="tm-hr"></div>
             </div>
           </div>
@@ -141,9 +150,11 @@
             $result_disp = $conn->query($sql_disp); 
             if($result_disp->num_rows > 0){
               while ($row = $result_disp->fetch_assoc()){
-                echo "<p class='cat' ><span class='text'> 
-                <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-                </span> <span class='bttn'> <a href=specialitem.php?fcod=".$row["foodcod"]."&ispopular=N >Unmark from Popular</a> </span> </p>";
+                if($row["foodqty"] > 0) {
+                  echo "<p class='cat' ><span class='text'> 
+                  <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+                  </span> <span class='bttn'> <a href=specialitem.php?fcod=".$row["foodcod"]."&ispopular=N >Unmark from Popular</a> </span> </p>";
+                }
               }
             } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
             $conn->close();
@@ -157,7 +168,7 @@
         <section class="tm-section tm-section-margin-bottom-0 row" id="allprd">
           <div class="category_name">
             <div class="col-lg-12 tm-section-header-container">
-              <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> All Products </h2>
+              <h2 class="tm-section-header gold-text tm-handwriting-font" id="head_big"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Remaining Items </h2>
               <div class="tm-hr-container"><hr class="tm-hr"></div>
             </div>
           </div>
@@ -169,42 +180,18 @@
             //$i = 0;
             if($result_disp->num_rows > 0){
               while ($row = $result_disp->fetch_assoc()){
-                echo "<p class='cat' ><span class='text'> 
-                <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-                </span> <span class='bttn'> <a href=specialitem.php?fcod=".$row["foodcod"]."&ispopular=Y > Mark as Popular </a> </span> </p>";
+                if($row["foodqty"] > 0){
+                  echo "<p class='cat' ><span class='text'> 
+                  <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+                  </span> <span class='bttn'> <a href=specialitem.php?fcod=".$row["foodcod"]."&ispopular=Y > Mark as Popular </a> </span> </p>";
+                }
               }
-            } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
+            } else echo "<p class='cat' ><span class='text'> All products are Popular </span> </p>";
             $conn->close();
           ?>  
                   
         </section>
       </div>
-
-      <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
-        <section class="tm-section tm-section-margin-bottom-0 row">
-          <div class="category_name">
-            <div class="col-lg-12 tm-section-header-container">
-              <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Not Avilable</h2>
-              <div class="tm-hr-container"><hr class="tm-hr"></div>
-            </div>
-          </div>
-          <?php
-            include('../conn.php');
-            $sql_disp = "call dspmenu";
-            $result_disp = $conn->query($sql_disp); 
-            if($result_disp->num_rows > 0){
-              while ($row = $result_disp->fetch_assoc()){
-                if($row["foodqty"] < 1){
-                  echo "<p class='cat' ><span class='text'> 
-                  <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-                  </span> <span class='bttn'> <a href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
-                }
-              }
-            } else echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";
-            $conn->close();
-          ?>            
-        </section>
-    </div> 
 
 
     <!-------------------- Footer content--------------------------> 

@@ -247,6 +247,19 @@ function checkCat() {
   return true;
 }
 
+// checking for quantity 
+function chkqty(id){
+  var qty = id.value;
+  if(qty < 1){
+    window.alert("Quantity should be greater than or equals to 1");
+    id.value = 1;
+  }
+  if(qty > 5){
+    window.alert("Quantity should be less than or equals to 5");
+    id.value = 5;
+  }
+}
+
 
 function confirmationCatDelete(anchor){
   var conf = confirm('Are you sure want to delete this category?');

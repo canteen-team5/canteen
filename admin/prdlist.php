@@ -11,7 +11,7 @@
       $file = "../prdpics/$pic";
       $sql = "DELETE from tbmenu WHERE foodcod =$fcod";
       if ($conn->query($sql) === TRUE) {
-        $msg = "Record deleted successfully";
+        $msg = "Product deleted ";
         unlink($file);
       } else {
         $err = "Error deleting record: " . $conn->error;
@@ -55,6 +55,9 @@
     footer{
       margin: 10vh 0 0;
     }
+    #head_big{
+      width: 450px;
+    }
     @media screen and (max-width: 780px){
         .h1{
           width: 100%;
@@ -72,6 +75,9 @@
           width: 100%;
         } 
         .tm-section-header{
+          width: 100%;
+        }
+        #head_big{
           width: 100%;
         }
     }
@@ -127,28 +133,30 @@
         <section class="tm-section tm-section-margin-bottom-0 row">
           <div class="category_name">
             <div class="col-lg-12 tm-section-header-container">
-              <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Top Selling</h2>
+              <h2 class="tm-section-header gold-text tm-handwriting-font" id="head_big"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Currently Unavailable</h2>
               <div class="tm-hr-container"><hr class="tm-hr"></div>
             </div>
           </div>
           <?php
+            include('../conn.php');
+            $j = 0;
             $sql_disp = "SELECT * FROM tbmenu";
             $result_disp = $conn->query($sql_disp); 
-            $i = 0;
             if($result_disp->num_rows > 0){
               while ($row = $result_disp->fetch_assoc()){
-                echo "<p class='cat' ><span class='text'> 
-                <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-                </span> <span class='bttn'> <a onclick='confirmationPrdDelete($(this));return false;' href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
-                $i++;
-                if($i == 3) break;
+                if($row["foodqty"] < 1){
+                  $j++;
+                  echo "<p class='cat' ><span class='text'> 
+                  <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
+                  </span> <span class='bttn'> <a onclick='confirmationPrdDelete($(this));return false;' href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
+                } 
               }
-            } else echo "<p class='cat' ><span class='text'> No record found </span> </p>";
+              if($j == 0) echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";
+            } else echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";
             $conn->close();
-          ?>  
-                  
-      </section>
-    </div> 
+          ?>            
+        </section>
+    </div>  
 
 
     <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
@@ -178,31 +186,7 @@
         </section>
       </div>
 
-      <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
-        <section class="tm-section tm-section-margin-bottom-0 row">
-          <div class="category_name">
-            <div class="col-lg-12 tm-section-header-container">
-              <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="../img/logo.png" alt="Logo" class="tm-site-logo" width="50px" height="50px"> Not Avilable</h2>
-              <div class="tm-hr-container"><hr class="tm-hr"></div>
-            </div>
-          </div>
-          <?php
-            include('../conn.php');
-            $sql_disp = "SELECT * FROM tbmenu";
-            $result_disp = $conn->query($sql_disp); 
-            if($result_disp->num_rows > 0){
-              while ($row = $result_disp->fetch_assoc()){
-                if($row["foodqty"] < 1){
-                  echo "<p class='cat' ><span class='text'> 
-                  <a href=prddetail.php?fcod=".$row["foodcod"]." >".$row["foodname"]." </a>
-                  </span> <span class='bttn'> <a onclick='confirmationPrdDelete($(this));return false;' href=prdlist.php?fcod=".$row["foodcod"]."&mod=D&pic=".$row["foodpic"]." >Delete</a> </span> </p>";
-                }
-              }
-            } else echo "<p class='cat' ><span class='text'> All Products are Available </span> </p>";
-            $conn->close();
-          ?>            
-        </section>
-    </div> 
+      
 
 
     <!-------------------- Footer content--------------------------> 

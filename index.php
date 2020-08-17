@@ -86,7 +86,19 @@
         background: transparent;
         padding: 0;
       }
-
+      @media screen and (max-width: 767px) {
+        .tm-popular-item-row{
+          width: 100%;
+          margin-bottom: 30px;
+        }
+        .tm-popular-item {
+          width: 100%;
+          margin: auto;
+        }
+        .tm-welcome-img-container{
+          text-align: center;
+        }
+      }
           
     </style>
   </head>

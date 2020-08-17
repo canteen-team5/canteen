@@ -61,12 +61,14 @@
       if ($conn->query($sql) === TRUE) {
         if($usrpic!="")
         move_uploaded_file ($_FILES["picture"]["tmp_name"],"stupics/".$rollno.$_FILES["picture"]["name"]);
-        $msg = "Registration successful";
+        $msg = "Registration successful. Please Sign In to continue";
         //header('location:index.php');
       } else $err =  $conn->error;
 
     }
     //if($err != "") echo $err;
+    if(!$err == "") echo "<script type='text/javascript'> alert('$err'); </script>";
+    if(!$msg == "") echo "<script type='text/javascript'> alert('$msg'); </script>";
     
   }
   function secure($data) {
@@ -105,6 +107,9 @@
       h2{
         font-size: 40px;
       }
+      sup{
+        color: red;
+      }
       
     </style>
   </head>
@@ -138,13 +143,13 @@
     </header>
 
     <!----------------- Alert Box -------------------------------->
-    <?php 
+    <?php /*
 
       if(!$err == "")
       echo '<div class="err"> '.$err.' </div>';
     
       if(!$msg == "")
-        echo '<div class="msg"> '.$msg.' </div>';
+        echo '<div class="msg"> '.$msg.' </div>';*/
     ?>
 
     <!----------------- Registration Form ------------------------>
@@ -154,6 +159,7 @@
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" class="add" onsubmit="return(checkSignUp())">
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="roll_no">Roll No</label>
           </div>
           <div class="col-75">
@@ -163,6 +169,7 @@
 
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="fname">First Name</label>
           </div>
           <div class="col-75">
@@ -172,6 +179,7 @@
         
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="lname">Last Name</label>
           </div>
           <div class="col-75">
@@ -181,6 +189,7 @@
         
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="gender">Gender</label>
           </div>
           <div class="col-75">
@@ -195,6 +204,7 @@
 
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="email">Email</label>
           </div>
           <div class="col-75">
@@ -204,6 +214,7 @@
 
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="mobile no">Mobile No</label>
           </div>
           <div class="col-75">
@@ -213,6 +224,7 @@
 
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="item_picture">Image</label>
           </div>
           <div class="col-75">
@@ -222,6 +234,7 @@
 
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="user name">User Name</label>
           </div>
           <div class="col-75">
@@ -231,6 +244,7 @@
 
         <div class="row">
           <div class="col-25">
+            <sup>*</sup>
             <label for="password">Password</label>
           </div>
           <div class="col-75">

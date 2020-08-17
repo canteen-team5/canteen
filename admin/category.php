@@ -24,7 +24,7 @@ if (isset($_POST["catsubmit"])) {
     else
       $err = "Error updating record: " . mysqli_error($conn);
   } else {
-    $sql = "INSERT tbcat VALUES('','$catnam')";
+    $sql = "INSERT tbcat VALUES(null,'$catnam')";
     if ($conn->query($sql) === true) {
       $msg = "New category added successfully";
       $catnam = "";

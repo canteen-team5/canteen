@@ -93,7 +93,9 @@
       
       .tm-popular-item-title{
           text-align: left;
+          font-size: 25px;
       }
+      
       .tm-popular-item:hover .tm-popular-item-title { color: #888; }
       
       .tm-popular-item:hover .dark{
@@ -117,7 +119,6 @@
       .left{
         width: 60%;
         float: left;
-        FONT-SIZE: 30px;">
       }
       #lft_gold{
         display: none;
@@ -181,6 +182,18 @@
           </div>    
         </div>
       </div>
+
+      <!----------------- Alert Box -------------------------------->
+    <?php 
+
+      if(!$err == "")
+      echo '<div class="err"> '.$err.' </div>';
+
+      if(!$msg == "")
+        echo '<div class="msg"> '.$msg.' </div>';
+      ?>
+
+      <!------------------ Main Content ---------------------------->
 
       <h1 onclick="mobile_icon_off()">CUSTOMER VERIFICATION</h1>
       <?php

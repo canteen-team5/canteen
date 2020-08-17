@@ -682,6 +682,7 @@ footer{
 @media screen and (max-width: 767px) {
   .empty-cart { padding: 20px }
   p.cat { max-width: 100%}
+  
 }
 span.text{
   width: 50%;
@@ -843,7 +844,7 @@ input[type=submit]:hover,input[type=submit]:active {
   margin: 35px auto 0;
 }
 .msg{
-  width:60%;
+  width:65%;
   border-radius: 8px;
   padding:9px;
   text-align: center;
@@ -852,4 +853,13 @@ input[type=submit]:hover,input[type=submit]:active {
   background-image: radial-gradient( white 35%, #04ef0491);
   border: 3px solid #1b88288a;
   margin: 35px auto 0;
+}
+
+@media screen and (max-width: 780px){
+  .err{
+    width:90%;
+  }
+  .msg{
+    width:90%;
+  }
 }

@@ -50,6 +50,11 @@
         background: transparent;
         padding: 0;
       }
+      @media screen and (max-width: 767px) {
+        .tm-welcome-img-container{
+          text-align: center;
+        }
+      }
     </style>
 
   </head>

@@ -32,7 +32,7 @@
         elseif ($confirmpwd != $newpwd) $err = "Confirm password didn't match!";
 
         else{
-            $sql = "call fndusr($ucod)";
+            $sql = "select * from tbusr where usrcod=$ucod";
             $result = $conn->query($sql);
             if($result->num_rows > 0){
                 $row = $result->fetch_assoc();
@@ -41,7 +41,7 @@
                     include('conn.php');
                     $sql_upd = "update tbusr set usrpwd='$newpwd' where usrcod=$ucod ";
                     if ($conn->query($sql_upd) === TRUE) {
-                        //$msg = "Password changed successfully";
+                        $msg = "Password changed successfully";
 
                     } else {
                         $err =  $conn->error;
@@ -49,11 +49,12 @@
                     
                     $conn->close();
                 }
-                else echo "You have entered wrong password";    
+                else $err = "You have entered wrong password";    
 
             }
         }
         if(!$err == "") echo "<script type='text/javascript'> alert('$err'); </script>";
+        if(!$msg == "") echo "<script type='text/javascript'> alert('$msg'); </script>";
     }
     function secure($data) {
         $data = trim($data);

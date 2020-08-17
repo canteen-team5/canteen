@@ -25,7 +25,7 @@
                 $ucod = $row["usrcod"];
                 $verification = $row["verification"];
 
-                if($verification == "Verified"){
+                //if($verification == "Verified"){
                     $_SESSION["ucod"] = $ucod;
                     if ($rol == "A") {
                         $_SESSION["rol"] = 'A';
@@ -33,16 +33,16 @@
                     }
                     else {
                         if(isset($_SESSION["cart"]))
-                            header("location:cart.php");
+                            header("location:payment.php");
                         else 
                             header("location:index.php");
                     }
-                }
+                /*}
                 else
-                    $msg = "You are not verified yet";
+                    $err = "You are not verified yet";*/
                   
             }
-            else echo "<script type='text/javascript'> alert('Incorrect Password'); </script>";
+            else echo "<script type='text/javascript'> alert('Incorrect Login Details'); </script>";
         }
         if(!$err == "") echo "<script type='text/javascript'> alert('$err'); </script>";
     }

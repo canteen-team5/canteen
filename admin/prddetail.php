@@ -37,7 +37,7 @@
       $file = "../prdpics/$pic";
       $sql = "DELETE from tbmenu WHERE foodcod =$fcod";
       if($conn->query($sql) === TRUE) {
-        $msg = "Record deleted successfully";
+        $msg = "Product deleted";
         if(!$msg == "") echo "<script> alert('$msg'); </script>";
         unlink($file);
         header('location:prdlist.php');
@@ -109,13 +109,53 @@
       }
       .dsc{
         font-size: 20px;
-    width: 60%;
-    padding: 0 0 0 1em;
-    float: left;
+        width: 60%;
+        padding: 0 0 0 1em;
+        float: left;
       }
       .bttn a{
         margin: 0 15%;
       }
+      .left{
+        width: 50%;
+        float: left;
+      }
+
+      @media screen and (max-width: 767px){
+        
+        .tm-popular-item-description {
+          padding: 0;
+        }
+        .bigger-first-letter{
+          font-size: 45px
+        }
+        .left{
+          width: 100%;>
+        }
+        .tm-popular-item {
+          margin-bottom: 0;
+        }
+        .gold{
+          display: none;
+        }
+        .tm-popular-item-title{
+          font-size: 30px;
+          margin: 5px 0;
+        }
+        .dsc{
+            font-size: 18px;
+            width: 100%;
+            padding: 1em 0 0;
+            float: none;
+          }
+          .imgdsc{
+            display: block;
+          }
+          .bttn a{
+            margin: 20px;
+          }
+      }
+      
       footer{
         margin: 0;
       }
@@ -172,10 +212,12 @@
                     <p><?php echo $fdsc; ?></p>
                   </div>
                 </div>
-                <h3 class="tm-handwriting-font tm-popular-item-title" style="width: 50%; float: left;">
+                <h3 class="tm-handwriting-font tm-popular-item-title left" >
                     <span class="tm-handwriting-font bigger-first-letter">A</span>vailable: <?php echo $favl; ?></h3>
-                <h3 class="tm-handwriting-font tm-popular-item-title"> <span class="tm-handwriting-font bigger-first-letter">Q</span>uantity: <?php echo $fqty; ?></h3><hr class="tm-popular-item-hr">
-                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">P</span>rice: ₹<?php echo $fprc; ?></h3><hr class="tm-popular-item-hr">
+                <h3 class="tm-handwriting-font tm-popular-item-title"> <span class="tm-handwriting-font bigger-first-letter">Q</span>uantity: <?php echo $fqty; ?></h3>
+                  <hr class="tm-popular-item-hr gold">
+                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">P</span>rice: ₹<?php echo $fprc; ?></h3>
+                  <hr class="tm-popular-item-hr gold">
                    
                 <?php echo '<h3 <span class="bttn"> <a href="addprd.php?fcod='.$_SESSION["fcod"].'&mod=E ">Edit</a>
                   <a onclick="confirmationPrdDelete($(this));return false;" href="prddetail.php?fcod='.$_SESSION["fcod"].'&mod=D&pic='.$_SESSION["fpic"].' ">Delete</a> </span></h3>'; ?>

@@ -205,6 +205,39 @@
       #logout:active {
         border: 0;
       }
+      @media screen and (max-width: 767px){
+        .bar{
+          height: auto;
+        }
+        .w3l_banner_nav_left {
+          float: none;
+          width: 100%;
+          margin-top: 0;
+          height: auto;
+        }
+        .navbar-collapse {
+          display: flex;
+        }
+        .navbar-nav {
+          float: none;
+          margin: auto;
+          display: block;
+          width: 100%;
+        }
+        .w3l_banner_nav_right {
+          float: none;
+          width: 100%;
+          height: auto;
+          margin-top: 0;
+        }
+        #data{
+          display: none;
+        }
+        .quick_link {
+          width: 100%;
+          float: none;
+        }
+      }
 
     </style>
   </head>
@@ -278,7 +311,7 @@
       <div class="w3l_banner_nav_right">
         <section class="tm-section tm-section-margin-bottom-0 ">
 
-          <div class="row">
+          <div class="row" id="data">
             <div class="tot">
               <div class="data">
                 <h1 class="inr-h1">
@@ -356,7 +389,7 @@
 
             <div class="quick_link">
               <div class="link">
-                <a href="prdlist.php">Top Sellings</a>
+                <a href="prdlist.php">Unavailable</a>
               </div>
             </div>
 

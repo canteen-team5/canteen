@@ -2,7 +2,7 @@
 
   include('header.php');
 
-  $msg = $mobile = "";
+  $msg = $err = $mobile = "";
    // for sending mail
    /*require("../PHPMailer/src/PHPMailer.php");
    require("../PHPMailer/src/SMTP.php");
@@ -28,7 +28,7 @@
     $ordcod = $_REQUEST["ordcod"];
     $sql = "update tbord set ordstatus = 'Accepted' where ordcod = $ordcod";
     if (mysqli_query($conn, $sql)) {
-      $msg =  "Record updated successfully";
+      $msg =  "Order number $ordcod Accepted";
       $email = $_SESSION["email"];
 
      
@@ -54,7 +54,7 @@
     $ordcod = $_REQUEST["ordcod"];
     $sql = "update tbord set ordstatus = 'Cancelled' where ordcod = $ordcod";
     if (mysqli_query($conn, $sql)) {
-      $msg =  "Record updated successfully";
+      $msg =  "Order number $ordcod Cancelled";
       $email = $_SESSION["email"];
      
         /*$mail->Body = "Oops! Your order has been cancelled.";
@@ -245,7 +245,18 @@
         </div>    
       </div>
     </div>
+        
+    <!----------------- Alert Box -------------------------------->
+    <?php 
 
+      if(!$err == "")
+      echo '<div class="err"> '.$err.' </div>';
+    
+      if(!$msg == "")
+        echo '<div class="msg"> '.$msg.' </div>';
+    ?>
+    
+    <!------------------ Main Content ---------------------------->
 
      <h1 onclick="mobile_icon_off()">Pending Orders</h1>
 

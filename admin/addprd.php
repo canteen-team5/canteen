@@ -38,16 +38,16 @@
           $fcod = $_SESSION['fcod'];
           $sql = "UPDATE tbmenu set foodname='$itm_nam', fooddsc='$itm_dsc', foodpic='$itm_pic', foodprc=$itm_prc, foodcatcod=$sel_cat, foodqty=$itm_qty where foodcod = $fcod ";
           if ($conn->query($sql) === TRUE) {
-            $msg = "Record updated successfully";
+            $msg = "Item updated successfully";
           } else {
             $err = "Error updating record: " . $conn->error;
           }
           unset($_SESSION["check"]);
       }
       else{
-        $sql = "INSERT tbmenu VALUES('', '$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, $itm_qty, 'no') ";
+        $sql = "INSERT tbmenu VALUES(null, '$itm_nam', '$itm_dsc', '$itm_pic', $itm_prc, $sel_cat, $itm_qty, 'no') ";
       if (mysqli_query($conn, $sql)) 
-        $msg = "New record created successfully";
+        $msg = "Item added successfully";
       else
         $err = "Error: " . $sql . "<br>" . mysqli_error($conn);
       }
@@ -118,7 +118,7 @@
               <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="category.php">Category</a></li>
-                <li><a href="addprd" class="active">Add Product</a></li>
+                <li><a href="addprd.php" class="active">Add Product</a></li>
                 <li><a href="prdlist.php">Product List</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
                   <ul class="dropdown-menu">

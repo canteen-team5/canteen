@@ -2,7 +2,7 @@
   
   include('header.php');
 
-  $addqty = $fqty = "";
+  $addqty = $fqty = $msg = $err = "";
 
   if(isset($_REQUEST["fcod"]) && isset($_POST["submit"])){
     $fcod = $_REQUEST["fcod"];
@@ -17,6 +17,7 @@
     $tot_qty = $fqty + $addqty;
     $sql = "update tbmenu set foodqty=$tot_qty where foodcod=$fcod ";
     if(mysqli_query($conn, $sql)){
+      $msg = "Item quantity updated sucessfully";
     }
   }
 
@@ -72,6 +73,12 @@
    section{
      min-height: 61vh;
    }
+   @media screen and (max-width: 767px){
+    .table {
+      width: 100%;
+      margin: 20px 0;
+    }
+  }
 
   
   </style>
@@ -109,6 +116,18 @@
       </div>
     </div>
 
+    <!----------------- Alert Box -------------------------------->
+    <?php 
+
+      if(!$err == "")
+      echo '<div class="err"> '.$err.' </div>';
+    
+      if(!$msg == "")
+        echo '<div class="msg"> '.$msg.' </div>';
+    ?>
+    
+    <!------------------ Main Content ---------------------------->
+
     <h1>Check Inventory</h1>
 
     <?php
@@ -116,8 +135,8 @@
       $sql = "select * from tbmenu order by foodcatcod ";
       $result = $conn->query($sql);
       if($result->num_rows > 0){
-        echo '<section>
-        <table class="table table-striped table-responsive">
+        echo '<section table-responsive>
+        <table class="table table-striped ">
           <thead>
             <tr>
               <th>Category</th>

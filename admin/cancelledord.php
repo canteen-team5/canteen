@@ -166,7 +166,7 @@
                         //$conn->close();
 
                         include('../conn.php');
-                        $sql_usr = "SELECT * FROM tbusr where usrcod=$key$ucod)";
+                        $sql_usr = "SELECT * FROM tbusr where usrcod=$ucod";
                         $result_usr = $conn->query($sql_usr);
                         if($result_usr->num_rows > 0){
                           $row_usr = $result_usr->fetch_assoc();
