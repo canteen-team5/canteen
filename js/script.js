@@ -247,6 +247,23 @@ function checkCat() {
   return true;
 }
 
+//Validating Search button
+function checkSearch() {
+  var search = document.getElementById("search").value;
+
+  if(search == null || search == "") {
+    window.alert("Please enter Food name!");
+    document.getElementById("search").focus();
+    return false;
+  }
+  else if(!search.match(/[a-zA-Z]{3,20}/)){
+    window.alert("Please enter atleast 3 characters");
+    document.getElementById("search").focus();
+    return false;
+  }
+  return true;
+}
+
 // checking for quantity 
 function chkqty(id){
   var qty = id.value;

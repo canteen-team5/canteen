@@ -105,7 +105,7 @@ body {
   font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
   font-weight: 400;
   font-size: 14px;
-  background: url(../img/bg1.jpeg);
+  background: url(../img/bg1.jpg);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -279,7 +279,7 @@ input {
 
 
 .blurr{
-  background: url(../img/bg1.jpeg);
+  background: url(../img/bg1.jpg);
   height: 100vh;
   filter: blur(1px);
 }

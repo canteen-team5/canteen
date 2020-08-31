@@ -202,7 +202,6 @@
             $gen = $row["gender"];
             $email = $row["email"];
             $mob = $row["mobile"];
-            $_SESSION["pic"] = $pic;
             echo'
               <div class="tm-main-section light-gray-bg" onclick="mobile_icon_off()">
               <div class="container" id="main">

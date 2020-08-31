@@ -92,6 +92,9 @@
       width: 80%; 
       margin: auto;
     }
+    p.cat{
+      max-width: 100%
+    }
     @media screen and (max-width: 767px){
       #btn{
         width: 90%;
@@ -172,15 +175,15 @@
             <div class="tm-hr-container"><hr class="tm-hr"></div>
           </div>
 
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"  class="add">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"  class="add" onsubmit="return(checkSearch())">
             <div class="row" id="row">
               
               <div class="col-75">
-                <input type="search" name="search" placeholder="Search...." value="" style="width: 90%;">
+                <input type="search" name="search" id="search" placeholder="Search...." value="" style="width: 90%;">
               </div>
 
               <div class="col-25">
-                <button type="submit" name="btnsubmit" class="btn" id="btn">Search</button>
+                <button type="submit" name="btnsubmit" class="btn" id="btn" >Search</button>
               </div>
             </div>
           </form>
@@ -217,10 +220,10 @@
                       </div>';
                     }
                   }
-                } else echo "<div class='empty-cart'><p class='cat' ><span class='text'> No matching record found </span> </p>
-                <p class='cat'> <span class='text'> <a href='menu.php'>Go to Menu</a> </span> </p></div>";
-                $conn->close();
+                }else echo "<div class='empty-cart'><p class='cat' ><span class='text'> No matching record found </span> </p>
+                <p class='cat'> <span class='text'> <a href='menu.php'>Go to Menu</a> </span> </p></div>"; 
               }
+              $conn->close();
             }
             else {
               echo'

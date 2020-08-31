@@ -205,6 +205,9 @@
       #logout:active {
         border: 0;
       }
+      #top_cntnr{
+        max-width: 80%;
+      }
       @media screen and (max-width: 767px){
         .bar{
           height: auto;
@@ -237,13 +240,16 @@
           width: 100%;
           float: none;
         }
+        #top_cntnr{
+          max-width: 100%;
+        }
       }
 
     </style>
   </head>
   <body>
     <div class="tm-top-header">
-      <div class="container" style="max-width:80%">
+      <div class="container" id="top_cntnr" >
         <div class="row">
           <div class="tm-top-header-inner">
             <div class="tm-logo-container" onclick="mobile_icon_off()">
